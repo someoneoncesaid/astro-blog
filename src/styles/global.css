@@ -1,6 +1,6 @@
 /*
  * Ink & Paper — 编辑排版式个人博客视觉系统
- * 暖纸色 / 衬线标题 / 朱砂红点缀 / 杂志式栏线与编号
+ * 暖纸色 / 石墨黑 / 群青蓝点缀 / 衬线标题 / 杂志式栏线与编号
  * 所有视觉变量集中在 :root，暗色主题由 [data-theme="dark"] 覆盖。
  */
 
@@ -22,21 +22,22 @@
 :root {
 	color-scheme: light;
 
-	--paper: #f8f6f1;
-	--surface: #ffffff;
-	--surface-soft: #f1eee7;
-	--ink: #1c1b18;
-	--ink-soft: #4a4740;
-	--muted: #847f74;
-	--line: #e4dfd4;
-	--line-strong: #cfc8b9;
-	--accent: #b3442d;
-	--accent-strong: #8d3320;
-	--accent-soft: #f2e3dd;
-	--code-bg: #232220;
-	--code-fg: #ece7dc;
-	--shadow-sm: 0 1px 2px rgba(28, 27, 24, 0.05);
-	--shadow-md: 0 2px 6px rgba(28, 27, 24, 0.05), 0 18px 44px rgba(28, 27, 24, 0.09);
+	/* 取自参考插画：暖纸 #f0e7d6 / 石墨 #514c47 / 群青蓝 #292ebc */
+	--paper: #f4eddf;
+	--surface: #fbf7ef;
+	--surface-soft: #ece4d4;
+	--ink: #2b2926;
+	--ink-soft: #57514a;
+	--muted: #8a8175;
+	--line: #ded5c4;
+	--line-strong: #c7bba6;
+	--accent: #292ebc;
+	--accent-strong: #1d218f;
+	--accent-soft: #e2e3f5;
+	--code-bg: #2b2926;
+	--code-fg: #f1e9d9;
+	--shadow-sm: 0 1px 2px rgba(43, 41, 38, 0.05);
+	--shadow-md: 0 2px 6px rgba(43, 41, 38, 0.05), 0 18px 44px rgba(43, 41, 38, 0.09);
 
 	--font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC",
 		"Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
@@ -54,19 +55,20 @@
 :root[data-theme="dark"] {
 	color-scheme: dark;
 
-	--paper: #141412;
-	--surface: #1c1b19;
-	--surface-soft: #24231f;
-	--ink: #f2efe8;
-	--ink-soft: #c6c1b7;
-	--muted: #948e82;
-	--line: #302e29;
-	--line-strong: #49463e;
-	--accent: #e08164;
-	--accent-strong: #f0a088;
-	--accent-soft: #3a2721;
-	--code-bg: #0d0d0c;
-	--code-fg: #e9e4d9;
+	/* 暗色下群青蓝提亮为 #8e93ff，保证深底上的可读性 */
+	--paper: #17181c;
+	--surface: #1e1f25;
+	--surface-soft: #26272e;
+	--ink: #f1eee7;
+	--ink-soft: #c4c0b8;
+	--muted: #928d86;
+	--line: #33343c;
+	--line-strong: #4b4c56;
+	--accent: #8e93ff;
+	--accent-strong: #b0b4ff;
+	--accent-soft: #282a48;
+	--code-bg: #101114;
+	--code-fg: #ece9e2;
 	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
 	--shadow-md: 0 2px 6px rgba(0, 0, 0, 0.3), 0 18px 44px rgba(0, 0, 0, 0.28);
 }
@@ -307,7 +309,7 @@ pre > code {
 .btn--primary:hover {
 	background: var(--accent);
 	border-color: var(--accent);
-	color: #fff;
+	color: var(--surface);
 }
 
 /* 暗色主题下强调色变浅，hover 文字须换成深色以保证对比度 */
