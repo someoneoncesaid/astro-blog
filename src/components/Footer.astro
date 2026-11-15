@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_AUTHOR } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 const today = new Date();
 ---
@@ -38,7 +38,7 @@ const today = new Date();
 		</div>
 
 		<div class="footer-bottom">
-			<span>© {today.getFullYear()} {SITE_AUTHOR}. All rights reserved.</span>
+			<span>© {today.getFullYear()} {SITE_TITLE}. All rights reserved.</span>
 			<span class="footer-colophon">Built with Astro · Ink &amp; Paper</span>
 		</div>
 	</div>
@@ -110,7 +110,7 @@ const today = new Date();
 		height: 34px;
 		border: 1px solid var(--line-strong);
 		border-radius: 50%;
-		color: var(--ink-soft);
+		color: var(--accent);
 		text-decoration: none;
 		transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 	}
@@ -121,7 +121,7 @@ const today = new Date();
 	}
 
 	.social-links a:hover {
-		color: var(--accent);
+		color: var(--accent-strong);
 		border-color: var(--accent);
 		background: var(--surface);
 	}

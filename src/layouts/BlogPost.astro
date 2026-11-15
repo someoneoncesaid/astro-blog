@@ -5,11 +5,11 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+import { SITE_TITLE } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category, tags } = Astro.props;
 
 // 文章底部的前后篇导航
 const posts = (await getCollection('blog')).sort(
@@ -40,7 +40,7 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 				<p class="article-desc reveal reveal--2">{description}</p>
 
 				<div class="article-meta reveal reveal--3">
-					<span>{SITE_AUTHOR}</span>
+					<span class="meta-category">{category}</span>
 					<span class="meta-sep"></span>
 					<FormattedDate date={pubDate} />
 					{
@@ -71,6 +71,16 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 				<p class="end-mark" aria-hidden="true">· · ·</p>
 
 				{
+					tags.length > 0 && (
+						<ul class="article-tags" aria-label="文章标签">
+							{tags.map((tag) => (
+								<li>{tag}</li>
+							))}
+						</ul>
+					)
+				}
+
+				{
 					(newer || older) && (
 						<nav class="post-nav" aria-label="文章导航">
 							{older && (
@@ -93,6 +103,9 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 			</div>
 		</main>
 		<Footer />
+		<script>
+			import '../scripts/diagrams.js';
+		</script>
 	</body>
 </html>
 
@@ -161,6 +174,12 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 		background: var(--line-strong);
 	}
 
+	.meta-category {
+		color: var(--accent);
+		font-weight: 500;
+		letter-spacing: 0.06em;
+	}
+
 	.article-hero {
 		width: min(calc(100% - 2.5rem), 1000px);
 		margin: 0 auto 3.5rem;
@@ -195,6 +214,24 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 		font-size: 1.4rem;
 		letter-spacing: 0.6em;
 		text-align: center;
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0 0 2.5rem;
+		padding: 0;
+		list-style: none;
+	}
+
+	.article-tags li {
+		padding: 0.22rem 0.75rem;
+		border: 1px solid var(--line-strong);
+		border-radius: 100px;
+		color: var(--muted);
+		font-size: 0.72rem;
+		letter-spacing: 0.05em;
 	}
 
 	.post-nav {

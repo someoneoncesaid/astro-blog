@@ -1,6 +1,7 @@
 /*
  * Ink & Paper — 编辑排版式个人博客视觉系统
- * 暖纸色 / 石墨黑 / 群青蓝点缀 / 衬线标题 / 杂志式栏线与编号
+ * 暖白 / 近黑 / 克莱因蓝点缀 / 衬线标题 / 杂志式栏线与编号
+ * 色板与「图文摘要」的小红书图卡一致：暖白 #FAF8F3、近黑 #16181D、品牌蓝 #002FA7。
  * 所有视觉变量集中在 :root，暗色主题由 [data-theme="dark"] 覆盖。
  */
 
@@ -22,20 +23,20 @@
 :root {
 	color-scheme: light;
 
-	/* 取自参考插画：暖纸 #f0e7d6 / 石墨 #514c47 / 群青蓝 #292ebc */
-	--paper: #f4eddf;
-	--surface: #fbf7ef;
-	--surface-soft: #ece4d4;
-	--ink: #2b2926;
-	--ink-soft: #57514a;
-	--muted: #8a8175;
-	--line: #ded5c4;
-	--line-strong: #c7bba6;
-	--accent: #292ebc;
-	--accent-strong: #1d218f;
-	--accent-soft: #e2e3f5;
-	--code-bg: #2b2926;
-	--code-fg: #f1e9d9;
+	/* 与图文摘要卡片同一套色板：暖白 #FAF8F3 / 近黑 #16181D / 克莱因蓝 #002FA7 */
+	--paper: #faf8f3;
+	--surface: #fffdf8;
+	--surface-soft: #f2eee5;
+	--ink: #16181d;
+	--ink-soft: #3a3f47;
+	--muted: #6b6f76;
+	--line: #dcd5c8;
+	--line-strong: #c4bcae;
+	--accent: #002fa7;
+	--accent-strong: #00237d;
+	--accent-soft: #e4e9f6;
+	--code-bg: #16181d;
+	--code-fg: #f2efe7;
 	--shadow-sm: 0 1px 2px rgba(43, 41, 38, 0.05);
 	--shadow-md: 0 2px 6px rgba(43, 41, 38, 0.05), 0 18px 44px rgba(43, 41, 38, 0.09);
 
@@ -55,19 +56,19 @@
 :root[data-theme="dark"] {
 	color-scheme: dark;
 
-	/* 暗色下群青蓝提亮为 #8e93ff，保证深底上的可读性 */
-	--paper: #17181c;
-	--surface: #1e1f25;
-	--surface-soft: #26272e;
-	--ink: #f1eee7;
-	--ink-soft: #c4c0b8;
-	--muted: #928d86;
-	--line: #33343c;
-	--line-strong: #4b4c56;
-	--accent: #8e93ff;
-	--accent-strong: #b0b4ff;
-	--accent-soft: #282a48;
-	--code-bg: #101114;
+	/* 暗色下品牌蓝提亮为 #8FA6FF，保证深底上的可读性 */
+	--paper: #131417;
+	--surface: #1a1c20;
+	--surface-soft: #23252b;
+	--ink: #f2f0ea;
+	--ink-soft: #c7c3bb;
+	--muted: #94908a;
+	--line: #32343a;
+	--line-strong: #4a4c54;
+	--accent: #8fa6ff;
+	--accent-strong: #b4c3ff;
+	--accent-soft: #222a45;
+	--code-bg: #0e0f12;
 	--code-fg: #ece9e2;
 	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
 	--shadow-md: 0 2px 6px rgba(0, 0, 0, 0.3), 0 18px 44px rgba(0, 0, 0, 0.28);
@@ -346,13 +347,13 @@ pre > code {
 	border: 1px solid var(--line);
 	border-radius: 50%;
 	background: transparent;
-	color: var(--ink-soft);
+	color: var(--accent);
 	cursor: pointer;
 	transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .theme-toggle:hover {
-	color: var(--accent);
+	color: var(--accent-strong);
 	border-color: var(--accent);
 	background: var(--accent-soft);
 }
@@ -483,6 +484,73 @@ pre > code {
 
 .prose pre {
 	margin: 2em 0;
+}
+
+/* ---------- 图表（PlantUML / Mermaid） ---------- */
+
+.diagram {
+	margin: 2.4em 0;
+	padding: 1.4em 1.5em 1em;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	background: var(--surface);
+}
+
+.diagram-canvas {
+	display: flex;
+	justify-content: center;
+	overflow-x: auto;
+}
+
+.diagram-canvas:empty {
+	display: none;
+}
+
+.diagram-canvas svg {
+	max-width: 100%;
+	height: auto;
+}
+
+.diagram-fallback {
+	margin: 0;
+	padding: 1em 1.2em;
+	border: 1px solid var(--line);
+	background: var(--surface-soft);
+	color: var(--ink);
+	font-size: 0.82rem;
+}
+
+.diagram[data-state="ready"] .diagram-fallback {
+	display: none;
+}
+
+.diagram-caption {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: 0.9rem;
+	padding-top: 0.7rem;
+	border-top: 1px solid var(--line);
+	color: var(--muted);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.04em;
+}
+
+.diagram[data-state="ready"] .diagram-status {
+	display: none;
+}
+
+.diagram[data-state="error"] .diagram-status {
+	color: var(--accent);
+}
+
+@media (max-width: 720px) {
+	.diagram {
+		margin-inline: -0.4rem;
+		padding: 1rem 0.9em 0.8em;
+	}
 }
 
 /* ---------- 动效 ---------- */

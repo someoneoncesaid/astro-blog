@@ -60,6 +60,32 @@ npm run sync:summaries -- --no-prune # 不清理源目录已删除的生成条�
 - 同步会生成两类文件：`src/content/summaries/*.md`（标题、配文、话题、卡片列表）和 `public/summaries/<slug>/`（图卡 HTML 与素材）。源内容变化时才重建；生成条目在源内容消失后会自动清理。
 - 阅读页左侧是图卡滑动预览，右侧是配文；支持方向键、滑动翻页和点击放大。
 
+## 📝 文章同步（SelfMedia 母稿）
+
+博客文章直接从 SelfMedia 各项目的 `母稿.md` 同步：
+
+```bash
+npm run sync:posts              # 增量同步全部母稿
+npm run sync:posts -- --dry-run # 只看计划，不写文件
+npm run sync:posts -- --force   # 忽略 sourceHash，强制重写
+npm run sync:posts -- --only <slug>  # 只同步一篇
+npm run sync:posts -- --no-prune     # 不清理源项目已删除的生成文章
+```
+
+- 源目录默认是 `/Users/zhiyuan/SelfMedia`，可用 `SELF_MEDIA_ROOT=/path/to/SelfMedia npm run sync:posts` 覆盖。
+- 固定 slug、特殊源文件（例如正文在 `更新总结.md` 或 `公众号/正文.md`）和分类改名写在 [`scripts/posts.config.json`](scripts/posts.config.json)。
+- 正文里的图片会复制到 `public/posts/<slug>/assets/`，Obsidian 的 `![[...]]` 嵌入、跨文章链接、callout 和本地绝对路径都会转成适合发布的写法。
+- 生成的文章带 `generatedBy: "sync-posts"` 与 `sourceHash`，方便增量更新和安全清理；手写文章不会被覆盖。
+- 文章卡片在没有 `heroImage` 时会生成排版封面，分类与标签来自 frontmatter。
+
+## 📊 图表（PlantUML / Mermaid）
+
+` ```plantuml `、` ```puml `、` ```uml `、` ```mermaid `、` ```mmd ` 围栏会由 [`src/utils/remark-diagrams.mjs`](src/utils/remark-diagrams.mjs) 转成图表占位块，再由 [`src/scripts/diagrams.js`](src/scripts/diagrams.js) 在浏览器里按需渲染成 SVG；渲染失败时保留源码可读。
+
+- PlantUML 使用 `@plantuml/core` 本地渲染，不经过任何外部服务；引擎文件通过 `?url` 原样输出（minify 会破坏 TeaVM 生成的代码），只在页面出现图表时才加载。
+- Mermaid 使用 `mermaid` 官方引擎，关闭 HTML label，渲染结果会跟随站点的明暗主题重新生成。
+- 图表颜色从 CSS 变量（`--ink`、`--accent`、`--surface` 等）读取，与图文摘要卡片共用一套色板。
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:

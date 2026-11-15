@@ -10,7 +10,7 @@ const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const [featured, ...rest] = posts;
-const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : '随笔');
+const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未分类';
 ---
 
 <!doctype html>
@@ -35,7 +35,17 @@ const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : 
 					<section class="container">
 						<a class="featured" href={`/blog/${featured.id}/`}>
 							<div class="featured-media">
-								<img width={720} height={360} src={featured.data.heroImage} alt="" loading="eager" />
+								{
+									featured.data.heroImage ? (
+										<img width={720} height={360} src={featured.data.heroImage} alt="" loading="eager" />
+									) : (
+										<div class="cover-fallback" aria-hidden="true">
+											<span class="cover-fallback-mark">{featured.data.title.trim().charAt(0)}</span>
+											<span class="cover-fallback-kicker">{categoryOf(featured)}</span>
+											<span class="cover-fallback-title">{featured.data.title}</span>
+										</div>
+									)
+								}
 							</div>
 							<div class="featured-content">
 								<p class="eyebrow">编辑精选 · Featured</p>
@@ -45,7 +55,7 @@ const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : 
 									<span class="meta">
 										<FormattedDate date={featured.data.pubDate} />
 										<span class="dot" />
-										{categoryOf(featured.id)}
+										{categoryOf(featured)}
 									</span>
 									<span class="featured-cta">
 										阅读文章
@@ -72,10 +82,20 @@ const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : 
 							<article class="card reveal">
 								<a href={`/blog/${post.id}/`}>
 									<div class="card-media">
-										<img width={720} height={360} src={post.data.heroImage} alt="" loading="lazy" />
+										{
+											post.data.heroImage ? (
+												<img width={720} height={360} src={post.data.heroImage} alt="" loading="lazy" />
+											) : (
+												<div class="cover-fallback" aria-hidden="true">
+													<span class="cover-fallback-mark">{post.data.title.trim().charAt(0)}</span>
+													<span class="cover-fallback-kicker">{categoryOf(post)}</span>
+													<span class="cover-fallback-title">{post.data.title}</span>
+												</div>
+											)
+										}
 									</div>
 									<div class="card-body">
-										<span class="card-tag">{categoryOf(post.id)}</span>
+										<span class="card-tag">{categoryOf(post)}</span>
 										<h3>{post.data.title}</h3>
 										<div class="card-foot">
 											<FormattedDate date={post.data.pubDate} />
@@ -164,6 +184,62 @@ const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : 
 		transform: scale(1.035);
 	}
 
+	/* 没有 heroImage 的文章（同步自母稿）使用排版封面 */
+	.cover-fallback {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 1.5rem;
+		width: 100%;
+		height: 100%;
+		min-height: 300px;
+		padding: clamp(1.3rem, 3vw, 2.2rem);
+		border-left: 2px solid var(--accent);
+		background:
+			linear-gradient(135deg, var(--accent-soft) 0%, transparent 62%),
+			var(--surface-soft);
+		overflow: hidden;
+	}
+
+	.cover-fallback-mark {
+		position: absolute;
+		right: 0.02em;
+		bottom: -0.22em;
+		color: var(--accent);
+		font-family: var(--font-serif);
+		font-size: clamp(7rem, 13vw, 11rem);
+		line-height: 1;
+		opacity: 0.1;
+		pointer-events: none;
+		user-select: none;
+		transition: transform 0.5s var(--ease);
+	}
+
+	.featured:hover .cover-fallback-mark {
+		transform: translateY(-6px);
+	}
+
+	.cover-fallback-kicker {
+		position: relative;
+		color: var(--accent);
+		font-size: 0.68rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.cover-fallback-title {
+		position: relative;
+		display: -webkit-box;
+		overflow: hidden;
+		font-family: var(--font-serif);
+		font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+		line-height: 1.32;
+		letter-spacing: -0.01em;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+	}
+
 	.featured-content {
 		display: flex;
 		flex-direction: column;
@@ -250,6 +326,25 @@ const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : 
 	.card a:hover .card-media img {
 		transform: scale(1.035);
 		opacity: 0.9;
+	}
+
+	.card-media .cover-fallback {
+		min-height: 0;
+		aspect-ratio: 2 / 1;
+		padding: clamp(1.1rem, 2vw, 1.6rem);
+	}
+
+	.card-media .cover-fallback-mark {
+		font-size: clamp(5rem, 8vw, 7rem);
+	}
+
+	.card-media .cover-fallback-title {
+		font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+		-webkit-line-clamp: 2;
+	}
+
+	.card a:hover .cover-fallback-mark {
+		transform: translateY(-4px);
 	}
 
 	.card-tag {

@@ -10,7 +10,7 @@ const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 4);
 
-const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : '随笔');
+const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未分类';
 ---
 
 <!doctype html>
@@ -77,7 +77,7 @@ const categoryOf = (id: string) => (/markdown|mdx/i.test(id) ? '技术笔记' : 
 										<span class="post-meta">
 											<FormattedDate date={post.data.pubDate} />
 											<span class="dot" />
-											{categoryOf(post.id)}
+											{categoryOf(post)}
 										</span>
 										<span class="post-title">{post.data.title}</span>
 									</span>

@@ -100,6 +100,10 @@ import { SITE_TITLE } from '../consts';
 		gap: 2rem;
 	}
 
+	.nav :global(a) {
+		white-space: nowrap;
+	}
+
 	.header-actions {
 		display: flex;
 		align-items: center;
@@ -114,7 +118,7 @@ import { SITE_TITLE } from '../consts';
 		height: 34px;
 		border: 1px solid var(--line);
 		border-radius: 50%;
-		color: var(--ink-soft);
+		color: var(--accent);
 		text-decoration: none;
 		transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 	}
@@ -125,7 +129,7 @@ import { SITE_TITLE } from '../consts';
 	}
 
 	.icon-link:hover {
-		color: var(--accent);
+		color: var(--accent-strong);
 		border-color: var(--accent);
 		background: var(--accent-soft);
 	}
@@ -146,10 +150,29 @@ import { SITE_TITLE } from '../consts';
 		}
 	}
 
-	@media (max-width: 400px) {
-		.nav {
-			gap: 0.55rem;
+	@media (max-width: 560px) {
+		.header-inner {
+			min-height: 0;
+			padding-block: 0.7rem 0;
+			flex-wrap: wrap;
+			row-gap: 0;
 		}
+		.nav {
+			order: 3;
+			width: 100%;
+			justify-content: center;
+			gap: 1.3rem;
+			padding: 0.55rem 0 0.65rem;
+			border-top: 1px solid var(--line);
+			overflow-x: auto;
+			scrollbar-width: none;
+		}
+		.nav::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	@media (max-width: 400px) {
 		.nav :global(a) {
 			font-size: 0.8rem;
 		}

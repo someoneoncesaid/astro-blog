@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 720" role="img" aria-labelledby="dual-overview-title dual-overview-desc">
+<title id="dual-overview-title">双端适配的八个关注点</title>
+<desc id="dual-overview-desc">从空间布局、阅读体验、操作入口、输入过程、可见区域、弹层焦点、状态保留和运行环境，逐项检查双端体验。</desc>
+<rect width="880" height="720" fill="#F7F5F0"/>
+<g font-family="PingFang SC, Microsoft YaHei, sans-serif">
+<text x="20" y="40" fill="#002FA7" font-size="25" font-weight="700">先列问题，再看实现</text>
+<text x="860" y="40" text-anchor="end" fill="#5A5E66" font-size="19">01—08 对应后文分述</text>
+<rect x="20" y="72" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="40" y="110" fill="#5A5E66" font-size="21">01</text>
+<text x="88" y="110" fill="#17181C" font-size="29" font-weight="700">空间布局</text>
+<text x="40" y="152" fill="#3A3E45" font-size="23">导航、会话、右栏</text>
+<text x="40" y="186" fill="#3A3E45" font-size="23">怎么分配空间？</text>
+<rect x="452" y="72" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="472" y="110" fill="#5A5E66" font-size="21">02</text>
+<text x="520" y="110" fill="#17181C" font-size="29" font-weight="700">阅读体验</text>
+<text x="472" y="152" fill="#3A3E45" font-size="23">长文本、字号与点击区域</text>
+<text x="472" y="186" fill="#3A3E45" font-size="23">怎样保持可读、可点？</text>
+<rect x="20" y="228" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="40" y="266" fill="#5A5E66" font-size="21">03</text>
+<text x="88" y="266" fill="#17181C" font-size="29" font-weight="700">操作入口</text>
+<text x="40" y="308" fill="#3A3E45" font-size="23">点按、悬停、右键和拖动</text>
+<text x="40" y="342" fill="#3A3E45" font-size="23">没有鼠标还能用吗？</text>
+<rect x="452" y="228" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="472" y="266" fill="#5A5E66" font-size="21">04</text>
+<text x="520" y="266" fill="#17181C" font-size="29" font-weight="700">输入过程</text>
+<text x="472" y="308" fill="#3A3E45" font-size="23">进入、发送与任务结束</text>
+<text x="472" y="342" fill="#3A3E45" font-size="23">焦点和键盘如何切换？</text>
+<rect x="20" y="384" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="40" y="422" fill="#5A5E66" font-size="21">05</text>
+<text x="88" y="422" fill="#17181C" font-size="29" font-weight="700">可见区域</text>
+<text x="40" y="464" fill="#3A3E45" font-size="23">键盘、工具栏与安全区域</text>
+<text x="40" y="498" fill="#3A3E45" font-size="23">关键内容会被挡住吗？</text>
+<rect x="452" y="384" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="472" y="422" fill="#5A5E66" font-size="21">06</text>
+<text x="520" y="422" fill="#17181C" font-size="29" font-weight="700">弹层焦点</text>
+<text x="472" y="464" fill="#3A3E45" font-size="23">抽屉、背景与键盘导航</text>
+<text x="472" y="498" fill="#3A3E45" font-size="23">打开和关闭后焦点在哪？</text>
+<rect x="20" y="540" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="40" y="578" fill="#5A5E66" font-size="21">07</text>
+<text x="88" y="578" fill="#17181C" font-size="29" font-weight="700">状态保留</text>
+<text x="40" y="620" fill="#3A3E45" font-size="23">尺寸偏好、草稿与面板状态</text>
+<text x="40" y="654" fill="#3A3E45" font-size="23">界面变化后留下什么？</text>
+<rect x="452" y="540" width="416" height="140" rx="4" fill="#FDFCF9" stroke="#D8D4C9"/>
+<text x="472" y="578" fill="#5A5E66" font-size="21">08</text>
+<text x="520" y="578" fill="#17181C" font-size="29" font-weight="700">运行环境</text>
+<text x="472" y="620" fill="#3A3E45" font-size="23">浏览器、桌面窗口与原生能力</text>
+<text x="472" y="654" fill="#3A3E45" font-size="23">哪些行为需要按端处理？</text>
+</g>
+</svg>

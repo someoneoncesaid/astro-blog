@@ -1,0 +1,32 @@
+{
+  "slugs": {
+    "DeepSeek Harness/2026-10-25-DeepSeek-Harness-0.2.1-rc.3-发布说明": "2026-10-25-dsh-0.2.1-rc.3-release",
+    "DeepSeek Harness/2026-10-28-DSH-0.2.2-alpha.2-更新解读": "2026-10-28-dsh-0.2.2-alpha.2",
+    "DeepSeek Harness/2026-10-29-OAR-编程Agent统一调用": "2026-10-29-oar-agent-runtime",
+    "DeepSeek Harness/2026-11-03-DSH-0.2.2-alpha.3-更新解读": "2026-11-03-dsh-0.2.2-alpha.3",
+    "DeepSeek Harness/2026-11-04-DeepSeekHarness的双端适配-41e2ba2e": "2026-11-04-dsh-dual-end-layout",
+    "DeepSeek Harness/2026-11-05-DSH-0.2.2-rc.1-累计能力补充": "2026-11-05-dsh-0.2.2-rc.1",
+    "DeepSeek Harness/2026-11-05-Super-agent设计探索": "2026-11-05-super-agent-design",
+    "DeepSeek Harness/2026-11-07-DeepSeekHarness的对话流处理": "2026-11-07-dsh-conversation-flow",
+    "DeepSeek Harness/2026-11-09-Deepseekharness electron适配-f7419114": "2026-11-09-dsh-electron-shell",
+    "DeepSeek Harness/2026-11-11-v0.2.2-rc.2-1d69ace5": "2026-11-11-dsh-0.2.2-rc.2",
+    "DeepSeek Harness/2026-11-13-DSH 0.2.2-rc.3 更新-77ca8483": "2026-11-13-dsh-0.2.2-rc.3",
+    "DeepSeek Harness/2026-11-14-Building always-on agents-3ed4dee3": "2026-11-14-always-on-agents",
+    "DeepSeek Harness/2026-11-14-DeepSeek 发布全家桶应用 API-9dafa4f8": "2026-11-14-deepseek-app-api",
+    "DeepSeek Harness/2026-11-14-放提示词注入-7b640969": "2026-11-14-prompt-injection",
+    "未分类/2026-11-13-vercel-2ed5f7df": "2026-11-13-vercel-ui-sdk"
+  },
+  "sources": {
+    "DeepSeek Harness/2026-11-11-v0.2.2-rc.2-1d69ace5": "更新总结.md",
+    "DeepSeek Harness/2026-11-05-Super-agent设计探索": "公众号/正文.md"
+  },
+  "categories": {
+    "未分类": "AI 工具"
+  },
+  "tagDenylist": [
+    "博客草稿",
+    "资料整理",
+    "本地审阅稿",
+    "draft"
+  ]
+}

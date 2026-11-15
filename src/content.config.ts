@@ -13,6 +13,12 @@ const blog = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		heroImage: z.string().optional(),
+		category: z.string().default("未分类"),
+		tags: z.array(z.string()).default([]),
+		// 由 scripts/sync-posts.mjs 写入，用于增量更新与安全清理。
+		generatedBy: z.string().optional(),
+		sourceHash: z.string().optional(),
+		sourcePath: z.string().optional(),
 	}),
 });
 

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="420" viewBox="0 0 920 420" role="img" aria-label="dsh-app 请求分流图">
+<rect width="920" height="420" rx="18" fill="#f5f7fc"/>
+<g font-family="PingFang SC, Microsoft YaHei, sans-serif" fill="#172547">
+<text x="32" y="43" font-size="26" fill="#002FA7">Electron 主进程按 URL 分流</text>
+<text x="32" y="73" font-size="17" fill="#172547">页面请求 → dsh-app:// → protocol.handle</text>
+<rect x="30" y="94" width="860" height="67" rx="10" fill="white" stroke="#d4def2"/>
+<text x="48" y="133" font-size="17" fill="#002FA7">dsh-app://shell/*</text>
+<text x="350" y="133" font-size="18" fill="#002FA7">→</text>
+<text x="395" y="121" font-size="18" fill="#172547">读取壳自带文件</text>
+<text x="395" y="144" font-size="15" fill="#172547">欢迎页、更新对话框等</text>
+<rect x="30" y="173" width="860" height="67" rx="10" fill="white" stroke="#d4def2"/>
+<text x="48" y="212" font-size="17" fill="#002FA7">dsh-app://app/ 的静态资源</text>
+<text x="350" y="212" font-size="18" fill="#002FA7">→</text>
+<text x="395" y="200" font-size="18" fill="#172547">读取打包的 Web 前端</text>
+<text x="395" y="223" font-size="15" fill="#172547">返回 HTML 时插入启动引导脚本</text>
+<rect x="30" y="252" width="860" height="67" rx="10" fill="white" stroke="#d4def2"/>
+<text x="48" y="291" font-size="17" fill="#002FA7">dsh-app://app/ 的动态路径</text>
+<text x="350" y="291" font-size="18" fill="#002FA7">→</text>
+<text x="395" y="279" font-size="18" fill="#172547">转发给本机 Host</text>
+<text x="395" y="302" font-size="15" fill="#172547">补认证 cookie，转回响应流 · Host 未就绪返回 503</text>
+<rect x="30" y="331" width="860" height="67" rx="10" fill="white" stroke="#d4def2"/>
+<text x="48" y="370" font-size="17" fill="#002FA7">其他 hostname</text>
+<text x="350" y="370" font-size="18" fill="#002FA7">→</text>
+<text x="395" y="370" font-size="18" fill="#172547">返回 404</text>
+</g></svg>

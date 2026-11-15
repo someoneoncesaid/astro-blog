@@ -16,7 +16,9 @@
 		"@astrojs/mdx": "4.3.13",
 		"@astrojs/rss": "4.0.14",
 		"@astrojs/sitemap": "3.6.1",
+		"@plantuml/core": "1.2026.10",
 		"astro": "5.16.9",
+		"mermaid": "12.3.0",
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
@@ -34,7 +36,9 @@
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
 		"preview": "astro build && wrangler dev",
-		"sync:summaries": "node scripts/sync-summaries.mjs"
+		"sync:posts": "node scripts/sync-posts.mjs",
+		"sync:summaries": "node scripts/sync-summaries.mjs",
+		"sync:all": "node scripts/sync-posts.mjs && node scripts/sync-summaries.mjs"
 	},
 	"type": "module"
 }
