@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DSH 用法</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:900px;height:1200px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;font-family:Inter,"PingFang SC","Noto Sans CJK SC",sans-serif;background:#f3f1e9;color:#171a1f}a{color:#1646a0}a:hover{color:#0e3174}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:900px;height:1200px;box-sizing:border-box;padding:64px 68px 50px;background:#f3f1e9;display:flex;flex-direction:column;gap:25px">
+<div style="display:flex;justify-content:space-between;border-bottom:2px solid #171a1f;padding-bottom:14px;font-size:16px;letter-spacing:1px"><span>05 / DSH 中的 OAR</span><span>看一个真实用法</span></div>
+<div style="font-size:58px;line-height:1.08;font-weight:850;letter-spacing:-2px">在 DSH 里，<br>它用于一次性委派</div>
+<div style="font-size:21px;line-height:1.45">subagent_oar 选择 Codex 或 Claude Code，执行一次文本任务。</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:26px 20px;background:#171a1f;color:#f3f1e9"><div style="font-size:19px;font-weight:700">DSH 主 Agent</div><div style="font-size:23px;color:#a9c1ff">→</div><div style="padding:18px 20px;background:#1646a0;font-size:20px;font-weight:800">OAR 工具</div><div style="font-size:23px;color:#a9c1ff">→</div><div style="font-size:19px;font-weight:700">原生 CLI</div></div>
+<div style="text-align:center;font-size:17px;color:#1646a0;font-weight:700">返回最终文本或失败通知</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div style="padding:20px;border:1px solid #171a1f;display:flex;flex-direction:column;gap:9px"><div style="font-size:16px;color:#1646a0;font-weight:700">当前集成范围</div><div style="font-size:18px;line-height:1.45">已验证 Codex 和 Claude Code；其他运行时待验证。</div></div>
+<div style="padding:20px;background:#e3e1d8;display:flex;flex-direction:column;gap:9px"><div style="font-size:16px;color:#1646a0;font-weight:700">重要限制</div><div style="font-size:18px;line-height:1.45">不创建 DSH 子 Session；不支持继续或恢复。</div></div></div>
+<div style="font-size:24px;font-weight:800;border-bottom:1px solid #8d918f;padding-bottom:12px">在 DSH 中开启 · Profile 配置</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:15px;font-size:17px;line-height:1.45"><b style="color:#1646a0">①</b><span>安装并登录 Codex / Claude Code 原生 CLI。</span></div>
+<div style="display:flex;gap:15px;font-size:17px;line-height:1.45"><b style="color:#1646a0">②</b><span>为 Profile 添加 OAR 提供方与工具包依赖，按文档补丁挂载运行时、权限及 providers 映射。</span></div>
+<div style="display:flex;gap:15px;font-size:17px;line-height:1.45"><b style="color:#1646a0">③</b><span>通过 dsh 启动该 Profile，使用 subagent_oar 委派任务。</span></div></div>
+<div style="font-size:15px;color:#4b5053">原生 CLI 需单独安装与认证；权限由 profile 配置。</div>
+<div style="margin-top:auto;display:flex;justify-content:flex-end;border-top:1px solid #8d918f;padding-top:12px;font-size:15px">06 / 08</div>
+</div></div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 900, H = 1200;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

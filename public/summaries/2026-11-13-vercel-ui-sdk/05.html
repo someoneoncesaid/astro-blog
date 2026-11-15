@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一套形状，五个框架</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.ui-card{font-family:-apple-system,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:#FBFAF6;color:#17171A;position:relative;width:1080px;height:1440px;box-sizing:border-box;display:flex;flex-direction:column;padding:80px 118px 64px 88px}
+.ui-mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="ui-card">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:26px;font-weight:700;letter-spacing:6px;color:#002FA7">README 示例</div>
+    <div style="font-size:24px;color:#8A8A90" class="ui-mono">05 / 08</div>
+  </div>
+  <div style="height:1px;background:#E7E4DC;margin:32px 0 44px"></div>
+  <h1 style="margin:0;font-size:66px;line-height:1.22;font-weight:800">写一次，五个框架都能跑</h1>
+  <div style="width:72px;height:7px;background:#002FA7;border-radius:4px;margin:32px 0 36px"></div>
+  <div style="border:1px solid #E7E4DC;border-radius:16px;background:#17171A;padding:30px 32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+      <span style="width:14px;height:14px;border-radius:50%;background:#FF5F57"></span>
+      <span style="width:14px;height:14px;border-radius:50%;background:#FEBC2E"></span>
+      <span style="width:14px;height:14px;border-radius:50%;background:#28C840"></span>
+      <span class="ui-mono" style="margin-left:14px;font-size:19px;color:#9A9AA2">search-field.ts</span>
+    </div>
+    <div class="ui-mono" style="font-size:22px;line-height:1.75;color:#E8E8EC">
+      <span style="color:#7EA2E8">import</span> {'{ definePrimitive }'} <span style="color:#7EA2E8">from</span> <span style="color:#9ECE9E">"@ui-sdk/core"</span><br>
+      <span style="color:#7EA2E8">const</span> searchField = <span style="color:#E0B97E">definePrimitive</span>({'{'}<br>
+      &nbsp;&nbsp;name: <span style="color:#9ECE9E">"search-field"</span>,<br>
+      &nbsp;&nbsp;state, api, slots: {'{ input, clear }'}<br>
+      {'}'})
+    </div>
+  </div>
+  <div style="display:flex;justify-content:center;padding:12px 0"><svg width="24" height="28" viewBox="0 0 24 30" aria-hidden="true"><path d="M12 1v21M5 18l7 10 7-10" stroke="#B9B6AD" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:26px 32px;display:flex;flex-direction:column;gap:16px">
+    <div class="ui-mono" style="font-size:22px;color:#17171A"><span style="color:#002FA7;font-weight:700">createParts</span>(searchField, {'{ input, clear }'})</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <span style="border:1.5px solid #002FA7;color:#002FA7;border-radius:999px;padding:8px 20px;font-size:21px;font-weight:700">React</span>
+      <span style="border:1.5px solid #002FA7;color:#002FA7;border-radius:999px;padding:8px 20px;font-size:21px;font-weight:700">Vue</span>
+      <span style="border:1.5px solid #002FA7;color:#002FA7;border-radius:999px;padding:8px 20px;font-size:21px;font-weight:700">Svelte</span>
+      <span style="border:1.5px solid #002FA7;color:#002FA7;border-radius:999px;padding:8px 20px;font-size:21px;font-weight:700">Solid</span>
+      <span style="border:1.5px solid #002FA7;color:#002FA7;border-radius:999px;padding:8px 20px;font-size:21px;font-weight:700">Web Components</span>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="background:#FFFFFF;border:1px solid #E7E4DC;border-radius:16px;padding:26px 32px">
+    <div style="font-size:26px;line-height:1.55;color:#17171A">五边 <b>API 名字完全一致</b>——「一套形状走天下」。组件自己不换元素，改用 <span class="ui-mono" style="font-size:22px">render</span>。</div>
+  </div>
+  <div aria-hidden="true" style="position:absolute;right:30px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:17px;letter-spacing:7px;color:#002FA7;opacity:.2;font-weight:700">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

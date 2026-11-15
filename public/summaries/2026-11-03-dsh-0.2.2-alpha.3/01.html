@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+a{color:#002FA7}a:hover{color:#001E6B}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:1080px;height:1440px;box-sizing:border-box;padding:76px 84px 60px;background:#F6F2E7;color:#211F1A;font-family:'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC',sans-serif;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;right:-56px;top:66px;font-family:'Songti SC','STSong','Noto Serif CJK SC',serif;font-size:560px;line-height:1;color:#002FA7;opacity:0.055;pointer-events:none">α</div>
+  <div aria-hidden="true" style="position:absolute;right:34px;top:330px;writing-mode:vertical-rl;font-family:'SF Mono','Menlo',monospace;font-size:17px;letter-spacing:5px;color:#6B665A">ISSUE 022 · ALPHA 3</div>
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;font-family:'SF Mono','Menlo',monospace;font-size:19px;letter-spacing:2.4px;color:#6B665A">
+    <span>DEEPSEEK HARNESS</span>
+    <span>RELEASE NOTES / 2026-11-03</span>
+  </div>
+  <div style="height:1px;background:#211F1A;margin-top:18px"></div>
+
+  <div style="margin-top:74px;font-size:27px;letter-spacing:1px;color:#211F1A">DeepSeek Harness 更新解读</div>
+  <div style="margin-top:14px;font-family:'SF Mono','Menlo',monospace;font-size:21px;letter-spacing:1px;color:#002FA7">0.2.2-alpha.3 ｜ 仍为 alpha 预发布</div>
+
+  <h1 style="margin:46px 0 0;font-family:'Songti SC','STSong','Noto Serif CJK SC',serif;font-size:118px;line-height:1.14;font-weight:600;letter-spacing:-2px">右键统一了<br>文件也看得清了</h1>
+
+  <p style="margin:40px 0 0;font-size:31px;line-height:1.75;color:#4A463C;max-width:760px">三条主线，加上三处默认值变化。<br>升级前，先看 07–08 页。</p>
+
+  <div style="margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #211F1A;border-bottom:1px solid #D7CEBB">
+    <div style="padding:26px 0 24px;border-right:1px solid #D7CEBB">
+      <div style="font-family:'Songti SC','STSong',serif;font-size:62px;line-height:1;color:#002FA7">3</div>
+      <div style="margin-top:10px;font-size:20px;letter-spacing:1px;color:#6B665A">条主线</div>
+    </div>
+    <div style="padding:26px 0 24px 30px;border-right:1px solid #D7CEBB">
+      <div style="font-family:'Songti SC','STSong',serif;font-size:62px;line-height:1;color:#211F1A">6</div>
+      <div style="margin-top:10px;font-size:20px;letter-spacing:1px;color:#6B665A">处体验优化</div>
+    </div>
+    <div style="padding:26px 0 24px 30px;border-right:1px solid #D7CEBB">
+      <div style="font-family:'Songti SC','STSong',serif;font-size:62px;line-height:1;color:#211F1A">10</div>
+      <div style="margin-top:10px;font-size:20px;letter-spacing:1px;color:#6B665A">处问题修复</div>
+    </div>
+    <div style="padding:26px 0 24px 30px">
+      <div style="font-family:'Songti SC','STSong',serif;font-size:62px;line-height:1;color:#211F1A">3</div>
+      <div style="margin-top:10px;font-size:20px;letter-spacing:1px;color:#6B665A">处默认值变化</div>
+    </div>
+  </div>
+
+  <div style="margin-top:26px;display:flex;justify-content:space-between;align-items:baseline;font-size:18px;color:#6B665A">
+    <span>来源：官方发布说明 dsh-v0.2.2-alpha.3</span>
+    <span style="font-family:'SF Mono','Menlo',monospace;letter-spacing:1px">01 / 08</span>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

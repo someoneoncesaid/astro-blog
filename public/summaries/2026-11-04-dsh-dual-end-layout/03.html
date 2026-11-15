@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>三栏放不下，空间怎么分？</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;font-family:'PingFang SC',-apple-system,'Helvetica Neue','Microsoft YaHei',sans-serif}
+a{color:#002FA7}a:hover{color:#001F73}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position: relative; width: 1080px; height: 1440px; box-sizing: border-box; background: #F7F5F0; color: #17181C; display: flex; flex-direction: column; overflow: hidden">
+
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 56px 96px 0 88px">
+    <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 19px; letter-spacing: 0.2em; color: #5A5E66">宽度 → 导航</div>
+    <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 19px; letter-spacing: 0.16em; color: #5A5E66">03 / 10</div>
+  </div>
+  <div style="height: 1px; background: #D8D4C9; margin: 26px 96px 0 88px"></div>
+
+  <div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 46px 96px 0 88px">
+
+    <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 20px; letter-spacing: 0.18em; color: #002FA7">01 空间布局</div>
+    <h2 style="margin: 20px 0 0; font-size: 76px; line-height: 1.1; letter-spacing: -0.04em; font-weight: 800">三栏放不下，<br>空间怎么分？</h2>
+    <p style="margin: 24px 0 0; max-width: 830px; font-size: 28px; line-height: 1.6; color: #3A3E45; text-wrap: pretty">空间看实际框架宽度，操作另看输入能力。DSH 先让侧栏退让，再判断右栏能否与会话并排。</p>
+
+    <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+
+      <div style="background: #FDFCF9; border: 1px solid #D8D4C9; padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+          <span style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 22px; letter-spacing: 0.02em; color: #17181C">‹ 768</span>
+          <span style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 17px; letter-spacing: 0.12em; color: #5A5E66">抽屉</span>
+        </div>
+        <div style="position: relative; height: 150px; background: #EFEDE5; border: 1px solid #D8D4C9; overflow: hidden">
+          <div style="position: absolute; top: 0; bottom: 0; left: 0; width: 58%; background: #E6EAF4; border-right: 1px solid #C4CDE6"></div>
+          <div style="position: absolute; bottom: 12px; right: 12px; font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 15px; color: #5A5E66">遮罩 + inert</div>
+        </div>
+        <div style="font-size: 23px; line-height: 1.55; color: #2B2F36">侧栏浮在内容上，不占列宽；宽度上限 = min(保存值, 可用宽度 − 48px)。</div>
+      </div>
+
+      <div style="background: #FDFCF9; border: 1px solid #D8D4C9; padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+          <span style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 22px; letter-spacing: 0.02em; color: #17181C">768 – 1023</span>
+          <span style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 17px; letter-spacing: 0.12em; color: #5A5E66">图标栏</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 6px; height: 150px">
+          <div style="background: #E6EAF4; border: 1px solid #C4CDE6"></div>
+          <div style="background: #EFEDE5; border: 1px solid #D8D4C9"></div>
+        </div>
+        <div style="font-size: 23px; line-height: 1.55; color: #2B2F36">自动收为 56px 图标栏；用户仍可手动展开，展开后挤压中间区域。</div>
+      </div>
+
+      <div style="background: #FDFCF9; border: 1px solid #D8D4C9; padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+          <span style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 22px; letter-spacing: 0.02em; color: #17181C">≥ 1024</span>
+          <span style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 17px; letter-spacing: 0.12em; color: #5A5E66">三列</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 52px; gap: 6px; height: 150px">
+          <div style="background: #E6EAF4; border: 1px solid #C4CDE6"></div>
+          <div style="background: #EFEDE5; border: 1px solid #D8D4C9"></div>
+          <div style="background: #EFEDE5; border: 1px solid #D8D4C9"></div>
+        </div>
+        <div style="font-size: 23px; line-height: 1.55; color: #2B2F36">侧栏默认展开、可收为图标栏；右栏开启且空间足够时可并排三列。</div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 26px; padding: 20px 24px; background: #E6EAF4; border: 1px solid #C4CDE6">
+      <div style="font-size: 19px; color: #002FA7; margin-bottom: 8px">右栏：空间约束与全屏分开判断</div>
+      <div style="font-size: 24px; line-height: 1.6; color: #2B2F36">普通右栏尽量保留会话 400px、右栏至少 300px；放不下就收起。低于 768px，已展开右栏自动全屏；宽屏也可手动全屏。</div>
+    </div>
+
+    <div style="margin-top: 30px; border-top: 1px solid #D8D4C9; padding-top: 24px; display: flex; gap: 24px; align-items: baseline">
+      <span style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 18px; letter-spacing: 0.14em; color: #002FA7; white-space: nowrap">桌面入口</span>
+      <span style="font-size: 24px; line-height: 1.6; color: #2B2F36">图示为普通 Web。macOS 桌面版和 Windows 标题栏窗口收起后，左侧不留纵向图标栏，操作入口保留在顶部。实图与实现见第 10 页。</span>
+    </div>
+
+    <div style="margin-top: auto; padding-top: 34px"></div>
+  </div>
+
+  <div style="height: 1px; background: #D8D4C9; margin: 0 96px 0 88px"></div>
+  <div style="display: flex; justify-content: space-between; padding: 18px 96px 54px 88px; font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 17px; letter-spacing: 0.06em; color: #5A5E66">
+    <span>columns.ts · AppFrame.tsx · SidebarRight.tsx</span>
+    <span>03</span>
+  </div>
+
+  <div style="position: absolute; right: 30px; bottom: 96px; writing-mode: vertical-rl; font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 13px; letter-spacing: 0.4em; color: #002FA7; opacity: 0.2">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

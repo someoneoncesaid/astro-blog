@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>侧栏收起来，顶部入口怎么留？</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+</head>
+<body>
+<div id="xhs-card"><style>
+.platform-card{box-sizing:border-box;position:relative;width:1080px;height:1440px;padding:56px 96px 46px 88px;background:#F7F5F0;color:#17181C;display:flex;flex-direction:column;overflow:hidden;font:24px/1.5 'PingFang SC',-apple-system,'Microsoft YaHei',sans-serif}
+.platform-card *{box-sizing:border-box}.platform-card>*{flex-shrink:0}
+.platform-card .pc-top{display:flex;justify-content:space-between;padding-bottom:25px;border-bottom:1px solid #D8D4C9;font:18px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.10em;color:#5A5E66}
+.platform-card .pc-eyebrow{margin-top:28px;font-size:21px;color:#002FA7}
+.platform-card .pc-title{font-size:70px;line-height:1.12;letter-spacing:-.04em;font-weight:800;margin:16px 0 0}
+.platform-card .pc-intro{font-size:26px;line-height:1.55;margin:18px 0 0;color:#3A3E45}
+.platform-card .pc-shots{margin-top:22px;display:grid;gap:16px}
+.platform-card .pc-shot{border:1px solid #D5DDED;background:#FDFCF9;border-radius:10px;overflow:hidden}
+.platform-card .pc-caption{font-size:22px;color:#002FA7;padding:10px 18px;border-bottom:1px solid #E1E6EF;display:flex;justify-content:space-between;align-items:baseline}
+.platform-card .pc-caption small{font-size:17px;color:#65718A}
+.platform-card .pc-crop{position:relative;width:100%;height:88px;overflow:hidden;background:white}
+.platform-card .pc-crop img{display:block;width:100%;height:auto;max-width:none}
+.platform-card .pc-mark{position:absolute;top:16px;left:23px;width:106px;height:48px;border:2px solid #002FA7;border-radius:9px;box-shadow:0 0 0 3px #002FA714;pointer-events:none}
+.platform-card .pc-mac .pc-mark{left:151px;top:17px;width:105px;height:51px}
+.platform-card .pc-source{font-size:17px;line-height:1.4;color:#65718A;margin-top:8px}
+.platform-card .pc-step{padding:14px 0;border-bottom:1px solid #D8D4C9}
+.platform-card .pc-step h2{font-size:25px;line-height:1.4;color:#002FA7;margin:0 0 7px;font-weight:650}
+.platform-card .pc-step p{font-size:23px;line-height:1.5;margin:0}
+.platform-card .pc-code{display:block;font:20px/1.5 ui-monospace,Menlo,monospace;color:#30456B;margin-top:7px}
+.platform-card .pc-flow{margin-top:18px;padding:14px 18px;background:#E8EDF9;border-left:3px solid #002FA7;font-size:23px;line-height:1.55}
+.platform-card .pc-note{font-size:21px;line-height:1.5;color:#5A5E66;margin:15px 0 0}
+.platform-card .pc-foot{margin-top:auto;padding-top:16px;border-top:1px solid #D8D4C9;font:15px/1.5 ui-monospace,Menlo,monospace;color:#5A5E66}
+.platform-card .pc-watermark{position:absolute;right:30px;bottom:96px;writing-mode:vertical-rl;font:13px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.4em;color:#002FA7;opacity:.2}
+</style>
+<div class="platform-card">
+<div class="pc-top"><span>DSH / 双端适配</span><span>10 / 10</span></div>
+<div class="pc-eyebrow">实图补充 · 桌面顶部入口</div>
+<h1 class="pc-title">侧栏收起来，<br>顶部入口怎么留？</h1>
+<p class="pc-intro">桌面版收起的是左侧那一列，顶部操作按钮仍保留。Windows 与 macOS 的入口，分别这样放置。</p>
+<div class="pc-shots">
+<div class="pc-shot"><div class="pc-caption"><span>Windows · 固定在标题栏区域</span><small>侧栏切换 / 新建会话</small></div><div class="pc-crop"><img src="assets/rel-5672aaf7.png" alt="用户提供的 Windows 桌面截图：顶部左侧保留侧栏切换与新建会话按钮"><div class="pc-mark"></div></div></div>
+<div class="pc-shot pc-mac"><div class="pc-caption"><span>macOS · 放在交通灯旁</span><small>侧栏切换 / 新建会话</small></div><div class="pc-crop"><img src="assets/rel-8b842ceb.png" alt="用户提供的 macOS 桌面截图：交通灯右侧保留侧栏切换与新建会话按钮"><div class="pc-mark"></div></div></div>
+</div>
+<div class="pc-source">用户提供的真实截图，裁取顶部；蓝框标出侧栏入口所在区域。</div>
+<div class="pc-step"><h2>01　Windows：窗口留空间，按钮用网页绘制</h2><p>Electron 开启标题栏覆盖，保留右上角系统按钮；React 侧栏按钮固定在顶部，并设为可点击区域。</p><code class="pc-code">titleBarStyle: 'hidden' + titleBarOverlay<br>position: fixed; -webkit-app-region: no-drag;</code></div>
+<div class="pc-step"><h2>02　macOS：侧栏隐藏后，顶部插槽承接入口</h2><p>侧栏隐藏时，框架通过 shell.leading 顶部插槽放置按钮，并预留交通灯空间。</p></div>
+<div class="pc-flow">按钮 → toggleSidebar() → 更新状态 → 重算列宽。<br>Windows 保留侧栏组件，列宽为 0 时顶部按钮仍可点击。</div>
+<p class="pc-note">macOS 低于 768px 可切抽屉；Windows 标题栏窗口不切抽屉。</p>
+<div class="pc-foot">main.ts · SidebarRoot.tsx / .module.css · HeaderLeadingControls.tsx · stores.ts</div>
+<div class="pc-watermark">SOMEONE ONCE SAID</div>
+</div></div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

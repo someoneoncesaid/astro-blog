@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>能力边界</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:900px;height:1200px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;font-family:Inter,"PingFang SC","Noto Sans CJK SC",sans-serif;background:#f3f1e9;color:#171a1f}a{color:#1646a0}a:hover{color:#0e3174}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:900px;height:1200px;box-sizing:border-box;padding:68px 68px 52px;background:#f3f1e9;display:flex;flex-direction:column;gap:27px">
+<div style="display:flex;justify-content:space-between;border-bottom:2px solid #171a1f;padding-bottom:14px;font-size:16px;letter-spacing:1px"><span>03 / 能力边界</span><span>统一接口，不等于完全一致</span></div>
+<div style="font-size:60px;line-height:1.08;font-weight:850;letter-spacing:-2px">统一的是入口，<br>差异还在底层</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+<div style="padding:20px;background:#1646a0;color:#fff;display:flex;flex-direction:column;gap:12px"><div style="font-size:16px;letter-spacing:1px;color:#d5e0ff">可统一</div><div style="font-size:24px;font-weight:750">会话控制</div><div style="font-size:17px;line-height:1.45">发任务、收事件、取消会话；部分运行时支持恢复与排队。</div></div>
+<div style="padding:20px;background:#1646a0;color:#fff;display:flex;flex-direction:column;gap:12px"><div style="font-size:16px;letter-spacing:1px;color:#d5e0ff">可统一</div><div style="font-size:24px;font-weight:750">结果记录</div><div style="font-size:17px;line-height:1.45">把交互整理成事件或记录，方便上层处理与回放。</div></div>
+<div style="padding:20px;border:1px solid #171a1f;display:flex;flex-direction:column;gap:12px"><div style="font-size:16px;letter-spacing:1px;color:#1646a0">仍有差异</div><div style="font-size:24px;font-weight:750">功能支持</div><div style="font-size:17px;line-height:1.45">模型与功能取决于具体 Agent 及其版本。</div></div>
+<div style="padding:20px;border:1px solid #171a1f;display:flex;flex-direction:column;gap:12px"><div style="font-size:16px;letter-spacing:1px;color:#1646a0">仍有差异</div><div style="font-size:24px;font-weight:750">权限与沙箱</div><div style="font-size:17px;line-height:1.45">权限与沙箱仍按各 Agent 的设置生效。</div></div>
+</div>
+<div style="padding:28px 30px;background:#e3e1d8;display:flex;flex-direction:column;gap:14px"><div style="font-size:16px;letter-spacing:1px;color:#1646a0">OAR 的处理原则</div><div style="font-size:24px;font-weight:750">不支持的选项会在启动前报错。</div><div style="font-size:19px;line-height:1.45">接入前先核对：运行时版本、支持选项、权限模式、沙箱设置。</div></div>
+<div style="flex:1"></div><div style="display:flex;justify-content:space-between;border-top:1px solid #8d918f;padding-top:14px;font-size:15px"><span>调用方式可以统一，能力需要逐个确认</span><span>04 / 08</span></div>
+</div></div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 900, H = 1200;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

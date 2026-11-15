@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>能力桥</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position:relative;width:1080px;height:1440px;background:#FBF8F3;overflow:hidden;font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;color:#17181A;display:flex;flex-direction:column;padding:72px 84px 56px;">
+
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="font-size:26px;font-weight:800;color:#002FA7;letter-spacing:2px;">05 / 07</div>
+    <div style="width:1px;height:24px;background:#D8D0BE;"></div>
+    <div style="font-size:26px;color:#6B665A;letter-spacing:6px;">能力桥</div>
+  </div>
+  <h1 style="margin:16px 0 0;font-size:56px;line-height:1.28;font-weight:800;color:#17181A;">点「选择目录」后发生什么？</h1>
+  <div style="width:64px;height:6px;background:#002FA7;border-radius:3px;margin-top:24px;"></div>
+
+  <div style="margin-top:28px;font-size:26px;line-height:1.6;color:#3A382F;">桌面能力经 preload 注入<b style="color:#17181A;">全局对象</b>，客户端用存在性探测（optional chaining）消费：</div>
+
+  <div style="margin-top:16px;background:#FFFFFF;border:1.5px solid #E3DCCB;border-radius:16px;padding:20px 24px;display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;align-items:baseline;gap:16px;"><div style="width:300px;flex:none;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;font-weight:700;color:#002FA7;">dshDesktop</div><div style="flex:1;font-size:22px;color:#3A382F;">原生保存 · 原生拖放 · 更新频道 · 凭据引导 · transcript 视图</div></div>
+    <div style="display:flex;align-items:baseline;gap:16px;"><div style="width:300px;flex:none;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;font-weight:700;color:#002FA7;">dshOnboarding</div><div style="flex:1;font-size:22px;color:#3A382F;">onboarding 凭据与 Desktop 入口（ui-settings-account）</div></div>
+    <div style="display:flex;align-items:baseline;gap:16px;"><div style="width:300px;flex:none;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;font-weight:700;color:#002FA7;">dshDesktopBoot</div><div style="flex:1;font-size:22px;color:#3A382F;">桌面 vs 浏览器 boot 的唯一分岔</div></div>
+    <div style="display:flex;align-items:baseline;gap:16px;"><div style="width:300px;flex:none;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;font-weight:700;color:#002FA7;">__DSH_DIRECTORY_PICKER__</div><div style="flex:1;font-size:22px;color:#3A382F;">原生目录选择</div></div>
+    <div style="display:flex;align-items:baseline;gap:16px;"><div style="width:300px;flex:none;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;font-weight:700;color:#002FA7;">__DSH_HOST_PATHS__</div><div style="flex:1;font-size:22px;color:#3A382F;">会话输入框的 @path 文件引用（ui-conversation）</div></div>
+    <div style="display:flex;align-items:baseline;gap:16px;"><div style="width:300px;flex:none;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;font-weight:700;color:#002FA7;">__DSH_LOCALE__</div><div style="flex:1;font-size:22px;color:#3A382F;">语言引导与变更通知</div></div>
+    <div style="display:flex;align-items:baseline;gap:16px;"><div style="width:300px;flex:none;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;font-weight:700;color:#002FA7;">dshPlatform</div><div style="flex:1;font-size:22px;color:#3A382F;">Usage / Top-up 嵌入视图</div></div>
+    <div style="font-size:20px;color:#6B665A;">欢迎窗口另用 dshWelcome，属于壳自己的一套全局，不在 dshDesktop 体系内。</div>
+  </div>
+
+  <div style="margin-top:20px;background:#131C33;border-radius:14px;padding:22px 26px;">
+    <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:22px;line-height:1.65;color:#DCE3F5;">const pick = desktop === undefined<br>&nbsp;&nbsp;? () =&gt; ctx.uiWorkspace.pickDirectory()&nbsp;&nbsp;// Web<br>&nbsp;&nbsp;: () =&gt; desktop.pick()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Electron</div>
+    <div style="margin-top:10px;font-size:21px;line-height:1.6;color:#8FA3CC;">同一个功能，按端选通道；Host 侧自动选择还会因缺图形工具（zenity / kdialog）、远程会话、无图形显示等条件降级为 browse 列表。</div>
+  </div>
+
+  <div style="margin-top:auto;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;gap:16px;">
+        <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+        <div style="flex:1;font-size:24px;line-height:1.58;color:#3A382F;"><b style="color:#17181A;">空壳兜底</b>：完整 dshDesktop API 只在 dsh-app://app 主 frame 暴露，其余文档只拿到 protocolVersion: 1 空壳（其余桥只按 protocol + hostname 暴露）；主进程 assertProductSender 逐次校验，boot 类 handler 另用 assertDesktopSender。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+        <div style="flex:1;font-size:24px;line-height:1.58;color:#3A382F;"><b style="color:#17181A;">依赖图纪律</b>：全部桥由 preload 定义，client 包不 import electron、不按载体做条件编译；但仍有本地 ./electron/* 模块与 dsh-app: 协议白名单，不是「零平台知识」。</div>
+      </div>
+    </div>
+    <div style="height:1px;background:#E3DCCB;margin:24px 0 22px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:23px;color:#6B665A;letter-spacing:1px;">DeepSeek Harness · Electron 桌面适配</div>
+      <div style="font-size:23px;color:#6B665A;">06 / 08</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;right:22px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:20px;letter-spacing:7px;font-weight:700;color:rgba(0,47,167,0.2);white-space:nowrap;">THIN SHELL · FULL WEB</div>
+
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

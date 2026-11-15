@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:900px;height:1200px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;font-family:Inter,"PingFang SC","Noto Sans CJK SC",sans-serif;background:#f3f1e9;color:#171a1f}a{color:#1646a0}a:hover{color:#0e3174}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:900px;height:1200px;box-sizing:border-box;padding:74px 72px 58px;background:#f3f1e9;display:flex;flex-direction:column;justify-content:space-between">
+<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #171a1f;padding-bottom:18px"><div style="font-size:18px;font-weight:800;letter-spacing:2px">OPEN AGENT RUNTIME</div><div style="font-size:16px;letter-spacing:2px">技术拆解 / 01</div></div>
+<div style="display:flex;flex-direction:column;gap:22px">
+<div style="font-size:22px;font-weight:700;color:#1646a0">把调用方式统一起来</div>
+<div style="display:flex;flex-direction:column;gap:0;font-size:94px;line-height:1.03;font-weight:850;letter-spacing:-5px"><div>一个接口</div><div style="color:#1646a0">接入多种</div><div>编程 Agent</div></div>
+<div style="font-size:27px;line-height:1.45;max-width:690px">OAR 是什么？DeepSeek Harness 又怎样用它委派编程任务？</div>
+<div style="margin-top:8px;padding:26px 28px;background:#171a1f;color:#f3f1e9;display:flex;flex-direction:column;gap:13px"><div style="font-size:17px;text-transform:uppercase;letter-spacing:2px;color:#a9c1ff">DSH 实验性接入 · subagent_oar 工具</div><div style="font-size:22px;line-height:1.5">DeepSeek Harness 新增实验性 subagent-oar provider，配合 subagent_oar 工具，将一次性文本任务交给 Codex 或 Claude Code。</div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:22px"><div style="font-size:24px;font-weight:700">OAR = Open Agent Runtime</div><div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #8d918f;padding-top:18px"><div style="font-size:16px">#DeepSeek-Harness　 #AI工具</div><div style="font-size:17px;font-weight:700">向右滑，拆开看 →</div></div></div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 900, H = 1200;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

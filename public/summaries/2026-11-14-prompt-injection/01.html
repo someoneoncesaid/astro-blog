@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;background:#FBFAF6;font-family:"PingFang SC","Noto Sans CJK SC","Hiragino Sans GB",sans-serif;font-feature-settings:"palt"}a{color:#002FA7}a:hover{color:#00205F}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:1080px;height:1440px;box-sizing:border-box;position:relative;padding:77px 77px 67px;background:#FBFAF6;color:#111110;display:flex;flex-direction:column;justify-content:space-between">
+<div style="position:absolute;right:26px;top:150px;writing-mode:vertical-rl;font-family:ui-monospace,Menlo,monospace;font-size:14px;letter-spacing:0.34em;color:rgba(0,47,167,0.2)">SOMEONE ONCE SAID</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #111110;padding-bottom:19px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:18px;letter-spacing:0.12em">
+<span>DEEPSEEK HARNESS · 安全边界</span>
+<span>01 / 07</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:29px">
+<div style="font-size:23px;letter-spacing:0.24em;color:#6E6E68">技术拆解</div>
+<div style="font-size:106px;line-height:1.04;font-weight:800;letter-spacing:-0.045em">防提示词注入</div>
+<div style="font-size:106px;line-height:1.04;font-weight:800;letter-spacing:-0.045em">不靠识别，<span style="color:#002FA7">靠权限</span></div>
+<p style="margin:10px 0 0;font-size:29px;line-height:1.75;color:#2B2B27;max-width:852px">它没有做「识别并拦截注入」的检测器。思路是承认模型会被内容带偏，于是把<b>内容</b>和<b>权限</b>拆开。</p>
+<div style="margin-top:7px;background:#F1F0E9;color:#111110;padding:31px 34px;font-size:28px;line-height:1.66">不可信内容照样进上下文；<br>真正会造成损失的动作，要另过几道闸门。</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:22px">
+<div style="border-top:1px solid #DEDCD2;padding-top:22px;font-size:18px;line-height:1.75;color:#6E6E68">事实基线：DSH 主干 <span style="font-family:ui-monospace,Menlo,monospace;color:#2B2B27">0.2.2-alpha.2</span> · 提交 <span style="font-family:ui-monospace,Menlo,monospace;color:#2B2B27">ce7073d512</span>。依据仓库文档与源码，不是官方安全白皮书——<b style="color:#2B2B27">SAFETY.md</b> 写明「未经过安全审计」。</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:19px;color:#2B2B27">
+<span>#DeepSeek-Harness　#AI安全　#Agent</span>
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:18px">向右滑 →</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>启动适配</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position:relative;width:1080px;height:1440px;background:#FBF8F3;overflow:hidden;font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;color:#17181A;display:flex;flex-direction:column;padding:72px 84px 56px;">
+
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="font-size:26px;font-weight:800;color:#002FA7;letter-spacing:2px;">03 / 07</div>
+    <div style="width:1px;height:24px;background:#D8D0BE;"></div>
+    <div style="font-size:26px;color:#6B665A;letter-spacing:6px;">启动适配</div>
+  </div>
+  <h1 style="margin:16px 0 0;font-size:56px;line-height:1.28;font-weight:800;color:#17181A;">加载页怎么进入应用？</h1>
+  <div style="width:64px;height:6px;background:#002FA7;border-radius:3px;margin-top:24px;"></div>
+
+  <div style="margin-top:28px;font-size:26px;line-height:1.6;color:#3A382F;">Web 靠服务端渲染 index.html 时注入一套行表；桌面没有服务端，但<b style="color:#17181A;">同一个文档</b>最终要完成同样的注入。</div>
+
+  <div style="margin-top:24px;">
+    <svg viewBox="0 0 912 112" width="912" height="112" role="img" aria-labelledby="relay-flow-title relay-flow-desc" style="display:block;">
+      <title id="relay-flow-title">boot 注入接力流程</title>
+      <desc id="relay-flow-desc">注入行表以纯 JSON 定义，随 ready 消息从 Host 交给 shell，Web 入口在同一文档里逐行注入，最后由 boot gate 结算成功或失败。</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#6B665A"/>
+        </marker>
+      </defs>
+      <line x1="206" y1="56" x2="232" y2="56" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="442" y1="56" x2="468" y2="56" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="678" y1="56" x2="704" y2="56" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <g>
+        <rect x="0" y="0" width="204" height="112" rx="6" fill="#FBF8F3"/>
+        <rect x="0" y="0" width="204" height="112" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="102" y="32" text-anchor="middle" font-size="15" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace" letter-spacing="0.08em">01</text>
+        <text x="102" y="64" text-anchor="middle" font-size="22" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">纯 JSON 行表</text>
+        <text x="102" y="90" text-anchor="middle" font-size="16" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">injections.ts</text>
+      </g>
+      <g>
+        <rect x="236" y="0" width="204" height="112" rx="6" fill="#FBF8F3"/>
+        <rect x="236" y="0" width="204" height="112" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="338" y="32" text-anchor="middle" font-size="15" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace" letter-spacing="0.08em">02</text>
+        <text x="338" y="64" text-anchor="middle" font-size="22" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">ready 消息</text>
+        <text x="338" y="90" text-anchor="middle" font-size="16" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">streamBaseUrl</text>
+      </g>
+      <g>
+        <rect x="472" y="0" width="204" height="112" rx="6" fill="#FBF8F3"/>
+        <rect x="472" y="0" width="204" height="112" rx="6" fill="rgba(0,47,167,0.08)" stroke="#002FA7" stroke-width="1.2"/>
+        <text x="574" y="32" text-anchor="middle" font-size="15" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace" letter-spacing="0.08em">03</text>
+        <text x="574" y="64" text-anchor="middle" font-size="22" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">同一文档逐行注入</text>
+        <text x="574" y="90" text-anchor="middle" font-size="16" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">script · await</text>
+      </g>
+      <g>
+        <rect x="708" y="0" width="204" height="112" rx="6" fill="#FBF8F3"/>
+        <rect x="708" y="0" width="204" height="112" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="810" y="32" text-anchor="middle" font-size="15" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace" letter-spacing="0.08em">04</text>
+        <text x="810" y="64" text-anchor="middle" font-size="22" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">gate 结算</text>
+        <text x="810" y="90" text-anchor="middle" font-size="16" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">resolve · reject</text>
+      </g>
+    </svg>
+    <div style="margin-top:18px;font-size:23px;line-height:1.6;color:#6B665A;">行表是纯 JSON：浏览器版渲染进 HTML、表尾带结算脚本；桌面版经 IPC 发走、不含结算脚本，由页面执行完后自己 resolve。只有 <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;">script-src</span> 行等 onload，<span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;">script-preload</span> 跳过；任一行失败则 gate rejected，走原生恢复。</div>
+  </div>
+
+  <div style="margin-top:24px;background:#131C33;border-radius:14px;padding:24px 28px;">
+    <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:23px;line-height:1.6;color:#DCE3F5;">await globalThis.__DSH_BOOT_READY__?.promise</div>
+    <div style="margin-top:10px;font-size:21px;line-height:1.6;color:#8FA3CC;">boot kernel 的第一行：安静地等。全局不存在，说明这份文档没有 bootstrap 负责。</div>
+  </div>
+
+  <div style="margin-top:auto;">
+    <div style="background:rgba(0,47,167,0.07);border-radius:14px;padding:24px 26px;">
+      <div style="font-size:27px;line-height:1.5;font-weight:800;color:#002FA7;">boot 分岔只有 apps/web/src/main.ts 一处；其余差异是「能力在不在」的探测，不是判断载体。</div>
+      <div style="margin-top:10px;font-size:23px;line-height:1.6;color:#3A382F;">streamBaseUrl 必须显式传：页面 baseURI 是 dsh-app:// 域，从那里解析不出 <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:21px;">ws://127.0.0.1:&lt;port&gt;</span>。</div>
+    </div>
+    <div style="height:1px;background:#E3DCCB;margin:26px 0 22px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:23px;color:#6B665A;letter-spacing:1px;">DeepSeek Harness · Electron 桌面适配</div>
+      <div style="font-size:23px;color:#6B665A;">04 / 08</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;right:22px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:20px;letter-spacing:7px;font-weight:700;color:rgba(0,47,167,0.2);white-space:nowrap;">THIN SHELL · FULL WEB</div>
+
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

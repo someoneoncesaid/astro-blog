@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第三层 沙箱与审批</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;background:#FBFAF6;font-family:"PingFang SC","Noto Sans CJK SC","Hiragino Sans GB",sans-serif}a{color:#002FA7}a:hover{color:#00205F}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:1080px;height:1440px;box-sizing:border-box;position:relative;padding:72px 77px 67px;background:#FBFAF6;color:#111110;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;right:26px;top:150px;writing-mode:vertical-rl;font-family:ui-monospace,Menlo,monospace;font-size:14px;letter-spacing:0.34em;color:rgba(0,47,167,0.2)">SOMEONE ONCE SAID</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #111110;padding-bottom:17px;font-family:ui-monospace,Menlo,monospace;font-size:18px;letter-spacing:0.12em">
+<span>04 · 第三层 沙箱与审批</span>
+<span>05 / 07</span>
+</div>
+<div style="font-size:67px;line-height:1.12;font-weight:800;letter-spacing:-0.035em">就算注入成功，<br>也换不来效果</div>
+<div style="font-size:23px;line-height:1.7;color:#2B2B27;max-width:912px">前两层都在跟模型的判断较劲；这一层不跟模型讲道理，只管宿主机的真实效果。</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:18px;border:1px solid #111110;padding:8px 14px">read-only</span>
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:18px;border:1px solid #111110;padding:8px 14px">workspace-write</span>
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:18px;border:1px solid #111110;padding:8px 14px">danger-full-access</span>
+</div>
+<div style="font-size:20px;line-height:1.65;color:#6E6E68">模式只管文件效果；网络和进程可见性不在其中——文档写得很直白，不装作全覆盖。</div>
+<div style="background:#F1F0E9;color:#111110;padding:22px 24px;font-family:ui-monospace,Menlo,monospace;font-size:19px;line-height:1.55">[sandbox: file access denied under &lt;mode&gt; mode]</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="font-size:22px;line-height:1.65;color:#2B2B27">拒绝是这条固定文本。bash 工具的描述里还写死了后半句：</div>
+<div style="background:#F1F0E9;padding:19px 22px;font-family:ui-monospace,Menlo,monospace;font-size:17px;line-height:1.55;color:#2B2B27">a blocked file operation is reported as `[sandbox: file access denied under &lt;mode&gt; mode]`, a policy denial: do not retry another way.</div>
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:16px;color:#8C8C86">packages/shell/tool-bash/src/index.ts:98</div>
+<div style="font-size:20px;line-height:1.65;color:#6E6E68">因为模型最常见的绕过不是提权，而是换一条路径再试一次。</div>
+</div>
+<div style="border-top:1px solid #DEDCD2;padding-top:19px;display:flex;flex-direction:column;gap:10px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:17px;letter-spacing:0.12em;color:#002FA7">唯一出口</div>
+<div style="font-size:23px;line-height:1.68;color:#2B2B27">同一轮次里，模型可以带最窄的更宽模式加一句 <span style="font-family:ui-monospace,Menlo,monospace;font-size:19px">justification</span>，把<b>同一条命令</b>重试一次。这次重试触发审批，被拒绝就是这条命令的终局。</div>
+<div style="font-size:24px;font-weight:700">升权不是模型的能力，是用户的决定。</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:17px;letter-spacing:0.12em;color:#002FA7">审批 fail-closed · 只有四种结果</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:17px;background:#F1F0E9;padding:6px 12px">allowed-once</span>
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:17px;background:#F1F0E9;padding:6px 12px">rejected</span>
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:17px;background:#F1F0E9;padding:6px 12px">cancelled</span>
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:17px;background:#F1F0E9;padding:6px 12px">unavailable</span>
+</div>
+<div style="font-size:20px;line-height:1.65;color:#2B2B27">没应答者、应答者抛异常、返回值不在词表——一律归一成 unavailable，按拒绝处理；never 策略下每次询问直接 rejected，连分发都不做。</div>
+</div>
+<div style="margin-top:auto;font-size:18px;line-height:1.6;color:#6E6E68;border-top:1px solid #DEDCD2;padding-top:17px">审批请求不复制一份工具参数，界面把提示挂在已经流式展示的那次调用上——避免两份参数各自漂移，人看到的就是要执行的那条。</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

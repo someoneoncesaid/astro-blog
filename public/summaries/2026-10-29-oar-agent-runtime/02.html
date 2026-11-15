@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>项目定位</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:900px;height:1200px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;font-family:Inter,"PingFang SC","Noto Sans CJK SC",sans-serif;background:#f3f1e9;color:#171a1f}a{color:#1646a0}a:hover{color:#0e3174}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:900px;height:1200px;box-sizing:border-box;padding:62px 66px 50px;background:#f3f1e9;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;justify-content:space-between;border-bottom:2px solid #171a1f;padding-bottom:14px;font-size:16px;letter-spacing:1px"><span>01 / 项目定位</span><span>一个接口，多种运行时</span></div>
+<div style="font-size:62px;line-height:1.08;font-weight:850;letter-spacing:-2px">OAR 到底<br>统一了什么？</div>
+<div style="font-size:22px;line-height:1.5">OAR 是一个 TypeScript 库。它用共同的 Runtime / Session 接口，让应用启动、控制并观察不同的编程 Agent。</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:22px 24px;background:#171a1f;color:#f3f1e9"><div style="font-size:19px">你的应用</div><div style="font-size:17px;color:#a9c1ff">↓</div><div style="width:100%;padding:20px;background:#1646a0;text-align:center;font-size:22px;font-weight:700">OAR　统一 Runtime / Session API</div><div style="font-size:17px;color:#a9c1ff">↓</div><div style="width:100%;display:flex;justify-content:space-around;font-size:20px"><span>Codex</span><span>Claude Code</span><span>Cursor</span></div></div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:18px;padding:16px 18px;border-top:1px solid #9c9f9c"><div style="font-size:30px;font-weight:850;color:#1646a0">01</div><div style="font-size:17px;line-height:1.42"><b>运行前：知道能不能用</b><br>检查 Agent 是否已安装；按运行时查询模型、登录和用量等可用信息。</div></div>
+<div style="display:flex;gap:18px;padding:16px 18px;border-top:1px solid #9c9f9c"><div style="font-size:30px;font-weight:850;color:#1646a0">02</div><div style="font-size:17px;line-height:1.42"><b>运行中：用同一套会话接口</b><br>创建 Session、发送任务；可用的排队、转向和取消能力由运行时声明。</div></div>
+<div style="display:flex;gap:18px;padding:16px 18px;border-top:1px solid #9c9f9c"><div style="font-size:30px;font-weight:850;color:#1646a0">03</div><div style="font-size:17px;line-height:1.42"><b>运行后：读统一事件与原始记录</b><br>用 events() 展示过程；用 records() / rawEvents() 核对原生消息。</div></div></div>
+<div style="font-size:14px;line-height:1.4;color:#30353a">依据： <a href="https://github.com/botiverse/oar/blob/main/packages/oar/README.md">https://github.com/botiverse/oar/blob/main/packages/oar/README.md</a><br>@botiverse/oar README。具体能力依运行时而异。</div>
+<div style="display:flex;justify-content:space-between;border-top:1px solid #8d918f;padding-top:14px;font-size:15px"><span>上层调用统一 · 底层各自执行</span><span>02 / 08</span></div>
+</div></div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 900, H = 1200;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

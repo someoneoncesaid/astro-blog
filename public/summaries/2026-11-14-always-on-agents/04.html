@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>定时器</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#F7F4EE}
+.card{position:relative;width:1080px;height:1440px;background:#F7F4EE;color:#17171A;overflow:hidden;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.card .pad{position:absolute;inset:0;padding:76px 96px 60px 80px;display:flex;flex-direction:column;box-sizing:border-box}
+.kick{display:flex;justify-content:space-between;align-items:baseline;font-size:21px;letter-spacing:.16em;color:#6E6A5E}
+.kick .b{font-weight:600;color:#17171A;letter-spacing:.10em}
+.rule{height:1px;background:#DCD5C6;margin-top:18px;flex:none}
+.eyebrow{margin-top:44px;font-size:22px;letter-spacing:.22em;color:#002FA7;font-weight:600}
+.h1{margin:18px 0 0;font-family:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:600;font-size:64px;line-height:1.30;letter-spacing:.01em}
+.deck{margin:26px 0 0;font-size:30px;line-height:1.76;color:#4E4B45;max-width:850px}
+.panel{margin-top:38px;background:#FFFDF8;border:1px solid #DCD5C6;border-radius:3px}
+.panel svg{display:block;width:100%;height:auto}
+.panel text{font-family:"PingFang SC","Hiragino Sans GB",system-ui,sans-serif}
+.note{margin-top:auto;padding-top:30px;font-size:24px;line-height:1.7;color:#6E6A5E}
+.note strong{color:#17171A;font-weight:600}
+.rail{display:flex;align-items:center;margin-top:18px}
+.rail span{flex:1;position:relative;padding-left:16px;font-size:18px;letter-spacing:.06em;color:#B5AE9E}
+.rail span::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:#CFC7B6;transform:translateY(-50%)}
+.rail span.on{color:#002FA7;font-weight:600}
+.rail span.on::before{background:#002FA7;width:7px;height:7px}
+.foot{margin-top:22px;padding-top:20px;border-top:1px solid #DCD5C6;display:flex;justify-content:space-between;gap:24px;font-size:19px;color:#8A8578;letter-spacing:.03em}
+.mark{position:absolute;top:104px;right:26px;writing-mode:vertical-rl;font-size:13px;letter-spacing:.34em;color:rgba(0,47,167,.20);font-family:"Helvetica Neue",Arial,sans-serif}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="card">
+  <span class="mark">SOMEONE ONCE SAID</span>
+  <div class="pad">
+    <div class="kick"><span><span class="b">常驻 AGENT</span> · 架构拆解</span><span>04 / 08</span></div>
+    <div class="rule"></div>
+    <div class="eyebrow">组件 02 · 定时器</div>
+    <h1 class="h1">定时器不直接发事件，<br>到点才写进收件箱</h1>
+    <p class="deck">一次性的「明天再检查」和周期性的「每周五汇总」都可以持久化。调度器扫描到期任务，把它变成收件箱里的一个事件。</p>
+    <div class="panel">
+      <svg viewBox="0 0 904 470" role="img" aria-label="一次性与周期性定时器到期后写入收件箱">
+        <defs><marker id="a4" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="#A9A293"/></marker></defs>
+        <text x="24" y="104" font-size="22" font-weight="600" fill="#17171A">一次性</text>
+        <text x="24" y="134" font-size="18" fill="#8A8578">明天再检查</text>
+        <rect x="190" y="74" width="180" height="64" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="206" y="114" font-size="21" fill="#17171A">定时器</text>
+        <line x1="370" y1="106" x2="410" y2="106" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a4)"/>
+        <rect x="416" y="74" width="92" height="64" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="462" y="114" font-size="21" fill="#17171A" text-anchor="middle">到期</text>
+        <line x1="508" y1="106" x2="548" y2="106" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a4)"/>
+        <rect x="554" y="74" width="164" height="64" rx="3" fill="#E9EDF9" stroke="#002FA7" stroke-width="1.5"/>
+        <text x="572" y="114" font-size="20" fill="#1E2B54">写入收件箱</text>
+        <line x1="718" y1="106" x2="758" y2="106" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a4)"/>
+        <rect x="756" y="74" width="140" height="64" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="774" y="114" font-size="20" fill="#17171A">任务结束</text>
+        <line x1="24" y1="196" x2="880" y2="196" stroke="#E2DBCB" stroke-width="1"/>
+        <text x="24" y="272" font-size="22" font-weight="600" fill="#17171A">周期性</text>
+        <text x="24" y="302" font-size="18" fill="#8A8578">每周五汇总</text>
+        <rect x="190" y="242" width="180" height="64" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="206" y="282" font-size="21" fill="#17171A">定时器</text>
+        <line x1="370" y1="274" x2="410" y2="274" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a4)"/>
+        <rect x="416" y="242" width="92" height="64" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="462" y="282" font-size="21" fill="#17171A" text-anchor="middle">到期</text>
+        <line x1="508" y1="274" x2="548" y2="274" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a4)"/>
+        <rect x="554" y="242" width="164" height="64" rx="3" fill="#E9EDF9" stroke="#002FA7" stroke-width="1.5"/>
+        <text x="572" y="282" font-size="20" fill="#1E2B54">写入收件箱</text>
+        <line x1="718" y1="274" x2="758" y2="274" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a4)"/>
+        <rect x="756" y="242" width="140" height="64" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="774" y="282" font-size="19" fill="#17171A">更新下次</text>
+        <text x="774" y="304" font-size="19" fill="#17171A">触发时间</text>
+        <path d="M826,306 L826,356 L280,356 L280,306" fill="none" stroke="#B9B2A2" stroke-width="1.4" stroke-dasharray="5 6" marker-end="url(#a4)"/>
+        <text x="470" y="392" font-size="18" fill="#8A8578">调度器扫到期任务 → 入队 → 再排下一次</text>
+        <text x="24" y="446" font-size="20" fill="#4E4B45">未来任务单独存放，到期后才往收件箱写入事件。</text>
+      </svg>
+    </div>
+    <div class="note"><strong>一次性到期就结束，周期性只更新时间。</strong>两者都不直接运行 Agent。</div>
+    <div class="rail" aria-label="五个组件进度"><span>收件箱</span><span class="on">定时器</span><span>记忆</span><span>权限</span><span>发件箱</span></div>
+    <div class="foot"><span>William Hu · Anthropic《Building always-on agents》</span><span>定时器</span></div>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

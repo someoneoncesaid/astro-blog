@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>进程结构</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position:relative;width:1080px;height:1440px;background:#FBF8F3;overflow:hidden;font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;color:#17181A;display:flex;flex-direction:column;padding:72px 84px 56px;">
+
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="font-size:26px;font-weight:800;color:#002FA7;letter-spacing:2px;">01 / 07</div>
+    <div style="width:1px;height:24px;background:#D8D0BE;"></div>
+    <div style="font-size:26px;color:#6B665A;letter-spacing:6px;">进程结构</div>
+  </div>
+  <h1 style="margin:16px 0 0;font-size:56px;line-height:1.28;font-weight:800;color:#17181A;">双击图标后，谁在运行？</h1>
+  <div style="width:64px;height:6px;background:#002FA7;border-radius:3px;margin-top:24px;"></div>
+
+  <div style="margin-top:34px;">
+    <div style="font-size:22px;letter-spacing:3px;color:#6B665A;font-weight:700;">进程链</div>
+    <svg viewBox="0 0 912 452" width="912" height="452" role="img" aria-labelledby="process-chain-title process-chain-desc" style="display:block;margin-top:20px;">
+      <title id="process-chain-title">桌面端进程链</title>
+      <desc id="process-chain-desc">Electron 主进程以 RunAsNode 方式启动 desktop-host 启动脚本，后者调用共享 runProfile，在 desktop profile 上拉起完整 Web composition。</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#6B665A"/>
+        </marker>
+      </defs>
+      <line x1="456" y1="80" x2="456" y2="120" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="456" y1="204" x2="456" y2="244" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="456" y1="328" x2="456" y2="368" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <g>
+        <rect x="136" y="0" width="640" height="80" rx="6" fill="#FBF8F3"/>
+        <rect x="136" y="0" width="640" height="80" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="456" y="34" text-anchor="middle" font-size="26" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">Electron 主进程</text>
+        <text x="456" y="62" text-anchor="middle" font-size="19" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">apps/desktop/src/main.ts</text>
+      </g>
+      <g>
+        <rect x="136" y="124" width="640" height="80" rx="6" fill="#FBF8F3"/>
+        <rect x="136" y="124" width="640" height="80" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="456" y="158" text-anchor="middle" font-size="26" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">RunAsNode 子进程</text>
+        <text x="456" y="186" text-anchor="middle" font-size="19" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">ELECTRON_RUN_AS_NODE=1 · host-process.ts</text>
+      </g>
+      <g>
+        <rect x="136" y="248" width="640" height="80" rx="6" fill="#FBF8F3"/>
+        <rect x="136" y="248" width="640" height="80" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="456" y="282" text-anchor="middle" font-size="26" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">desktop-host 启动脚本</text>
+        <text x="456" y="310" text-anchor="middle" font-size="19" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">desktop-host/src/index.ts → runProfile()</text>
+      </g>
+      <g>
+        <rect x="136" y="372" width="640" height="80" rx="6" fill="#FBF8F3"/>
+        <rect x="136" y="372" width="640" height="80" rx="6" fill="rgba(0,47,167,0.08)" stroke="#002FA7" stroke-width="1.2"/>
+        <text x="456" y="406" text-anchor="middle" font-size="26" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">完整 Web composition</text>
+        <text x="456" y="434" text-anchor="middle" font-size="19" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">profile 'desktop' · 127.0.0.1 · --port 0</text>
+      </g>
+    </svg>
+    <div style="margin-top:16px;font-size:23px;line-height:1.6;color:#6B665A;">Electron 可执行文件直接当 Node 用，应用不依赖系统 Node.js 或 pnpm；<span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;">--port 0</span> 由操作系统分配端口，避开 Web 默认的 3080。</div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div style="font-size:22px;letter-spacing:3px;color:#6B665A;font-weight:700;">关键细节</div>
+    <div style="margin-top:18px;display:flex;flex-direction:column;gap:20px;">
+      <div style="display:flex;gap:16px;">
+        <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+        <div style="flex:1;font-size:26px;line-height:1.62;color:#3A382F;"><b style="color:#17181A;">桌面专用配置</b>。Electron 用名为 <code>desktop</code> 的 profile 启动后台，对应 <code>$DSH_HOME/profiles/desktop</code>。公开 CLI 会拒绝用这个 profile 启动，避免两边同时使用这份配置。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+        <div style="flex:1;font-size:26px;line-height:1.62;color:#3A382F;"><b style="color:#17181A;">运行时校验</b>：<span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:23px;">isDesktopHostEvent</span> 逐条守卫生命周期消息；协议外事件直接 SIGTERM（<span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:23px;">plugin-operation</span> 诊断事件先单独分流）。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+        <div style="flex:1;font-size:26px;line-height:1.62;color:#3A382F;"><b style="color:#17181A;">后台启动失败时，提示和诊断分开</b><br><b>用户提示</b>在弹窗里，说明启动出了什么问题。<br><b>排查详情</b>在崩溃报告里。报告写入后，弹窗会显示路径。Host 上报的完整错误链在 <code>hostDiagnostic</code>，异常退出时捕获到的 stderr 尾部附在退出错误里。</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:auto;">
+    <div style="height:1px;background:#E3DCCB;margin-bottom:22px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:23px;color:#6B665A;letter-spacing:1px;">DeepSeek Harness · Electron 桌面适配</div>
+      <div style="font-size:23px;color:#6B665A;">02 / 08</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;right:22px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:20px;letter-spacing:7px;font-weight:700;color:rgba(0,47,167,0.2);white-space:nowrap;">THIN SHELL · FULL WEB</div>
+
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

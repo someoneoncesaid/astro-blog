@@ -1,0 +1,462 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import SummaryCardFrame from '../../components/SummaryCardFrame.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+
+const allEntries = await getCollection('summaries');
+const entries = allEntries
+	.filter((entry) => !entry.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const [featured, ...rest] = entries;
+const totalCards = entries.reduce((total, entry) => total + entry.data.cards.length, 0);
+const categories = [...new Set(entries.map((entry) => entry.data.category))];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title={`图文摘要 · ${SITE_TITLE}`}
+			description={`${SITE_DESCRIPTION} 小红书图卡归档：逐页预览、放大查看，并保留原始配文。`}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="summaries">
+			<section class="container summaries-head reveal">
+				<p class="eyebrow">Xiaohongshu · 图文摘要</p>
+				<h1>一页一页，<br /><em>把事讲清楚。</em></h1>
+				<div class="summaries-sub">
+					<p>
+						把发布在小红书上的图卡按选题归档。每一组都保留原始设计稿的 HTML
+						预览，可以逐页翻阅、点击放大，也能直接读到配文。
+					</p>
+					<div class="summaries-stat">
+						<span><strong>{entries.length}</strong> 组选题</span>
+						<span><strong>{totalCards}</strong> 张图卡</span>
+						<span class="summaries-cats">{categories.join(' · ')}</span>
+					</div>
+				</div>
+			</section>
+
+			{
+				entries.length === 0 ? (
+					<section class="container summaries-empty">
+						<p class="eyebrow">Nothing here yet</p>
+						<h2>还没有同步图文摘要</h2>
+						<p>
+							运行 <code>npm run sync:summaries</code>，从 SelfMedia
+							读取有设计稿或成图的选题。
+						</p>
+					</section>
+				) : (
+					<>
+						{featured && (
+							<section class="container">
+								<a class="summary-lead reveal" href={`/summaries/${featured.id}/`}>
+									<div class="summary-lead-cover">
+										{featured.data.cards[0] ? (
+											<SummaryCardFrame
+												card={featured.data.cards[0]}
+												alt={`${featured.data.title} 封面`}
+												loading="eager"
+											/>
+										) : (
+											<div class="summary-fallback">
+												<span>{featured.data.category}</span>
+												<strong>{featured.data.title}</strong>
+											</div>
+										)}
+									</div>
+									<div class="summary-lead-body">
+										<p class="eyebrow">Latest · 最新一组</p>
+										<h2>{featured.data.title}</h2>
+										<p class="summary-lead-desc">{featured.data.description}</p>
+										<div class="summary-meta">
+											<FormattedDate date={featured.data.pubDate} />
+											<span class="dot" />
+											<span>{featured.data.category}</span>
+											<span class="dot" />
+											<span>{featured.data.cards.length} 页</span>
+										</div>
+										<span class="summary-lead-cta">
+											逐页阅读
+											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+												<path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+											</svg>
+										</span>
+									</div>
+								</a>
+							</section>
+						)}
+
+						{rest.length > 0 && (
+							<section class="container summaries-grid-section">
+								<div class="section-head">
+									<div>
+										<p class="eyebrow">All visual notes</p>
+										<h2 class="section-title">全部图文</h2>
+									</div>
+									<span class="summaries-count">共 {entries.length} 组</span>
+								</div>
+
+								<div class="summary-grid">
+									{rest.map((entry) => (
+										<article class="summary-card reveal">
+											<a class="summary-link" href={`/summaries/${entry.id}/`}>
+												<div class="summary-cover">
+													{entry.data.cards[0] ? (
+														<SummaryCardFrame
+															card={entry.data.cards[0]}
+															alt={`${entry.data.title} 封面`}
+															loading="lazy"
+														/>
+													) : (
+														<div class="summary-fallback">
+															<span>{entry.data.category}</span>
+															<strong>{entry.data.title}</strong>
+														</div>
+													)}
+												</div>
+												<div class="summary-body">
+													<div class="summary-meta">
+														<FormattedDate date={entry.data.pubDate} />
+														<span class="dot" />
+														<span>{entry.data.category}</span>
+													</div>
+													<h3>{entry.data.title}</h3>
+													<p>{entry.data.description}</p>
+													<div class="summary-foot">
+														<span class="summary-pages">{entry.data.cards.length} 页</span>
+														{entry.data.tags.length > 0 && (
+															<span class="summary-tags">
+																{entry.data.tags.slice(0, 2).map((tag) => (
+																	<span>{tag}</span>
+																))}
+															</span>
+														)}
+													</div>
+												</div>
+											</a>
+										</article>
+									))}
+								</div>
+							</section>
+						)}
+					</>
+				)
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.summaries-head {
+		padding: clamp(3rem, 7vw, 5.5rem) 0 2.5rem;
+		border-bottom: 1px solid var(--line-strong);
+	}
+
+	.summaries-head h1 {
+		margin: 1rem 0 1.6rem;
+		font-size: clamp(2.5rem, 5.6vw, 4.2rem);
+		letter-spacing: -0.04em;
+	}
+
+	.summaries-head h1 em {
+		color: var(--accent);
+		font-style: normal;
+	}
+
+	.summaries-sub {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 2.5rem;
+	}
+
+	.summaries-sub p {
+		max-width: 38rem;
+		margin: 0;
+		color: var(--ink-soft);
+		line-height: 1.9;
+	}
+
+	.summaries-stat {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 0.25rem;
+		flex-shrink: 0;
+		color: var(--muted);
+		font-size: 0.76rem;
+		letter-spacing: 0.06em;
+		text-align: right;
+	}
+
+	.summaries-stat strong {
+		color: var(--ink);
+		font-family: var(--font-serif);
+		font-size: 1.05rem;
+		font-weight: 600;
+	}
+
+	.summaries-cats {
+		margin-top: 0.35rem;
+		color: var(--accent);
+		font-size: 0.7rem;
+		letter-spacing: 0.12em;
+	}
+
+	.summary-lead {
+		display: grid;
+		grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr);
+		align-items: center;
+		gap: clamp(2rem, 5vw, 4.5rem);
+		margin-top: 3.5rem;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.summary-lead-cover {
+		transition: transform 0.4s var(--ease), filter 0.4s ease;
+	}
+
+	.summary-lead:hover .summary-lead-cover {
+		transform: translateY(-6px);
+	}
+
+	.summary-lead-body h2 {
+		margin: 0.8rem 0 1rem;
+		font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+		line-height: 1.25;
+	}
+
+	.summary-lead-desc {
+		margin: 0 0 1.5rem;
+		color: var(--ink-soft);
+		font-size: 1.02rem;
+		line-height: 1.9;
+	}
+
+	.summary-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.55rem;
+		color: var(--muted);
+		font-size: 0.8rem;
+		letter-spacing: 0.04em;
+	}
+
+	.summary-meta .dot {
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background: var(--line-strong);
+	}
+
+	.summary-lead-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: 2rem;
+		color: var(--accent);
+		font-size: 0.88rem;
+		letter-spacing: 0.04em;
+	}
+
+	.summary-lead-cta svg {
+		width: 16px;
+		height: 16px;
+		transition: transform 0.25s var(--ease);
+	}
+
+	.summary-lead:hover .summary-lead-cta svg {
+		transform: translateX(5px);
+	}
+
+	.summaries-grid-section {
+		margin-top: clamp(4rem, 8vw, 6rem);
+	}
+
+	.summaries-count {
+		flex-shrink: 0;
+		padding: 0.3rem 0.85rem;
+		border: 1px solid var(--line-strong);
+		border-radius: 100px;
+		color: var(--muted);
+		font-size: 0.76rem;
+		letter-spacing: 0.05em;
+	}
+
+	.summary-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 2.6rem 2rem;
+	}
+
+	.summary-card {
+		min-width: 0;
+	}
+
+	.summary-link {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.summary-cover {
+		transition: transform 0.4s var(--ease);
+	}
+
+	.summary-card:hover .summary-cover {
+		transform: translateY(-5px);
+	}
+
+	.summary-body {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		padding-top: 1.2rem;
+	}
+
+	.summary-body h3 {
+		margin: 0.55rem 0 0.6rem;
+		font-size: 1.28rem;
+		line-height: 1.4;
+		transition: color 0.2s ease;
+	}
+
+	.summary-card:hover h3 {
+		color: var(--accent);
+	}
+
+	.summary-body > p {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		margin: 0 0 1.2rem;
+		color: var(--ink-soft);
+		font-size: 0.88rem;
+		line-height: 1.75;
+	}
+
+	.summary-foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-top: auto;
+		padding-top: 0.85rem;
+		border-top: 1px solid var(--line);
+	}
+
+	.summary-pages {
+		color: var(--accent);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.08em;
+	}
+
+	.summary-tags {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.35rem;
+	}
+
+	.summary-tags span {
+		padding: 0.18rem 0.55rem;
+		border: 1px solid var(--line);
+		border-radius: 100px;
+		color: var(--muted);
+		font-size: 0.66rem;
+		letter-spacing: 0.03em;
+	}
+
+	.summary-fallback {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: 100%;
+		aspect-ratio: 3 / 4;
+		padding: 1.6rem;
+		border: 1px solid var(--line);
+		background:
+			linear-gradient(150deg, var(--surface) 0%, var(--surface-soft) 100%);
+		box-shadow: var(--shadow-md);
+	}
+
+	.summary-fallback span {
+		color: var(--accent);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.12em;
+	}
+
+	.summary-fallback strong {
+		font-family: var(--font-serif);
+		font-size: 1.7rem;
+		font-weight: 600;
+		line-height: 1.35;
+	}
+
+	.summaries-empty {
+		padding: 5rem 0;
+	}
+
+	.summaries-empty h2 {
+		margin-top: 0.8rem;
+	}
+
+	.summaries-empty code {
+		font-size: 0.85em;
+	}
+
+	@media (max-width: 960px) {
+		.summary-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 760px) {
+		.summaries-sub {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1.6rem;
+		}
+
+		.summaries-stat {
+			align-items: flex-start;
+			text-align: left;
+		}
+
+		.summary-lead {
+			grid-template-columns: 1fr;
+			gap: 1.8rem;
+			margin-top: 2.5rem;
+		}
+
+		.summary-lead-cover {
+			max-width: 26rem;
+		}
+
+		.summary-grid {
+			grid-template-columns: 1fr;
+			gap: 2.4rem;
+		}
+
+		.summary-cover {
+			max-width: 26rem;
+		}
+	}
+</style>

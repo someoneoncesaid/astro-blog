@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#FAF8F3;font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:ui-monospace,"SFMono-Regular",Menlo,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; padding: 96px 92px 72px; background: #FAF8F3; color: #16181D; display: flex; flex-direction: column; position: relative; overflow: hidden">
+
+  <div style="position: absolute; right: 30px; top: 108px; writing-mode: vertical-rl; font-size: 18px; letter-spacing: 7px; color: #002FA7; opacity: 0.2; font-family: ui-monospace,Menlo,monospace">SOMEONE ONCE SAID</div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between">
+    <div class="mono" style="font-size: 22px; letter-spacing: 0.16em; color: #5C6169">DEEPSEEK · 2026-11-13</div>
+    <div class="mono" style="font-size: 22px; letter-spacing: 0.16em; color: #5C6169">01 / 08</div>
+  </div>
+
+  <div style="height: 1px; background: #DCD5C8; margin: 30px 0 64px"></div>
+
+  <div style="width: 64px; height: 8px; background: #002FA7"></div>
+
+  <h1 style="margin: 40px 0 0; font-size: 112px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 700">把整个<br>App 塞进<br>API</h1>
+
+  <p style="margin: 44px 0 0; font-size: 34px; line-height: 1.55; color: #3A3F47; max-width: 760px">联网、读链接、文件解析、语音、风控，这次都由服务端执行；你只负责界面和状态。</p>
+
+  <div style="flex: 1"></div>
+
+  <div style="display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 44px">
+    <div style="padding: 14px 22px; border: 1px solid #DCD5C8; border-radius: 999px; font-size: 24px; color: #3A3F47">3 个协议</div>
+    <div style="padding: 14px 22px; border: 1px solid #DCD5C8; border-radius: 999px; font-size: 24px; color: #3A3F47">2 个服务端工具</div>
+    <div style="padding: 14px 22px; border: 1px solid #DCD5C8; border-radius: 999px; font-size: 24px; color: #3A3F47">5 个独立接口</div>
+  </div>
+
+  <div style="border-top: 1px solid #DCD5C8; padding-top: 28px; display: flex; align-items: baseline; justify-content: space-between; gap: 32px">
+    <div style="font-size: 26px; line-height: 1.5; color: #16181D">代价藏在一处细节里：<span class="mono" style="color: #002FA7">signature</span> 必须原样回传。</div>
+    <div class="mono" style="font-size: 20px; color: #6B6F76; white-space: nowrap">fact card · 8P</div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

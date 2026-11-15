@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>五层架构</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.ui-card{font-family:-apple-system,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:#FBFAF6;color:#17171A;position:relative;width:1080px;height:1440px;box-sizing:border-box;display:flex;flex-direction:column;padding:80px 118px 64px 88px}
+.ui-mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="ui-card">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:26px;font-weight:700;letter-spacing:6px;color:#002FA7">仓库怎么分层</div>
+    <div style="font-size:24px;color:#8A8A90" class="ui-mono">04 / 08</div>
+  </div>
+  <div style="height:1px;background:#E7E4DC;margin:32px 0 44px"></div>
+  <h1 style="margin:0;font-size:66px;line-height:1.22;font-weight:800">五层架构，一套形状</h1>
+  <div style="width:72px;height:7px;background:#002FA7;border-radius:4px;margin:32px 0 38px"></div>
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:22px 28px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px"><span style="background:#002FA7;color:#FFFFFF;border-radius:8px;padding:4px 14px;font-size:20px;font-weight:700">Behaviors</span><span class="ui-mono" style="font-size:19px;color:#8A8A90">foundation/ · 20+ 个域</span></div>
+      <div style="font-size:24px;line-height:1.5;color:#54545A">最小积木：焦点、拖拽、选区、弹层、快捷键，一个行为只做一件事。</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:22px 28px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px"><span style="background:#17171A;color:#FFFFFF;border-radius:8px;padding:4px 14px;font-size:20px;font-weight:700">Primitives</span><span class="ui-mono" style="font-size:19px;color:#8A8A90">50 个现成原语</span></div>
+      <div style="font-size:24px;line-height:1.5;color:#54545A"><span class="ui-mono" style="font-size:21px">definePrimitive</span> 把 options、state、behaviors、parts 组成单一定义，<b>零样式</b>。</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:22px 28px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px"><span style="background:#002FA7;color:#FFFFFF;border-radius:8px;padding:4px 14px;font-size:20px;font-weight:700">Adapters</span><span class="ui-mono" style="font-size:19px;color:#8A8A90">react · vue · svelte · solid · web</span></div>
+      <div style="font-size:24px;line-height:1.5;color:#54545A"><span class="ui-mono" style="font-size:21px">createParts</span> 把同一个原语渲染到五个框架；状态以 data 属性和 CSS 变量暴露。</div>
+    </div>
+    <div style="display:flex;gap:18px">
+      <div style="flex:1;border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:22px 26px">
+        <div style="font-size:22px;font-weight:700;color:#002FA7;margin-bottom:8px">Testing</div>
+        <div style="font-size:22px;line-height:1.5;color:#54545A">按 WAI-ARIA 模式校验，含 RTL 与 SSR。</div>
+      </div>
+      <div style="flex:1;border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:22px 26px">
+        <div style="font-size:22px;font-weight:700;color:#002FA7;margin-bottom:8px">Agent</div>
+        <div style="font-size:22px;line-height:1.5;color:#54545A"><span class="ui-mono" style="font-size:20px">snapshot / act</span>：Agent 直接操作界面。</div>
+      </div>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="font-size:23px;line-height:1.6;color:#54545A;border-top:1px solid #E7E4DC;padding-top:26px">仓库是 pnpm monorepo：<span class="ui-mono" style="font-size:20px">packages/ · examples/ · apps/</span>（文档站 + playground）。</div>
+  <div aria-hidden="true" style="position:absolute;right:30px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:17px;letter-spacing:7px;color:#002FA7;opacity:.2;font-weight:700">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

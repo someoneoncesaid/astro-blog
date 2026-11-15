@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>审代码</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.rc2card{position:relative;width:1080px;height:1440px;background:#faf9f4;padding:70px 82px 96px;overflow:hidden;background-image:linear-gradient(rgba(0,47,167,0.016) 1px,transparent 1px),linear-gradient(90deg,rgba(0,47,167,0.016) 1px,transparent 1px);background-size:54px 54px;font-family:"PingFang SC","Noto Sans CJK SC",sans-serif;color:#172033;box-sizing:border-box}
+.rc2card *{box-sizing:border-box}
+.rc2card:before{content:"";position:absolute;left:30px;top:30px;width:20px;height:20px;border-top:1px solid #002FA7;border-left:1px solid #002FA7}
+.rc2card .kicker{font-size:20px;letter-spacing:3px;color:#002FA7;font-weight:650;border-bottom:1px solid #d7dce5;padding-bottom:20px}
+.rc2card h1{font-size:64px;line-height:1.14;letter-spacing:-2px;margin:30px 0 16px;font-weight:720}
+.rc2card h1 em{font-style:normal;color:#002FA7}
+.rc2card .deck{font-size:25px;line-height:1.5;color:#667080;margin:0 0 24px}
+.rc2card .visual{position:relative;z-index:1}
+.rc2card .note{position:absolute;bottom:96px;left:82px;right:118px;font-size:20px;line-height:1.5;color:#667080;border-top:1px solid #d7dce5;padding-top:16px}
+.rc2card .footer{position:absolute;left:82px;right:82px;bottom:44px;display:flex;justify-content:space-between;font-size:20px;letter-spacing:2px;color:#002FA7}
+.rc2card .watermark{position:absolute;right:24px;top:700px;writing-mode:vertical-rl;letter-spacing:5px;font-size:17px;color:rgba(0,47,167,0.2);z-index:2}
+.rc2card .callout{border-left:5px solid #002FA7;background:rgba(0,47,167,0.035);padding:20px 24px;font-size:24px;line-height:1.55;margin-top:22px}
+.rc2card .shot-label{display:flex;justify-content:space-between;gap:20px;border:1px solid #d7dce5;border-bottom:0;padding:15px 20px;background:#fffdf8;font-size:20px;color:#667080}
+.rc2card .shot-label b{color:#002FA7;font-weight:600}
+.rc2card .shot{margin:0;background:#ffffff;border:1px solid #d7dce5;overflow:hidden;position:relative}
+.rc2card .shot img{display:block;max-width:none;height:auto}
+.rc2card .shot.wide img{width:100%}
+.rc2card .shot.diff{height:680px}
+.rc2card .evidence-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+.rc2card .evidence-row div{padding:19px 22px;border:1px solid #d7dce5;font-size:23px;line-height:1.5;background:#fffdf8}
+.rc2card .evidence-row b{display:block;color:#002FA7;margin-bottom:5px}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="rc2card">
+  <div class="kicker">01 / WORKTREE REVIEW</div>
+  <h1>审代码<br><em>先看你关心的改动</em></h1>
+  <p class="deck">按分支、提交和文件类型筛选，接口、实现、测试分开看。</p>
+  <div class="visual">
+    <div class="shot-label"><b>购物车项目 / 本地改动</b><span>接口 1 · 实现 1 · 测试 1</span></div>
+    <figure class="shot wide diff" style="margin:0"><img src="assets/rel-c19f1430.jpg" alt="DSH 本地 diff、三类筛选和已审阅进度"></figure>
+    <div class="evidence-row">
+      <div><b>rc.1 已有</b>分支、提交与文件类型筛选</div>
+      <div><b>本阶段新增</b>GitHub 评审与已审阅进度同步</div>
+    </div>
+  </div>
+  <div class="note">筛选功能在 rc.1 已有基础；本页展示本地改动，GitHub 同步见第 4 页。</div>
+  <span class="watermark">SOMEONE ONCE SAID</span>
+  <div class="footer"><span>DEEPSEEK HARNESS / 0.2.2-rc.2</span><span>02 / 11</span></div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

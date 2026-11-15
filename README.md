@@ -40,6 +40,26 @@ The `src/content/` directory contains "collections" of related Markdown and MDX 
 
 Any static assets, like images, can be placed in the `public/` directory.
 
+## 📕 图文摘要（小红书图卡）
+
+`/summaries` 是独立于博客文章的图文栏目，用来归档 SelfMedia 里带设计稿的小红书内容。图卡不是截图，而是把设计稿的 HTML 抽出来直接嵌入（`public/summaries/<slug>/NN.html`），所以文字清晰、可以随窗口缩放。
+
+同步命令：
+
+```bash
+npm run sync:summaries              # 增量同步（默认只处理带 designs 的项目）
+npm run sync:summaries -- --dry-run # 只打印将要做的事，不写文件
+npm run sync:summaries -- --force   # 忽略 sourceHash，强制重建
+npm run sync:summaries -- --only <slug>  # 只同步某一个条目
+npm run sync:summaries -- --include-images # 同时收录只有图片、没有 designs 的项目
+npm run sync:summaries -- --no-prune # 不清理源目录已删除的生成条目
+```
+
+- 源目录默认是 `/Users/zhiyuan/SelfMedia`，可用 `SELF_MEDIA_ROOT=/path/to/SelfMedia npm run sync:summaries` 覆盖。
+- 顶层设计集到内容项目的映射、以及固定 slug，写在 [`scripts/summaries.config.json`](scripts/summaries.config.json)。新增设计稿时在这里补一条 `designProjects`，再跑同步。
+- 同步会生成两类文件：`src/content/summaries/*.md`（标题、配文、话题、卡片列表）和 `public/summaries/<slug>/`（图卡 HTML 与素材）。源内容变化时才重建；生成条目在源内容消失后会自动清理。
+- 阅读页左侧是图卡滑动预览，右侧是配文；支持方向键、滑动翻页和点击放大。
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:

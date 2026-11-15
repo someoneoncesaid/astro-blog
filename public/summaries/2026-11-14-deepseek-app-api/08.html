@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>边界</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#FAF8F3;font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:ui-monospace,"SFMono-Regular",Menlo,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; padding: 96px 92px 72px; background: #FAF8F3; color: #16181D; display: flex; flex-direction: column; position: relative; overflow: hidden">
+
+  <div style="position: absolute; right: 30px; top: 108px; writing-mode: vertical-rl; font-size: 18px; letter-spacing: 7px; color: #002FA7; opacity: 0.2; font-family: ui-monospace,Menlo,monospace">SOMEONE ONCE SAID</div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between">
+    <div class="mono" style="font-size: 22px; letter-spacing: 0.16em; color: #5C6169">边界</div>
+    <div class="mono" style="font-size: 22px; letter-spacing: 0.16em; color: #5C6169">08 / 08</div>
+  </div>
+
+  <div style="height: 1px; background: #DCD5C8; margin: 30px 0 56px"></div>
+
+  <h2 style="margin: 0; font-size: 68px; line-height: 1.18; letter-spacing: -0.02em; font-weight: 700">上生产前<br>先看这五条</h2>
+
+  <div style="margin-top: 48px; display: flex; flex-direction: column">
+
+    <div style="display: flex; gap: 26px; padding: 26px 0; border-top: 1px solid #E6DFD2">
+      <div class="mono" style="width: 40px; flex: none; font-size: 23px; color: #002FA7">01</div>
+      <div style="font-size: 27px; line-height: 1.55">图片搜索只走联网工具，Search 接口暂不支持，官方写「后续会支持」</div>
+    </div>
+
+    <div style="display: flex; gap: 26px; padding: 26px 0; border-top: 1px solid #E6DFD2">
+      <div class="mono" style="width: 40px; flex: none; font-size: 23px; color: #002FA7">02</div>
+      <div style="font-size: 27px; line-height: 1.55">联网工具不能和自定义工具混用，两者都要就自己在应用层串</div>
+    </div>
+
+    <div style="display: flex; gap: 26px; padding: 26px 0; border-top: 1px solid #E6DFD2">
+      <div class="mono" style="width: 40px; flex: none; font-size: 23px; color: #002FA7">03</div>
+      <div style="font-size: 27px; line-height: 1.55">ASR 不支持流式，实时语音输入要自己在客户端做切片</div>
+    </div>
+
+    <div style="display: flex; gap: 26px; padding: 26px 0; border-top: 1px solid #E6DFD2">
+      <div class="mono" style="width: 40px; flex: none; font-size: 23px; color: #002FA7">04</div>
+      <div style="font-size: 27px; line-height: 1.55">TTS 只有两个音色、10 种语言，文档没提定制音色</div>
+    </div>
+
+    <div style="display: flex; gap: 26px; padding: 26px 0; border-top: 1px solid #E6DFD2; border-bottom: 1px solid #E6DFD2">
+      <div class="mono" style="width: 40px; flex: none; font-size: 23px; color: #002FA7">05</div>
+      <div style="font-size: 27px; line-height: 1.55">「约 20 次」是文档措辞，不是可配置参数，第 21 次的行为未说明</div>
+    </div>
+
+  </div>
+
+  <div style="flex: 1"></div>
+
+  <div style="border-top: 1px solid #DCD5C8; padding-top: 26px; display: flex; gap: 20px; align-items: flex-start">
+    <div style="width: 8px; height: 8px; margin-top: 13px; background: #002FA7; flex: none"></div>
+    <div style="font-size: 25px; line-height: 1.55; color: #3A3F47">本图卡事实来自官方文档与发布原文，未做实际调用实测；文档没写的地方不补结论。</div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

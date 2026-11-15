@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profile 配置</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:900px;height:1200px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;font-family:Inter,"PingFang SC","Noto Sans CJK SC",sans-serif;background:#f3f1e9;color:#171a1f}a{color:#1646a0}a:hover{color:#0e3174}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:900px;height:1200px;box-sizing:border-box;padding:66px 68px 50px;background:#f3f1e9;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;justify-content:space-between;border-bottom:2px solid #171a1f;padding-bottom:14px;font-size:16px;letter-spacing:1px"><span>PROFILE 配置</span><span>最小补丁：只接入 Codex</span></div>
+<div style="font-size:53px;line-height:1.1;font-weight:850;letter-spacing:-2px">让 subagent_oar<br>连上 Codex CLI</div>
+<div style="font-size:18px;line-height:1.45">先在组合中声明以上两个包的依赖，再将补丁加入 Profile 配置层。Codex CLI 需已安装并登录。</div>
+<div style="padding:25px 24px;background:#171a1f;color:#edf0f4"><div style="font-size:15px;letter-spacing:1px;color:#a9c1ff;margin-bottom:16px">PATCH · YAML</div><div style="font-family:ui-monospace,monospace;font-size:15px;line-height:1.58;white-space:pre-wrap">- insert:
+    - name: '@deepseek-ai/dsh-experimental-subagent-oar'
+      config:
+        runtime: codex
+        providerName: oar-codex
+        launchArgs: ['-c', 'sandbox_mode="workspace-write"']
+    - name: '@deepseek-ai/dsh-experimental-tool-subagent-oar'
+      config:
+        providers:
+          codex: oar-codex</div></div>
+<div style="padding:22px 24px;border:1px solid #171a1f;display:flex;flex-direction:column;gap:12px"><div style="font-size:16px;color:#1646a0;font-weight:800">补丁对应的接入关系</div><div style="font-size:18px;line-height:1.45">提供方配置 runtime: codex，名称为 oar-codex；工具包的 providers 映射将 codex 指向 oar-codex。</div></div>
+<div style="margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid #8d918f;padding-top:14px;font-size:15px"><span>原生 CLI 需单独安装与认证</span><span>07 / 08</span></div>
+</div></div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 900, H = 1200;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

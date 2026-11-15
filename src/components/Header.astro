@@ -13,6 +13,7 @@ import { SITE_TITLE } from '../consts';
 		<nav class="nav" aria-label="主导航">
 			<HeaderLink href="/">首页</HeaderLink>
 			<HeaderLink href="/blog">文章</HeaderLink>
+			<HeaderLink href="/summaries">图文摘要</HeaderLink>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</nav>
 
@@ -147,7 +148,13 @@ import { SITE_TITLE } from '../consts';
 
 	@media (max-width: 400px) {
 		.nav {
-			gap: 0.8rem;
+			gap: 0.55rem;
+		}
+		.nav :global(a) {
+			font-size: 0.8rem;
+		}
+		.brand-name {
+			font-size: 1.05rem;
 		}
 		.brand-mark {
 			display: none;

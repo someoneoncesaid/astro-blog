@@ -1,0 +1,1077 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import SummaryCardFrame from '../../components/SummaryCardFrame.astro';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('summaries');
+	return entries.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+type Props = { entry: CollectionEntry<'summaries'> };
+
+const { entry } = Astro.props;
+const { title, description, pubDate, updatedDate, category, tags, hashtags, sourceUrl, cards } =
+	entry.data;
+const { Content } = await render(entry);
+const pageCount = cards.length;
+const firstCard = cards[0];
+const ratioWidth = firstCard?.width ?? 1080;
+const ratioHeight = firstCard?.height ?? 1440;
+const hasCaption = Boolean(entry.body && entry.body.trim().length > 0);
+const hashtagText = hashtags.map((tag) => `#${tag}`).join(' ');
+
+const allEntries = (await getCollection('summaries'))
+	.filter((item) => !item.data.draft && item.data.cards.length > 0)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const currentIndex = allEntries.findIndex((item) => item.id === entry.id);
+const newer = currentIndex > 0 ? allEntries[currentIndex - 1] : null;
+const older =
+	currentIndex >= 0 && currentIndex < allEntries.length - 1
+		? allEntries[currentIndex + 1]
+		: null;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title={`${title} · 图文摘要 · ${SITE_TITLE}`}
+			description={description}
+			image={firstCard?.type === 'image' ? firstCard.src : undefined}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="summary-page">
+			<div class="container summary-topbar">
+				<a class="back-link" href="/summaries">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+						<path d="M19 12H5M11 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+					返回图文摘要
+				</a>
+				<span class="summary-topbar-meta">
+					{category}
+					<span class="meta-sep"></span>
+					{pageCount} 页
+				</span>
+			</div>
+
+			<div class="container summary-reader">
+				<div class="summary-visual">
+					<section
+						class="summary-stage"
+						style={`--ratio: ${ratioWidth / ratioHeight};`}
+						aria-roledescription="carousel"
+						aria-label="图卡滑动预览"
+						tabindex="0"
+						id="summary-stage"
+					>
+						<div class="summary-track" id="summary-track">
+							{cards.map((card, index) => (
+								<a
+									class="summary-slide summary-card-link"
+									href={card.src}
+									target="_blank"
+									rel="noopener"
+									draggable="false"
+									style={`--ratio: ${card.width / card.height};`}
+									data-index={index}
+									data-type={card.type}
+									data-width={card.width}
+									data-height={card.height}
+									aria-label={`放大查看第 ${index + 1} 页：${card.title ?? title}`}
+								>
+									<SummaryCardFrame
+										card={card}
+										alt={`${title} 第 ${index + 1} 页${card.title ? `：${card.title}` : ''}`}
+										loading={index < 2 ? 'eager' : 'lazy'}
+									/>
+								</a>
+							))}
+						</div>
+
+						<div class="summary-stage-bar">
+							<span class="summary-counter" id="summary-counter">
+								{String(1).padStart(2, '0')} / {String(pageCount).padStart(2, '0')}
+							</span>
+						</div>
+
+						<button class="summary-arrow is-prev" type="button" id="summary-prev" aria-label="上一页">
+							←
+						</button>
+						<button class="summary-arrow is-next" type="button" id="summary-next" aria-label="下一页">
+							→
+						</button>
+
+						{cards.length === 0 && (
+							<p class="summary-stage-empty">这组内容还没有可预览的图卡。</p>
+						)}
+					</section>
+
+					<div class="summary-dots" id="summary-dots" role="group" aria-label="图卡页码">
+						{cards.map((card, index) => (
+							<button
+								class:list={['summary-dot', { 'is-active': index === 0 }]}
+								type="button"
+								data-index={index}
+								aria-label={`查看第 ${index + 1} 页`}
+								title={card.title ?? `第 ${index + 1} 页`}
+							></button>
+						))}
+					</div>
+					<p class="summary-hint">左右滑动或按方向键翻页 · 点击图卡放大</p>
+				</div>
+
+				<aside class="summary-info">
+					<h1 class="summary-info-title">{title}</h1>
+
+					<div class="summary-caption prose" id="summary-caption">
+						{hasCaption ? <Content /> : <p>{description}</p>}
+					</div>
+
+					{hashtags.length > 0 && (
+						<ul class="summary-hashtags">
+							{hashtags.map((tag) => (
+								<li>#{tag}</li>
+							))}
+						</ul>
+					)}
+
+					<div class="summary-info-meta">
+						<span>{category}</span>
+						<span class="meta-sep"></span>
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<>
+								<span class="meta-sep" />
+								<span>更新于 <FormattedDate date={updatedDate} /></span>
+							</>
+						)}
+						<span class="meta-sep" />
+						<span>{pageCount} 页图卡</span>
+					</div>
+
+					{tags.length > 0 && (
+						<ul class="summary-taglist">
+							{tags.map((tag) => (
+								<li>{tag}</li>
+							))}
+						</ul>
+					)}
+
+					<div class="summary-info-actions">
+						<button class="copy-button" type="button" id="copy-caption" data-hashtags={hashtagText}>
+							复制配文
+						</button>
+						{sourceUrl && (
+							<a class="summary-source" href={sourceUrl} target="_blank" rel="noopener noreferrer">
+								查看原始来源
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+									<path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+								</svg>
+							</a>
+						)}
+					</div>
+
+					<p class="summary-aside-note">图卡来自 SelfMedia 设计稿，HTML 实时预览。</p>
+
+					<nav class="summary-note-nav" aria-label="图文导航">
+						{older && (
+							<a class="summary-nav-item" href={`/summaries/${older.id}/`}>
+								<span class="eyebrow">← 更早一组</span>
+								<span>{older.data.title}</span>
+							</a>
+						)}
+						{newer && (
+							<a class="summary-nav-item is-right" href={`/summaries/${newer.id}/`}>
+								<span class="eyebrow">更新一组 →</span>
+								<span>{newer.data.title}</span>
+							</a>
+						)}
+					</nav>
+				</aside>
+			</div>
+		</main>
+		<Footer />
+
+		<dialog id="summary-lightbox" class="lightbox" aria-label="图卡放大查看">
+			<div class="lightbox-bar">
+				<span class="lightbox-count" id="lightbox-count"></span>
+				<span class="lightbox-title" id="lightbox-title"></span>
+				<button class="lightbox-close" type="button" id="lightbox-close" aria-label="关闭">关闭</button>
+			</div>
+			<div class="lightbox-stage" id="lightbox-stage">
+				<div class="lightbox-frame" id="lightbox-frame"></div>
+			</div>
+			<button class="lightbox-nav is-prev" type="button" id="lightbox-prev" aria-label="上一页">←</button>
+			<button class="lightbox-nav is-next" type="button" id="lightbox-next" aria-label="下一页">→</button>
+		</dialog>
+
+		<script>
+			const track = document.getElementById('summary-track');
+			const stage = document.getElementById('summary-stage');
+			const counter = document.getElementById('summary-counter');
+			const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('.summary-dot'));
+			const slides = Array.from(
+				document.querySelectorAll<HTMLAnchorElement>('.summary-card-link'),
+			);
+
+			if (track && stage && counter && slides.length > 0) {
+				let current = 0;
+				let frame = 0;
+				let pointerDownX: number | null = null;
+				let lockedUntil = 0;
+
+				const pad = (value: number) => String(value).padStart(2, '0');
+
+				const setActive = (index: number) => {
+					current = index;
+					counter.textContent = `${pad(index + 1)} / ${pad(slides.length)}`;
+					slides.forEach((slide, slideIndex) => {
+						slide.classList.toggle('is-active', slideIndex === index);
+					});
+					dots.forEach((dot, dotIndex) => {
+						dot.classList.toggle('is-active', dotIndex === index);
+						dot.setAttribute('aria-current', dotIndex === index ? 'true' : 'false');
+					});
+				};
+
+				const center = (index: number, behavior: ScrollBehavior = 'smooth') => {
+					const slide = slides[index];
+					if (!slide) return;
+					lockedUntil = Date.now() + 600;
+					const trackRect = track.getBoundingClientRect();
+					const slideRect = slide.getBoundingClientRect();
+					const left =
+						track.scrollLeft +
+						(slideRect.left - trackRect.left) -
+						(track.clientWidth - slideRect.width) / 2;
+					track.scrollTo({ left, behavior });
+					setActive(index);
+				};
+
+				const detect = () => {
+					frame = 0;
+					if (Date.now() < lockedUntil) return;
+					const trackRect = track.getBoundingClientRect();
+					const trackCenter = trackRect.left + trackRect.width / 2;
+					let best = 0;
+					let bestDistance = Number.POSITIVE_INFINITY;
+					slides.forEach((slide, index) => {
+						const rect = slide.getBoundingClientRect();
+						const distance = Math.abs(rect.left + rect.width / 2 - trackCenter);
+						if (distance < bestDistance) {
+							bestDistance = distance;
+							best = index;
+						}
+					});
+					if (best !== current) setActive(best);
+				};
+
+				track.addEventListener(
+					'scroll',
+					() => {
+						if (frame) return;
+						frame = requestAnimationFrame(detect);
+					},
+					{ passive: true },
+				);
+
+				document.getElementById('summary-prev')?.addEventListener('click', () => {
+					center((current - 1 + slides.length) % slides.length);
+				});
+				document.getElementById('summary-next')?.addEventListener('click', () => {
+					center((current + 1) % slides.length);
+				});
+
+				dots.forEach((dot, index) => {
+					dot.addEventListener('click', () => center(index));
+				});
+
+				stage.addEventListener('keydown', (event) => {
+					if (event.key === 'ArrowLeft') {
+						event.preventDefault();
+						center((current - 1 + slides.length) % slides.length);
+					} else if (event.key === 'ArrowRight') {
+						event.preventDefault();
+						center((current + 1) % slides.length);
+					}
+				});
+
+				track.addEventListener('pointerdown', (event) => {
+					pointerDownX = event.clientX;
+				});
+				track.addEventListener('pointercancel', () => {
+					pointerDownX = null;
+				});
+
+				window.addEventListener('resize', () => center(current, 'auto'));
+
+				requestAnimationFrame(() => {
+					setActive(0);
+					center(0, 'auto');
+				});
+
+				/* ---------- 灯箱 ---------- */
+
+				const dialog = document.getElementById('summary-lightbox') as HTMLDialogElement | null;
+				const lightboxStage = document.getElementById('lightbox-stage');
+				const lightboxFrame = document.getElementById('lightbox-frame');
+				const lightboxCount = document.getElementById('lightbox-count');
+				const lightboxTitle = document.getElementById('lightbox-title');
+				const lightboxPrev = document.getElementById('lightbox-prev');
+				const lightboxNext = document.getElementById('lightbox-next');
+				const lightboxClose = document.getElementById('lightbox-close');
+				let lightboxIndex = 0;
+
+				const renderLightbox = (index: number) => {
+					const slide = slides[index];
+					if (!slide || !lightboxFrame || !lightboxCount || !lightboxTitle) return;
+					lightboxIndex = index;
+
+					const type = slide.dataset.type;
+					const width = Number(slide.dataset.width || 1080);
+					const height = Number(slide.dataset.height || 1440);
+					const src = slide.getAttribute('href') || '';
+					const label = slide.getAttribute('aria-label') || '';
+
+					lightboxFrame.style.setProperty('--ratio', String(width / height));
+
+					if (type === 'html') {
+						const iframe = document.createElement('iframe');
+						iframe.src = src;
+						iframe.title = label;
+						iframe.setAttribute('scrolling', 'no');
+						lightboxFrame.replaceChildren(iframe);
+					} else {
+						const image = document.createElement('img');
+						image.src = src;
+						image.alt = label;
+						lightboxFrame.replaceChildren(image);
+					}
+
+					lightboxCount.textContent = `${pad(index + 1)} / ${pad(slides.length)}`;
+					lightboxTitle.textContent = label;
+				};
+
+				const openLightbox = (index: number) => {
+					if (!dialog) return;
+					pointerDownX = null;
+					renderLightbox(index);
+					dialog.showModal();
+					document.documentElement.classList.add('lightbox-open');
+				};
+
+				const stepLightbox = (delta: number) => {
+					renderLightbox((lightboxIndex + delta + slides.length) % slides.length);
+				};
+
+				slides.forEach((slide, index) => {
+					slide.addEventListener('click', (event) => {
+						if (pointerDownX !== null && Math.abs(event.clientX - pointerDownX) > 10) {
+							event.preventDefault();
+							pointerDownX = null;
+							return;
+						}
+						event.preventDefault();
+						openLightbox(index);
+					});
+				});
+
+				lightboxPrev?.addEventListener('click', () => stepLightbox(-1));
+				lightboxNext?.addEventListener('click', () => stepLightbox(1));
+				lightboxClose?.addEventListener('click', () => dialog?.close());
+
+				dialog?.addEventListener('click', (event) => {
+					if (event.target === dialog) dialog.close();
+				});
+
+				dialog?.addEventListener('close', () => {
+					document.documentElement.classList.remove('lightbox-open');
+					lightboxFrame?.replaceChildren();
+					/* 在灯箱里翻到的最后一页，关闭后同步回左侧滑动预览 */
+					center(lightboxIndex, 'auto');
+				});
+
+				lightboxStage?.addEventListener('click', (event) => {
+					if (event.target === lightboxStage) dialog?.close();
+				});
+
+				dialog?.addEventListener('keydown', (event) => {
+					if (event.key === 'ArrowLeft') {
+						event.preventDefault();
+						stepLightbox(-1);
+					} else if (event.key === 'ArrowRight') {
+						event.preventDefault();
+						stepLightbox(1);
+					}
+				});
+			}
+
+			const copyButton = document.getElementById('copy-caption');
+			const captionElement = document.getElementById('summary-caption');
+			if (copyButton && captionElement) {
+				copyButton.addEventListener('click', async () => {
+					const hashtags = copyButton.dataset.hashtags?.trim();
+					const text = [captionElement.innerText.trim(), hashtags].filter(Boolean).join('\n\n');
+					try {
+						await navigator.clipboard.writeText(text);
+						const original = copyButton.textContent;
+						copyButton.textContent = '已复制';
+						copyButton.classList.add('is-copied');
+						window.setTimeout(() => {
+							copyButton.textContent = original;
+							copyButton.classList.remove('is-copied');
+						}, 1600);
+					} catch {
+						copyButton.textContent = '复制失败';
+						window.setTimeout(() => {
+							copyButton.textContent = '复制配文';
+						}, 1600);
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
+
+<style>
+	.summary-page {
+		padding-bottom: 2rem;
+	}
+
+	.summary-topbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: 1.4rem 0;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		color: var(--muted);
+		font-size: 0.85rem;
+		text-decoration: none;
+		transition: color 0.2s ease, gap 0.25s var(--ease);
+	}
+
+	.back-link svg {
+		width: 15px;
+		height: 15px;
+	}
+
+	.back-link:hover {
+		gap: 0.7rem;
+		color: var(--accent);
+	}
+
+	.summary-topbar-meta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.55rem;
+		color: var(--muted);
+		font-size: 0.74rem;
+		letter-spacing: 0.05em;
+	}
+
+	.meta-sep {
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background: var(--line-strong);
+	}
+
+	.summary-reader {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 380px;
+		align-items: start;
+		gap: clamp(1.8rem, 4vw, 3.2rem);
+		padding-top: 2rem;
+	}
+
+	.summary-visual {
+		min-width: 0;
+	}
+
+	/* ---------- 左侧：滑动图卡 ---------- */
+
+	.summary-stage {
+		--stage-h: min(76vh, 760px);
+		--card-h: calc(var(--stage-h) - 48px);
+		--card-w: calc(var(--card-h) * var(--ratio));
+		position: relative;
+		height: var(--stage-h);
+		padding-block: 24px;
+		overflow: hidden;
+		border: 1px solid var(--line);
+		background-color: var(--surface-soft);
+		background-image:
+			linear-gradient(color-mix(in srgb, var(--line) 52%, transparent) 1px, transparent 1px),
+			linear-gradient(90deg, color-mix(in srgb, var(--line) 52%, transparent) 1px, transparent 1px);
+		background-size: 48px 48px;
+		outline: none;
+	}
+
+	.summary-stage:focus-visible {
+		box-shadow: 0 0 0 2px var(--accent);
+	}
+
+	.summary-track {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		height: 100%;
+		padding-inline: max(12px, calc((100% - var(--card-w)) / 2));
+		overflow-x: auto;
+		overflow-y: hidden;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.summary-track::-webkit-scrollbar {
+		display: none;
+	}
+
+	.summary-slide {
+		position: relative;
+		display: block;
+		flex: 0 0 auto;
+		height: 100%;
+		aspect-ratio: var(--ratio);
+		scroll-snap-align: center;
+		text-decoration: none;
+		cursor: zoom-in;
+		opacity: 0.5;
+		transform: scale(0.94);
+		transition:
+			opacity 0.35s ease,
+			transform 0.35s var(--ease);
+	}
+
+	.summary-slide.is-active {
+		opacity: 1;
+		transform: none;
+	}
+
+	.summary-slide::after {
+		content: '点击放大';
+		position: absolute;
+		right: 0.9rem;
+		bottom: 0.9rem;
+		padding: 0.32rem 0.7rem;
+		border-radius: 100px;
+		background: color-mix(in srgb, var(--ink) 82%, transparent);
+		color: var(--paper);
+		font-size: 0.68rem;
+		letter-spacing: 0.06em;
+		opacity: 0;
+		transform: translateY(4px);
+		transition: opacity 0.25s ease, transform 0.25s var(--ease);
+		pointer-events: none;
+	}
+
+	.summary-slide.is-active:hover::after,
+	.summary-slide.is-active:focus-visible::after {
+		opacity: 1;
+		transform: none;
+	}
+
+	.summary-stage-bar {
+		position: absolute;
+		top: 14px;
+		right: 16px;
+		z-index: 3;
+	}
+
+	.summary-counter {
+		display: inline-block;
+		padding: 0.28rem 0.65rem;
+		border: 1px solid color-mix(in srgb, var(--line-strong) 70%, transparent);
+		border-radius: 100px;
+		background: color-mix(in srgb, var(--paper) 78%, transparent);
+		backdrop-filter: blur(6px);
+		color: var(--ink-soft);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		letter-spacing: 0.06em;
+	}
+
+	.summary-arrow {
+		position: absolute;
+		top: 50%;
+		z-index: 3;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 42px;
+		height: 42px;
+		border: 1px solid var(--line-strong);
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--paper) 82%, transparent);
+		backdrop-filter: blur(6px);
+		color: var(--ink-soft);
+		font-size: 0.95rem;
+		cursor: pointer;
+		transform: translateY(-50%);
+		transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+	}
+
+	.summary-arrow:hover {
+		border-color: var(--accent);
+		background: var(--surface);
+		color: var(--accent);
+	}
+
+	.summary-arrow.is-prev {
+		left: 12px;
+	}
+
+	.summary-arrow.is-next {
+		right: 12px;
+	}
+
+	.summary-stage-empty {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+
+	.summary-dots {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.42rem;
+		margin-top: 1rem;
+	}
+
+	.summary-dot {
+		width: 7px;
+		height: 7px;
+		padding: 0;
+		border: 0;
+		border-radius: 100px;
+		background: var(--line-strong);
+		cursor: pointer;
+		transition:
+			width 0.25s var(--ease),
+			background 0.25s ease;
+	}
+
+	.summary-dot:hover {
+		background: var(--muted);
+	}
+
+	.summary-dot.is-active {
+		width: 22px;
+		background: var(--accent);
+	}
+
+	.summary-hint {
+		margin: 0.65rem 0 0;
+		color: var(--muted);
+		font-size: 0.7rem;
+		letter-spacing: 0.04em;
+		text-align: center;
+	}
+
+	/* ---------- 右侧：配文 ---------- */
+
+	.summary-info {
+		position: sticky;
+		top: 88px;
+		max-height: calc(100dvh - 112px);
+		padding: 1.6rem;
+		overflow-y: auto;
+		border: 1px solid var(--line);
+		background: var(--surface);
+		box-shadow: var(--shadow-sm);
+		scrollbar-width: thin;
+		scrollbar-color: var(--line-strong) transparent;
+	}
+
+	.summary-info-title {
+		margin: 0 0 0.9rem;
+		font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+		line-height: 1.42;
+		letter-spacing: -0.02em;
+	}
+
+	.summary-caption {
+		color: var(--ink-soft);
+		font-size: 0.92rem;
+		line-height: 1.9;
+	}
+
+	.summary-caption :global(p) {
+		margin: 0 0 1em;
+	}
+
+	.summary-caption :global(p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.summary-caption :global(a) {
+		word-break: break-all;
+	}
+
+	.summary-hashtags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		margin: 1.1rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.summary-hashtags li {
+		color: var(--accent);
+		font-size: 0.74rem;
+		letter-spacing: 0.02em;
+	}
+
+	.summary-info-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.55rem;
+		margin-top: 1.2rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--line);
+		color: var(--muted);
+		font-size: 0.74rem;
+		letter-spacing: 0.04em;
+	}
+
+	.summary-taglist {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0.8rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.summary-taglist li {
+		padding: 0.2rem 0.6rem;
+		border: 1px solid var(--line);
+		border-radius: 100px;
+		color: var(--ink-soft);
+		font-size: 0.68rem;
+		letter-spacing: 0.03em;
+	}
+
+	.summary-info-actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-top: 1.3rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--line);
+	}
+
+	.copy-button {
+		padding: 0.38rem 0.8rem;
+		border: 1px solid var(--line-strong);
+		border-radius: 2px;
+		background: transparent;
+		color: var(--ink-soft);
+		font-family: var(--font-sans);
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		cursor: pointer;
+		transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+	}
+
+	.copy-button:hover,
+	.copy-button.is-copied {
+		color: var(--accent);
+		border-color: var(--accent);
+		background: var(--accent-soft);
+	}
+
+	.summary-source {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		color: var(--accent);
+		font-size: 0.74rem;
+		text-decoration: none;
+	}
+
+	.summary-source svg {
+		width: 13px;
+		height: 13px;
+	}
+
+	.summary-aside-note {
+		margin: 0.9rem 0 0;
+		color: var(--muted);
+		font-size: 0.66rem;
+		line-height: 1.7;
+		letter-spacing: 0.03em;
+	}
+
+	.summary-note-nav {
+		display: grid;
+		gap: 0.7rem;
+		margin-top: 1.2rem;
+	}
+
+	.summary-nav-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		padding: 0.8rem 0.9rem;
+		border: 1px solid var(--line);
+		color: var(--ink-soft);
+		font-size: 0.78rem;
+		line-height: 1.5;
+		text-decoration: none;
+		transition: border-color 0.2s ease, color 0.2s ease;
+	}
+
+	.summary-nav-item:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.summary-nav-item.is-right {
+		text-align: right;
+	}
+
+	/* ---------- 灯箱 ---------- */
+
+	.lightbox {
+		width: 100vw;
+		max-width: none;
+		height: 100dvh;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: rgba(20, 19, 16, 0.94);
+		color: #ece9e1;
+	}
+
+	.lightbox::backdrop {
+		background: rgba(20, 19, 16, 0.94);
+	}
+
+	.lightbox-bar {
+		position: absolute;
+		inset: 0 0 auto;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.9rem 1.2rem;
+		background: linear-gradient(rgba(20, 19, 16, 0.92), transparent);
+		font-size: 0.74rem;
+		letter-spacing: 0.06em;
+	}
+
+	.lightbox-count {
+		color: #b9b3a6;
+		font-family: var(--font-mono);
+	}
+
+	.lightbox-title {
+		overflow: hidden;
+		color: #ece9e1;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.lightbox-close {
+		margin-left: auto;
+		padding: 0.4rem 0.85rem;
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		border-radius: 100px;
+		background: rgba(23, 22, 19, 0.8);
+		color: #ece9e1;
+		font-family: var(--font-sans);
+		font-size: 0.72rem;
+		cursor: pointer;
+	}
+
+	.lightbox-close:hover {
+		border-color: rgba(255, 255, 255, 0.7);
+	}
+
+	.lightbox-stage {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4rem 3.5rem;
+	}
+
+	.lightbox-frame {
+		position: relative;
+		width: min(92vw, calc(84dvh * var(--ratio)));
+		aspect-ratio: var(--ratio);
+		max-height: 84dvh;
+		overflow: hidden;
+		background: #faf8f3;
+		box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+	}
+
+	.lightbox-frame :global(iframe),
+	.lightbox-frame :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	.lightbox-frame :global(img) {
+		object-fit: contain;
+	}
+
+	.lightbox-nav {
+		position: fixed;
+		top: 50%;
+		z-index: 2;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 46px;
+		height: 46px;
+		border: 1px solid rgba(255, 255, 255, 0.32);
+		border-radius: 50%;
+		background: rgba(23, 22, 19, 0.75);
+		color: #ece9e1;
+		font-size: 1rem;
+		cursor: pointer;
+		transform: translateY(-50%);
+	}
+
+	.lightbox-nav:hover {
+		border-color: rgba(255, 255, 255, 0.7);
+	}
+
+	.lightbox-nav.is-prev {
+		left: max(0.8rem, env(safe-area-inset-left));
+	}
+
+	.lightbox-nav.is-next {
+		right: max(0.8rem, env(safe-area-inset-right));
+	}
+
+	.lightbox-nav:disabled {
+		opacity: 0.3;
+		cursor: default;
+	}
+
+	:global(html.lightbox-open) {
+		overflow: hidden;
+	}
+
+	@media (max-width: 1080px) {
+		.summary-reader {
+			grid-template-columns: minmax(0, 1fr) 340px;
+		}
+	}
+
+	@media (max-width: 1020px) {
+		.summary-reader {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.summary-stage {
+			--stage-h: auto;
+			width: 100%;
+			max-width: 560px;
+			height: auto;
+			margin-inline: auto;
+			padding: 0;
+		}
+
+		.summary-track {
+			height: auto;
+			padding-inline: 0;
+			gap: 12px;
+		}
+
+		.summary-slide {
+			height: auto;
+			width: 100%;
+			aspect-ratio: var(--ratio);
+			opacity: 1;
+			transform: none;
+		}
+
+		.summary-info {
+			position: static;
+			width: 100%;
+			max-width: 560px;
+			max-height: none;
+			margin-inline: auto;
+		}
+
+		/* 移动端图卡占满宽度，翻页交给滑动和圆点，避免箭头压住图卡内容 */
+		.summary-arrow {
+			display: none;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.summary-topbar {
+			padding: 1rem 0;
+		}
+
+		.summary-reader {
+			padding-top: 1.2rem;
+		}
+
+		.summary-info {
+			padding: 1.2rem;
+		}
+
+		.summary-arrow {
+			width: 36px;
+			height: 36px;
+		}
+
+		.summary-arrow.is-prev {
+			left: 8px;
+		}
+
+		.summary-arrow.is-next {
+			right: 8px;
+		}
+
+		.lightbox-stage {
+			padding: 3.6rem 0.5rem;
+		}
+
+		.lightbox-nav {
+			top: auto;
+			bottom: max(1rem, env(safe-area-inset-bottom));
+			transform: none;
+		}
+	}
+</style>

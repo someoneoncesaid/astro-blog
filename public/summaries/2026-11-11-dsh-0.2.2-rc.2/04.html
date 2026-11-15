@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitHub 同步</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.rc2card{position:relative;width:1080px;height:1440px;background:#faf9f4;padding:70px 82px 96px;overflow:hidden;background-image:linear-gradient(rgba(0,47,167,0.016) 1px,transparent 1px),linear-gradient(90deg,rgba(0,47,167,0.016) 1px,transparent 1px);background-size:54px 54px;font-family:"PingFang SC","Noto Sans CJK SC",sans-serif;color:#172033;box-sizing:border-box}
+.rc2card *{box-sizing:border-box}
+.rc2card:before{content:"";position:absolute;left:30px;top:30px;width:20px;height:20px;border-top:1px solid #002FA7;border-left:1px solid #002FA7}
+.rc2card .kicker{font-size:20px;letter-spacing:3px;color:#002FA7;font-weight:650;border-bottom:1px solid #d7dce5;padding-bottom:20px}
+.rc2card h1{font-size:64px;line-height:1.14;letter-spacing:-2px;margin:30px 0 16px;font-weight:720}
+.rc2card h1 em{font-style:normal;color:#002FA7}
+.rc2card .deck{font-size:25px;line-height:1.5;color:#667080;margin:0 0 24px}
+.rc2card .visual{position:relative;z-index:1}
+.rc2card .note{position:absolute;bottom:96px;left:82px;right:118px;font-size:20px;line-height:1.5;color:#667080;border-top:1px solid #d7dce5;padding-top:16px}
+.rc2card .footer{position:absolute;left:82px;right:82px;bottom:44px;display:flex;justify-content:space-between;font-size:20px;letter-spacing:2px;color:#002FA7}
+.rc2card .watermark{position:absolute;right:24px;top:700px;writing-mode:vertical-rl;letter-spacing:5px;font-size:17px;color:rgba(0,47,167,0.2);z-index:2}
+.rc2card .callout{border-left:5px solid #002FA7;background:rgba(0,47,167,0.035);padding:16px 22px;font-size:22px;line-height:1.55;margin-top:18px}
+.rc2card .shot-label{display:flex;justify-content:space-between;gap:20px;border:1px solid #d7dce5;border-bottom:0;padding:15px 20px;background:#fffdf8;font-size:20px;color:#667080}
+.rc2card .shot-label b{color:#002FA7;font-weight:600}
+.rc2card .shot{margin:0;background:#ffffff;border:1px solid #d7dce5;overflow:hidden;position:relative}
+.rc2card .shot img{display:block;max-width:none;height:auto}
+.rc2card .dshview{height:282px}
+.rc2card .dshview img{position:absolute;width:100%;left:0;top:-79px}
+.rc2card .ghweb{height:360px}
+.rc2card .ghweb img{position:absolute;width:3614px;left:-2650px;top:-345px}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="rc2card">
+  <div class="kicker">03 / GITHUB VIEWED</div>
+  <h1>在 DSH 勾选<br><em>GitHub 也能看到</em></h1>
+  <p class="deck">同一个测试 PR，两边的已审阅状态一致。</p>
+  <div class="visual">
+    <div class="shot-label"><b>测试 PR #1 / DSH</b><span>刷新后 · 已审阅 2 / 3</span></div>
+    <figure class="shot dshview" style="margin:0"><img src="assets/rel-5b0d3aff.jpg" alt="DSH 刷新后显示已审阅 2/3，cart.d.ts 与 cart.test.mjs 已审阅"></figure>
+    <div class="shot-label" style="margin-top:16px"><b>同一 PR / GitHub</b><span>已审阅 2 / 3</span></div>
+    <figure class="shot ghweb" style="margin:0"><img src="assets/rel-3a1e945f.png" alt="GitHub 网页端显示 2/3 viewed，cart.d.ts 与 tests 勾选 Viewed，src/cart.mjs 未勾选"></figure>
+    <div class="callout">DSH 勾选，GitHub 保存；<br>GitHub 端标记，DSH 刷新后同步。</div>
+  </div>
+  <div class="note">上方为 DSH，下方为 GitHub。同一 PR 的已审阅状态，经独立 API 查询复核一致。</div>
+  <span class="watermark">SOMEONE ONCE SAID</span>
+  <div class="footer"><span>DEEPSEEK HARNESS / 0.2.2-rc.2</span><span>04 / 11</span></div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>传输适配</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position:relative;width:1080px;height:1440px;background:#FBF8F3;overflow:hidden;font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;color:#17181A;display:flex;flex-direction:column;padding:72px 84px 56px;">
+
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="font-size:26px;font-weight:800;color:#002FA7;letter-spacing:2px;">02 / 07</div>
+    <div style="width:1px;height:24px;background:#D8D0BE;"></div>
+    <div style="font-size:26px;color:#6B665A;letter-spacing:6px;">传输适配</div>
+  </div>
+  <h1 style="margin:16px 0 0;font-size:56px;line-height:1.28;font-weight:800;color:#17181A;">页面地址固定，后台端口可变</h1>
+  <div style="width:64px;height:6px;background:#002FA7;border-radius:3px;margin-top:24px;"></div>
+
+  <div style="margin-top:28px;">
+    <div style="font-size:26px;line-height:1.6;color:#3A382F;">页面不再挂在 <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:23px;">http://</span> 上，三路分流由 <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:23px;">protocol.handle</span> 承担：</div>
+    <svg viewBox="0 0 912 368" width="912" height="368" role="img" aria-labelledby="route-flow-title route-flow-desc" style="display:block;margin-top:20px;">
+      <title id="route-flow-title">dsh-app 协议三路分流</title>
+      <desc id="route-flow-desc">页面请求进入 protocol.handle 后按路径分为三路：shell 自有文件不经 Host，静态资源直接本地读取，其余请求用 Node fetch 转发给 Host。</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#6B665A"/>
+        </marker>
+      </defs>
+      <line x1="456" y1="72" x2="456" y2="112" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M386,188 V216 Q386,224 378,224 H160 Q152,224 152,232 V261" fill="none" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="456" y1="188" x2="456" y2="261" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M526,188 V216 Q526,224 534,224 H752 Q760,224 760,232 V261" fill="none" stroke="#6B665A" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <rect x="208" y="196" width="96" height="22" rx="2" fill="#FBF8F3"/>
+      <text x="256" y="211" text-anchor="middle" font-size="18" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace" letter-spacing="0.06em">shell/*</text>
+      <rect x="468" y="228" width="88" height="24" rx="2" fill="#FBF8F3"/>
+      <text x="470" y="245" font-size="18" fill="#6B665A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">静态资源</text>
+      <rect x="600" y="196" width="108" height="22" rx="2" fill="#FBF8F3"/>
+      <text x="654" y="211" text-anchor="middle" font-size="18" fill="#6B665A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">其余请求</text>
+      <g>
+        <rect x="316" y="0" width="280" height="72" rx="6" fill="#FBF8F3"/>
+        <rect x="316" y="0" width="280" height="72" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="456" y="30" text-anchor="middle" font-size="22" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">页面请求</text>
+        <text x="456" y="56" text-anchor="middle" font-size="18" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">dsh-app://app/*</text>
+      </g>
+      <g>
+        <rect x="316" y="116" width="280" height="72" rx="6" fill="#FBF8F3"/>
+        <rect x="316" y="116" width="280" height="72" rx="6" fill="rgba(0,47,167,0.08)" stroke="#002FA7" stroke-width="1.2"/>
+        <text x="456" y="146" text-anchor="middle" font-size="22" font-weight="600" fill="#17181A" font-family="'SF Mono',ui-monospace,Menlo,monospace">protocol.handle</text>
+        <text x="456" y="172" text-anchor="middle" font-size="18" fill="#6B665A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">承担 Web 端 nginx 的角色</text>
+      </g>
+      <g>
+        <rect x="8" y="264" width="288" height="104" rx="6" fill="#FBF8F3"/>
+        <rect x="8" y="264" width="288" height="104" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="152" y="302" text-anchor="middle" font-size="24" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">shell 自有文件</text>
+        <text x="152" y="330" text-anchor="middle" font-size="18" fill="#6B665A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">不经 Host · renderer · welcome</text>
+      </g>
+      <g>
+        <rect x="312" y="264" width="288" height="104" rx="6" fill="#FBF8F3"/>
+        <rect x="312" y="264" width="288" height="104" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="456" y="302" text-anchor="middle" font-size="24" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">静态资源本地读</text>
+        <text x="456" y="330" text-anchor="middle" font-size="18" fill="#6B665A" font-family="'SF Mono',ui-monospace,Menlo,monospace">dsh-web-frontend/dist</text>
+      </g>
+      <g>
+        <rect x="616" y="264" width="288" height="104" rx="6" fill="#FBF8F3"/>
+        <rect x="616" y="264" width="288" height="104" rx="6" fill="#FFFFFF" stroke="#17181A" stroke-width="1"/>
+        <text x="760" y="302" text-anchor="middle" font-size="24" font-weight="600" fill="#17181A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">转发给 Host</text>
+        <text x="760" y="330" text-anchor="middle" font-size="18" fill="#6B665A" font-family="-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif">Node fetch 原样转发</text>
+      </g>
+    </svg>
+    <div style="margin-top:10px;font-size:21px;line-height:1.5;color:#6B665A;">静态资源走精确白名单（/、index.html、/assets/*、favicon.svg、manifest.webmanifest），Host 没起来也能显示 loading；未就绪时返回 503，其它 hostname 返回 404。</div>
+  </div>
+
+  <div style="margin-top:18px;">
+    <div style="font-size:22px;letter-spacing:3px;color:#6B665A;font-weight:700;">认证闭环三步</div>
+    <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:16px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#002FA7;color:#FFFFFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">1</div>
+        <div style="flex:1;font-size:24px;line-height:1.5;color:#3A382F;"><b style="color:#17181A;">拿凭据</b>：authenticateWebHost 以 <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:22px;">redirect:'manual'</span> 请求认证 URL，截取 303 响应的 set-cookie 第一段。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#002FA7;color:#FFFFFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">2</div>
+        <div style="flex:1;font-size:24px;line-height:1.5;color:#3A382F;"><b style="color:#17181A;">藏凭据</b>：cookie 只由主进程持有，转发时替换请求头，响应剔除 set-cookie——页面 cookie jar 里永远没有它。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#002FA7;color:#FFFFFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">3</div>
+        <div style="flex:1;font-size:24px;line-height:1.5;color:#3A382F;"><b style="color:#17181A;">清尾巴</b>：Host 每次端口不同而 cookie 无视端口，启动时先删历史版本留下的 <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:22px;">dsh-auth-*</span>。</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;background:rgba(0,47,167,0.06);border-radius:14px;padding:18px 24px;display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:22px;line-height:1.5;color:#3A382F;"><b style="color:#002FA7;">插件 bundle 强制 no-store</b>：revision 随产物内容变化，别当成「每次启动必换」；对 /plugins/ 前缀覆写 cache-control，避免缓存只增不减。</div>
+    <div style="font-size:22px;line-height:1.5;color:#3A382F;"><b style="color:#002FA7;">WebSocket 另走拦截</b>：onBeforeSendHeaders 校验 host / protocol / origin：不符则原样发送、不注入凭据，origin 不符取消连接；全通过才补 cookie 并改写 origin。</div>
+  </div>
+
+  <div style="margin-top:auto;">
+    <div style="height:1px;background:#E3DCCB;margin-bottom:22px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:23px;color:#6B665A;letter-spacing:1px;">DeepSeek Harness · Electron 桌面适配</div>
+      <div style="font-size:23px;color:#6B665A;">03 / 08</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;right:22px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:20px;letter-spacing:7px;font-weight:700;color:rgba(0,47,167,0.2);white-space:nowrap;">THIN SHELL · FULL WEB</div>
+
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

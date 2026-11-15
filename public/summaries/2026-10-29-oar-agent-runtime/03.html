@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>生命周期</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:900px;height:1200px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;font-family:Inter,"PingFang SC","Noto Sans CJK SC",sans-serif;background:#f3f1e9;color:#171a1f}a{color:#1646a0}a:hover{color:#0e3174}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:900px;height:1200px;box-sizing:border-box;padding:62px 66px 50px;background:#f3f1e9;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;justify-content:space-between;border-bottom:2px solid #171a1f;padding-bottom:14px;font-size:16px;letter-spacing:1px"><span>02 / 生命周期</span><span>以 Codex 为例</span></div>
+<div style="font-size:57px;line-height:1.08;font-weight:850;letter-spacing:-1.5px">一项任务，<br>从启动到收尾</div>
+<div style="font-size:20px;line-height:1.45">先选运行时并打开会话，再发任务、观察结果，最后释放资源。</div>
+<div style="display:flex;flex-direction:column;gap:0">
+<div style="display:flex;gap:20px;padding:15px 0;border-top:1px solid #9c9f9c"><div style="width:42px;height:42px;flex:none;background:#1646a0;color:white;display:flex;align-items:center;justify-content:center;font-weight:800">1</div><div style="font-size:17px;line-height:1.4"><b>选择 Runtime</b><br>从注册表取出 Codex 对应的运行时实现。</div></div>
+<div style="display:flex;gap:20px;padding:15px 0;border-top:1px solid #9c9f9c"><div style="width:42px;height:42px;flex:none;background:#1646a0;color:white;display:flex;align-items:center;justify-content:center;font-weight:800">2</div><div style="font-size:17px;line-height:1.4"><b>确认安装可用</b><br>调用 installation()；只有返回 available 才继续。</div></div>
+<div style="display:flex;gap:20px;padding:15px 0;border-top:1px solid #9c9f9c"><div style="width:42px;height:42px;flex:none;background:#1646a0;color:white;display:flex;align-items:center;justify-content:center;font-weight:800">3</div><div style="font-size:17px;line-height:1.4"><b>打开 Session</b><br>传入安装结果与工作目录；订阅事件以观察过程。</div></div>
+<div style="display:flex;gap:20px;padding:15px 0;border-top:1px solid #9c9f9c"><div style="width:42px;height:42px;flex:none;background:#1646a0;color:white;display:flex;align-items:center;justify-content:center;font-weight:800">4</div><div style="font-size:17px;line-height:1.4"><b>发送任务并等待本轮结果</b><br>promptAndWait() 将输入关联到对应 Turn；事件可同时流向界面。</div></div>
+<div style="display:flex;gap:20px;padding:15px 0;border-top:1px solid #9c9f9c"><div style="width:42px;height:42px;flex:none;background:#1646a0;color:white;display:flex;align-items:center;justify-content:center;font-weight:800">5</div><div style="font-size:17px;line-height:1.4"><b>读取结果，释放会话</b><br>检查完成或拒绝结果；不再使用时调用 dispose()。</div></div></div>
+<div style="padding:20px;background:#171a1f;color:#eef0f3"><div style="font-size:16px;color:#a9c1ff;margin-bottom:12px">TypeScript 调用示例 · 省略 import；直接使用 process.cwd()</div><div style="font-family:ui-monospace,monospace;font-size:14px;line-height:1.55;white-space:pre-wrap">const runtime = defaultRuntimes.require("codex")
+const found = await runtime.installation?.()
+if (found?.kind !== "available") throw Error("Codex unavailable")
+const session = await runtime.session(found, { cwd: process.cwd() })
+try { await promptAndWait(session, "修复问题") }
+finally { await session.dispose() }</div></div>
+<div style="font-size:15px;line-height:1.45">两个时间点：Turn 结束：本轮有结果 · dispose()：释放会话资源<br>一个 Session 可以承载后续交互。</div>
+<div style="font-size:14px;line-height:1.4;color:#30353a">依据： <a href="https://github.com/botiverse/oar/blob/main/packages/oar/README.md">https://github.com/botiverse/oar/blob/main/packages/oar/README.md</a> @botiverse/oar README 的使用示例。</div>
+<div style="display:flex;justify-content:flex-end;border-top:1px solid #8d918f;padding-top:12px;font-size:15px">03 / 08</div>
+</div></div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 900, H = 1200;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

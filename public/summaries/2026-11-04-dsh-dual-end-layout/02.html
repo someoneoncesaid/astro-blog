@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DSH 的双端适配，最值得学这四点</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+</head>
+<body>
+<div id="xhs-card"><style>body{margin:0}.overview-figure svg{display:block;width:100%;height:auto}</style>
+<div style="position:relative;width:1080px;height:1440px;padding:56px 96px 46px 88px;box-sizing:border-box;background:#F7F5F0;color:#17181C;font-family:'PingFang SC',-apple-system,'Microsoft YaHei',sans-serif;display:flex;flex-direction:column;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding-bottom:25px;border-bottom:1px solid #D8D4C9;font-size:18px;color:#5A5E66"><span>DSH / 核心经验</span><span>02 / 10</span></div>
+<div style="margin-top:34px;font-size:21px;color:#002FA7">从具体实现，提炼可借鉴的设计方法</div>
+<h1 style="font-size:70px;line-height:1.12;margin:18px 0 0;font-weight:800;letter-spacing:-.04em">DSH 的双端适配，<br>最值得学这四点</h1>
+<p style="font-size:26px;line-height:1.55;color:#3A3E45;margin:22px 0 28px">把不同适配问题交给各自合适的机制，<br>让一套界面在不同设备上保留连贯的使用体验。</p>
+<div class="overview-figure" style="width:896px;max-width:100%;align-self:center;flex:none"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 896 716" role="img" aria-labelledby="dsh-lessons-title dsh-lessons-desc">
+<title id="dsh-lessons-title">从 DSH 双端方案提炼的四条核心经验</title>
+<desc id="dsh-lessons-desc">拆开适配判断、复用界面并分配空间、覆盖完整交互过程、按生命周期管理状态。</desc>
+<g transform="translate(0 0)">
+<rect x="1" y="1" width="894" height="163" rx="10" fill="#FDFCF9" stroke="#D8D4C9"/>
+<rect x="1" y="1" width="68" height="163" rx="10" fill="#E8EDF9"/>
+<path d="M69 2v161" stroke="#D2DBEE"/>
+<text x="35" y="46" text-anchor="middle" fill="#002FA7" font-family="Menlo,monospace" font-size="22">01</text>
+<text x="92" y="40" fill="#17181C" font-size="29" font-weight="700">拆开适配信号，各自负责判断</text>
+<foreignObject x="92" y="57" width="770" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'PingFang SC',sans-serif;font-size:24px;line-height:1.5;color:#3A3E45">宽度决定布局，输入能力决定操作；移动平台与桌面运行时，分别处理焦点策略和原生能力。</div></foreignObject>
+<text x="92" y="145" fill="#002FA7" font-size="21">窄窗口不等于手机；触屏电脑也可能同时有鼠标。</text>
+</g>
+<g transform="translate(0 178)">
+<rect x="1" y="1" width="894" height="163" rx="10" fill="#FDFCF9" stroke="#D8D4C9"/>
+<rect x="1" y="1" width="68" height="163" rx="10" fill="#E8EDF9"/>
+<path d="M69 2v161" stroke="#D2DBEE"/>
+<text x="35" y="46" text-anchor="middle" fill="#002FA7" font-family="Menlo,monospace" font-size="22">02</text>
+<text x="92" y="40" fill="#17181C" font-size="29" font-weight="700">复用界面结构，按空间安排优先级</text>
+<foreignObject x="92" y="57" width="770" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'PingFang SC',sans-serif;font-size:24px;line-height:1.5;color:#3A3E45">会话与输入优先，侧栏按宽度切换常驻、图标栏与抽屉，原组件继续复用。</div></foreignObject>
+<text x="92" y="145" fill="#002FA7" font-size="21">先决定内容优先级，再设计断点与区域切换。</text>
+</g>
+<g transform="translate(0 356)">
+<rect x="1" y="1" width="894" height="163" rx="10" fill="#FDFCF9" stroke="#D8D4C9"/>
+<rect x="1" y="1" width="68" height="163" rx="10" fill="#E8EDF9"/>
+<path d="M69 2v161" stroke="#D2DBEE"/>
+<text x="35" y="46" text-anchor="middle" fill="#002FA7" font-family="Menlo,monospace" font-size="22">03</text>
+<text x="92" y="40" fill="#17181C" font-size="29" font-weight="700">覆盖完整操作，管理焦点与入口</text>
+<foreignObject x="92" y="57" width="770" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'PingFang SC',sans-serif;font-size:24px;line-height:1.5;color:#3A3E45">触屏补可见入口；手机减少自动聚焦；抽屉隔离背景，并在关闭后归还焦点。</div></foreignObject>
+<text x="92" y="145" fill="#002FA7" font-size="21">按“进入 → 输入 → 打开 → 关闭”检查完整操作。</text>
+</g>
+<g transform="translate(0 534)">
+<rect x="1" y="1" width="894" height="163" rx="10" fill="#FDFCF9" stroke="#D8D4C9"/>
+<rect x="1" y="1" width="68" height="163" rx="10" fill="#E8EDF9"/>
+<path d="M69 2v161" stroke="#D2DBEE"/>
+<text x="35" y="46" text-anchor="middle" fill="#002FA7" font-family="Menlo,monospace" font-size="22">04</text>
+<text x="92" y="40" fill="#17181C" font-size="29" font-weight="700">区分临时状态与长期偏好</text>
+<foreignObject x="92" y="57" width="770" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'PingFang SC',sans-serif;font-size:24px;line-height:1.5;color:#3A3E45">跨断点清临时展开，像素宽度偏好独立保存；切换面板形态时尽量保留内容树。</div></foreignObject>
+<text x="92" y="145" fill="#002FA7" font-size="21">分别决定哪些要重置、哪些要保留；草稿恢复另行核对。</text>
+</g>
+</svg></div>
+<p style="font-size:24px;line-height:1.6;color:#002FA7;margin:22px 0">可以借鉴的方法：判断拆开、界面复用、交互走全、状态分清。</p>
+<div style="margin-top:auto;border-top:1px solid #D8D4C9;padding-top:20px;font-size:17px;color:#5A5E66">后文按场景拆解实现与限制，另附桌面顶部入口实图</div>
+<div style="position:absolute;right:30px;bottom:96px;writing-mode:vertical-rl;font:13px ui-monospace,Menlo,monospace;letter-spacing:.4em;color:#002FA7;opacity:.2">SOMEONE ONCE SAID</div>
+</div></div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

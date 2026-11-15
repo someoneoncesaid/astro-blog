@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>完整链路</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#F7F4EE}
+.card{position:relative;width:1080px;height:1440px;background:#F7F4EE;color:#17171A;overflow:hidden;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.card .pad{position:absolute;inset:0;padding:76px 96px 60px 80px;display:flex;flex-direction:column;box-sizing:border-box}
+.kick{display:flex;justify-content:space-between;align-items:baseline;font-size:21px;letter-spacing:.16em;color:#6E6A5E}
+.kick .b{font-weight:600;color:#17171A;letter-spacing:.10em}
+.rule{height:1px;background:#DCD5C6;margin-top:18px;flex:none}
+.eyebrow{margin-top:44px;font-size:22px;letter-spacing:.22em;color:#002FA7;font-weight:600}
+.h1{margin:18px 0 0;font-family:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:600;font-size:64px;line-height:1.30;letter-spacing:.01em}
+.steps{margin:34px 0 0;display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:22px;padding:17px 0;border-top:1px solid #E2DBCB}
+.step:first-child{border-top:0}
+.step .n{flex:none;width:38px;height:38px;border-radius:50%;background:#002FA7;color:#FFFDF8;font-size:19px;line-height:38px;text-align:center;letter-spacing:0}
+.step .t{font-size:26px;line-height:1.45;color:#33302A;padding-top:3px}
+.step .t b{font-weight:600;color:#17171A}
+.step .t span{color:#002FA7}
+.closing{margin-top:26px;background:#E9EDF9;padding:26px 28px;border-radius:3px}
+.closing p{margin:0;font-size:25px;line-height:1.7;color:#1E2B54}
+.closing p b{font-weight:600;color:#002FA7}
+.foot{margin-top:22px;padding-top:20px;border-top:1px solid #DCD5C6;display:flex;justify-content:space-between;gap:24px;font-size:19px;color:#8A8578;letter-spacing:.03em}
+.mark{position:absolute;top:104px;right:26px;writing-mode:vertical-rl;font-size:13px;letter-spacing:.34em;color:rgba(0,47,167,.20);font-family:"Helvetica Neue",Arial,sans-serif}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="card">
+  <span class="mark">SOMEONE ONCE SAID</span>
+  <div class="pad">
+    <div class="kick"><span><span class="b">常驻 AGENT</span> · 架构拆解</span><span>08 / 08</span></div>
+    <div class="rule"></div>
+    <div class="eyebrow">串起来 · 一次周五汇总</div>
+    <h1 class="h1" style="font-size:60px">周五到了，<br>五个组件依次上场</h1>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="t">调度器把「汇总项目进度」写入收件箱</div></div>
+      <div class="step"><div class="n">2</div><div class="t">worker 取出事件，启动一次 run</div></div>
+      <div class="step"><div class="n">3</div><div class="t">读取偏好与上次汇报，再取项目最新状态</div></div>
+      <div class="step"><div class="n">4</div><div class="t">一项延期要你定夺：<span>保存会话、发问、结束 run</span></div></div>
+      <div class="step"><div class="n">5</div><div class="t">你回复后，新事件唤醒新 run，接续原会话</div></div>
+      <div class="step"><div class="n">6</div><div class="t">保存本次进度，把结果交给投递渠道</div></div>
+    </div>
+    <div class="closing">
+      <p>模型跑的还是熟悉的 Agent 循环。工程上要设计的，是<b>每次运行之间的交接</b>：事件能重新取到、进度能接续、决定能挂起、消息按合适时机送达。</p>
+      <p style="margin-top:16px;font-size:21px;line-height:1.7;color:#3A3C4A">常驻不等于一直在跑。这五个组件决定的，只是它多久运行一次、醒来知道什么、什么时候打扰你。</p>
+    </div>
+    <div class="foot" style="margin-top:auto"><span>William Hu · Anthropic《Building always-on agents》· 2026-11-13</span><span>完整链路</span></div>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

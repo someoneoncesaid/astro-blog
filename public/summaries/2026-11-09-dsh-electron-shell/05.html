@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profile 所有权</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position:relative;width:1080px;height:1440px;background:#FBF8F3;overflow:hidden;font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;color:#17181A;display:flex;flex-direction:column;padding:72px 84px 56px;">
+
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="font-size:26px;font-weight:800;color:#002FA7;letter-spacing:2px;">04 / 07</div>
+    <div style="width:1px;height:24px;background:#D8D0BE;"></div>
+    <div style="font-size:26px;color:#6B665A;letter-spacing:6px;">Profile 所有权</div>
+  </div>
+  <h1 style="margin:16px 0 0;font-size:56px;line-height:1.28;font-weight:800;color:#17181A;">桌面插件装在哪里？</h1>
+  <div style="width:64px;height:6px;background:#002FA7;border-radius:3px;margin-top:24px;"></div>
+
+  <div style="margin-top:30px;background:#FFFFFF;border:1.5px solid #E3DCCB;border-radius:16px;padding:24px 28px;">
+    <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:24px;font-weight:700;color:#002FA7;">$DSH_HOME/profiles/desktop</div>
+    <div style="margin-top:16px;display:flex;gap:24px;">
+      <div style="flex:1;">
+        <div style="font-size:22px;font-weight:800;color:#17181A;letter-spacing:2px;">共享</div>
+        <div style="margin-top:6px;font-size:22px;line-height:1.55;color:#6B665A;">产品数据：会话 · 设置 · 凭据 · 工作区</div>
+      </div>
+      <div style="width:1px;background:#E3DCCB;"></div>
+      <div style="flex:1;">
+        <div style="font-size:22px;font-weight:800;color:#17181A;letter-spacing:2px;">隔开</div>
+        <div style="margin-top:6px;font-size:22px;line-height:1.55;color:#6B665A;">可执行包 · 插件激活 · 锁文件 · node_modules</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;">
+    <div style="font-size:22px;letter-spacing:3px;color:#6B665A;font-weight:700;">先准备桌面配置，再启动后台</div>
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:16px;">
+      <div style="display:flex;gap:16px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#002FA7;color:#FFFFFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">1</div>
+        <div style="flex:1;font-size:25px;line-height:1.58;color:#3A382F;"><b style="color:#17181A;">核对安装包</b>。检查随应用发布的后台组件版本。版本对不上，就停在启动前。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#002FA7;color:#FFFFFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">2</div>
+        <div style="flex:1;font-size:25px;line-height:1.58;color:#3A382F;"><b style="color:#17181A;">迁移旧配置</b>。识别到旧版工作区配置时，更新它的格式。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#002FA7;color:#FFFFFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">3</div>
+        <div style="flex:1;font-size:25px;line-height:1.58;color:#3A382F;"><b style="color:#17181A;">补齐缺失文件</b>。用默认模板补齐桌面插件配置，保留已有设置。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#002FA7;color:#FFFFFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">4</div>
+        <div style="flex:1;font-size:25px;line-height:1.58;color:#3A382F;"><b style="color:#17181A;">清理旧版软链接</b>。移除旧启动方式留在插件目录里的链接。</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:26px;background:rgba(0,47,167,0.07);border-radius:14px;padding:24px 26px;">
+    <div style="font-size:26px;line-height:1.55;font-weight:800;color:#002FA7;">配置准备好、拿到目录锁，才启动 Host。</div>
+    <div style="margin-top:8px;font-size:23px;line-height:1.6;color:#3A382F;">这一步只整理配置。需要装插件时，在应用的 Plugins 页手动安装。</div>
+  </div>
+
+  <div style="margin-top:auto;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;gap:16px;">
+        <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+        <div style="flex:1;font-size:25px;line-height:1.6;color:#3A382F;"><b style="color:#17181A;">并发保护</b>：lock 文件记录 PID，已存在先 kill(pid, 0) 验活，确认退出才重开。</div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+        <div style="flex:1;font-size:25px;line-height:1.6;color:#3A382F;"><b style="color:#17181A;">恢复路径</b>：disableAllPlugins 复用共享 sanitizeProfile——锁住写盘、禁用全部三方 bundle，不依赖 Host 可用。</div>
+      </div>
+    </div>
+    <div style="height:1px;background:#E3DCCB;margin:26px 0 22px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:23px;color:#6B665A;letter-spacing:1px;">DeepSeek Harness · Electron 桌面适配</div>
+      <div style="font-size:23px;color:#6B665A;">05 / 08</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;right:22px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:20px;letter-spacing:7px;font-weight:700;color:rgba(0,47,167,0.2);white-space:nowrap;">THIN SHELL · FULL WEB</div>
+
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>50+ 行为</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.ui-card{font-family:-apple-system,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:#FBFAF6;color:#17171A;position:relative;width:1080px;height:1440px;box-sizing:border-box;display:flex;flex-direction:column;padding:80px 118px 64px 88px}
+.ui-mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="ui-card">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:26px;font-weight:700;letter-spacing:6px;color:#002FA7">零件清单</div>
+    <div style="font-size:24px;color:#8A8A90" class="ui-mono">03 / 08</div>
+  </div>
+  <div style="height:1px;background:#E7E4DC;margin:32px 0 44px"></div>
+  <h1 style="margin:0;font-size:66px;line-height:1.22;font-weight:800">50+ 个行为，<br>每个都有官方名字</h1>
+  <div style="width:72px;height:7px;background:#002FA7;border-radius:4px;margin:32px 0 38px"></div>
+  <p style="margin:0 0 30px;font-size:27px;line-height:1.55;color:#54545A">官网列举的 8 个代表——让组件真正能用的，正是键盘导航、焦点、选区、弹层、拖拽这些底层细节。</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createRovingFocus</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">方向键在列表里移动，只有一个 Tab 停留点</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createTypeahead</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">敲几个字母，直接跳到那一项</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createPopup</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">贴着按钮弹出，并且始终留在屏幕内</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createSelection</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">单选或多选，Shift / Ctrl 和文件管理器一样</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createReorder</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">用指针或键盘给列表排序</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createResize</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">从把手拖拽缩放盒子</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createViewport</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">画布平移与缩放</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:14px;background:#FFFFFF;padding:20px 24px">
+      <div class="ui-mono" style="font-size:22px;font-weight:700;color:#002FA7">createVirtualizer</div>
+      <div style="font-size:21px;color:#54545A;margin-top:8px;line-height:1.45">只渲染你看得见的那些行</div>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="border-left:5px solid #002FA7;background:#FFFFFF;border-radius:0 16px 16px 0;padding:26px 32px">
+    <div style="font-size:26px;line-height:1.55;color:#17171A">官网原话：<b>We built 50+ behaviors for your agents.</b><br><span style="color:#6B6B70;font-size:23px">这些行为跨框架共用，全部经过测试。</span></div>
+  </div>
+  <div aria-hidden="true" style="position:absolute;right:30px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:17px;letter-spacing:7px;color:#002FA7;opacity:.2;font-weight:700">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

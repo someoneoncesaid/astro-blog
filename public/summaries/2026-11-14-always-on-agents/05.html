@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>记忆</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#F7F4EE}
+.card{position:relative;width:1080px;height:1440px;background:#F7F4EE;color:#17171A;overflow:hidden;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.card .pad{position:absolute;inset:0;padding:76px 96px 60px 80px;display:flex;flex-direction:column;box-sizing:border-box}
+.kick{display:flex;justify-content:space-between;align-items:baseline;font-size:21px;letter-spacing:.16em;color:#6E6A5E}
+.kick .b{font-weight:600;color:#17171A;letter-spacing:.10em}
+.rule{height:1px;background:#DCD5C6;margin-top:18px;flex:none}
+.eyebrow{margin-top:44px;font-size:22px;letter-spacing:.22em;color:#002FA7;font-weight:600}
+.h1{margin:18px 0 0;font-family:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:600;font-size:64px;line-height:1.30;letter-spacing:.01em}
+.deck{margin:26px 0 0;font-size:30px;line-height:1.76;color:#4E4B45;max-width:850px}
+.panel{margin-top:38px;background:#FFFDF8;border:1px solid #DCD5C6;border-radius:3px}
+.panel svg{display:block;width:100%;height:auto}
+.panel text{font-family:"PingFang SC","Hiragino Sans GB",system-ui,sans-serif}
+.note{margin-top:auto;padding-top:30px;font-size:24px;line-height:1.7;color:#6E6A5E}
+.note strong{color:#17171A;font-weight:600}
+.rail{display:flex;align-items:center;margin-top:18px}
+.rail span{flex:1;position:relative;padding-left:16px;font-size:18px;letter-spacing:.06em;color:#B5AE9E}
+.rail span::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:#CFC7B6;transform:translateY(-50%)}
+.rail span.on{color:#002FA7;font-weight:600}
+.rail span.on::before{background:#002FA7;width:7px;height:7px}
+.foot{margin-top:22px;padding-top:20px;border-top:1px solid #DCD5C6;display:flex;justify-content:space-between;gap:24px;font-size:19px;color:#8A8578;letter-spacing:.03em}
+.mark{position:absolute;top:104px;right:26px;writing-mode:vertical-rl;font-size:13px;letter-spacing:.34em;color:rgba(0,47,167,.20);font-family:"Helvetica Neue",Arial,sans-serif}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="card">
+  <span class="mark">SOMEONE ONCE SAID</span>
+  <div class="pad">
+    <div class="kick"><span><span class="b">常驻 AGENT</span> · 架构拆解</span><span>05 / 08</span></div>
+    <div class="rule"></div>
+    <div class="eyebrow">组件 03 · 记忆</div>
+    <h1 class="h1">记忆只留四类东西，<br>其余留个引用</h1>
+    <p class="deck">跨次运行要保留用户指令、偏好、已经告知用户的内容和任务进度。每次启动只加载必要的指令和索引，其余按需读取。</p>
+    <div class="panel">
+      <svg viewBox="0 0 904 480" role="img" aria-label="左侧是值得保留的记忆，右侧是只留引用的可重查信息">
+        <line x1="452" y1="36" x2="452" y2="330" stroke="#DCD5C6" stroke-width="1"/>
+        <text x="24" y="60" font-size="21" font-weight="600" fill="#17171A">值得跨 run 保留</text>
+        <circle cx="32" cy="106" r="5" fill="#002FA7"/>
+        <text x="52" y="113" font-size="22" fill="#33302A">用户明确交代的规则</text>
+        <circle cx="32" cy="166" r="5" fill="#002FA7"/>
+        <text x="52" y="173" font-size="22" fill="#33302A">偏好与工作方式</text>
+        <circle cx="32" cy="226" r="5" fill="#002FA7"/>
+        <text x="52" y="233" font-size="22" fill="#33302A">已经告知用户的内容</text>
+        <circle cx="32" cy="286" r="5" fill="#002FA7"/>
+        <text x="52" y="293" font-size="22" fill="#33302A">未完成任务的进度</text>
+        <text x="492" y="60" font-size="21" font-weight="600" fill="#17171A">可以重新查询的</text>
+        <text x="492" y="113" font-size="22" fill="#33302A">工单标题和状态，不必存</text>
+        <text x="492" y="151" font-size="22" fill="#33302A">记忆里留工单链接，</text>
+        <text x="492" y="189" font-size="22" fill="#33302A">和下次要查的事项。</text>
+        <rect x="492" y="220" width="180" height="56" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="508" y="256" font-size="20" fill="#17171A">工单 → 链接</text>
+        <line x1="672" y1="248" x2="706" y2="248" stroke="#A9A293" stroke-width="1.5"/>
+        <rect x="712" y="220" width="168" height="56" rx="3" fill="#E9EDF9" stroke="#002FA7" stroke-width="1.2"/>
+        <text x="728" y="256" font-size="20" fill="#1E2B54">下次核对清单</text>
+        <rect x="24" y="352" width="856" height="96" rx="3" fill="#FFFDF8" stroke="#DCD5C6" stroke-width="1.2"/>
+        <text x="48" y="393" font-size="21" fill="#1E2B54">每次启动：系统提示 + 工具定义 + 必要记忆</text>
+        <text x="48" y="426" font-size="19" fill="#6E6A5E">新会话再加上触发事件；继续旧会话时，历史消息和工具调用也会进入上下文。</text>
+      </svg>
+    </div>
+    <div class="note"><strong>压缩或开新会话都可能丢细节。</strong>之后还要用的信息，要及时持久化。</div>
+    <div class="rail" aria-label="五个组件进度"><span>收件箱</span><span>定时器</span><span class="on">记忆</span><span>权限</span><span>发件箱</span></div>
+    <div class="foot"><span>William Hu · Anthropic《Building always-on agents》</span><span>记忆与上下文</span></div>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第四层 收窄通道</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;background:#FBFAF6;font-family:"PingFang SC","Noto Sans CJK SC","Hiragino Sans GB",sans-serif}a{color:#002FA7}a:hover{color:#00205F}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:1080px;height:1440px;box-sizing:border-box;position:relative;padding:72px 77px 67px;background:#FBFAF6;color:#111110;display:flex;flex-direction:column;gap:26px">
+<div style="position:absolute;right:26px;top:150px;writing-mode:vertical-rl;font-family:ui-monospace,Menlo,monospace;font-size:14px;letter-spacing:0.34em;color:rgba(0,47,167,0.2)">SOMEONE ONCE SAID</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #111110;padding-bottom:17px;font-family:ui-monospace,Menlo,monospace;font-size:18px;letter-spacing:0.12em">
+<span>05 · 第四层 收窄搬运</span>
+<span>06 / 07</span>
+</div>
+<div style="font-size:65px;line-height:1.14;font-weight:800;letter-spacing:-0.035em">缩小「搬运」的通道</div>
+<div style="font-size:23px;line-height:1.7;color:#2B2B27;max-width:924px">注入要造成损失，通常得把东西搬出去或搬进来。这一层不判断内容，只缩小搬运面。</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:17px">
+<div style="border:1px solid #DEDCD2;padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:16px;color:#002FA7">01 / SUBNET</div>
+<div style="font-size:25px;font-weight:700">子进程环境清洗</div>
+<div style="font-size:20px;line-height:1.65;color:#2B2B27">名称匹配 <span style="font-family:ui-monospace,Menlo,monospace;font-size:18px">*KEY*</span>、<span style="font-family:ui-monospace,Menlo,monospace;font-size:18px">*SECRET*</span>、<span style="font-family:ui-monospace,Menlo,monospace;font-size:18px">*TOKEN*</span>、<span style="font-family:ui-monospace,Menlo,monospace;font-size:18px">*PASSWORD*</span> 的变量不传给子进程，PATH 保留。跑一句 env 也拿不到 harness 自己的凭证。</div>
+</div>
+<div style="border:1px solid #DEDCD2;padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:16px;color:#002FA7">02 / SPILL</div>
+<div style="font-size:25px;font-weight:700">临时文件不可预测</div>
+<div style="font-size:20px;line-height:1.65;color:#2B2B27">spill 写在 0700 私有目录，随机前缀，用 <span style="font-family:ui-monospace,Menlo,monospace;font-size:18px">open(path, 'wx', 0o600)</span> 打开：路径已存在就失败，预置的符号链接无法把写入重定向。</div>
+</div>
+<div style="border:1px solid #DEDCD2;padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:16px;color:#002FA7">03 / HTML</div>
+<div style="font-size:25px;font-weight:700">先删「看不见的东西」</div>
+<div style="font-size:20px;line-height:1.65;color:#2B2B27">web_fetch 转换前丢掉 SCRIPT、STYLE、NOSCRIPT、TEMPLATE、IFRAME、OBJECT、EMBED，以及带 hidden、aria-hidden、display:none、visibility:hidden 的节点。</div>
+</div>
+<div style="border:1px solid #DEDCD2;padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:16px;color:#002FA7">04 / FRAMING</div>
+<div style="font-size:25px;font-weight:700">框架行用编码防伪造</div>
+<div style="font-size:20px;line-height:1.65;color:#2B2B27">定时消息的 id、时间和 prompt 都按 JSON 字符串单行输出，prompt 里带换行也拼不出额外的框架行。</div>
+</div>
+</div>
+<div style="font-size:22px;line-height:1.7;color:#2B2B27;border-top:1px solid #DEDCD2;padding-top:19px">转换不安全时输出固定省略标记，而不是原始 HTML——隐藏文本是最经典的注入载体之一。</div>
+<div style="margin-top:auto;border-top:2px solid #111110;padding-top:19px;font-size:25px;line-height:1.6">它不猜你想干什么，<span style="color:#002FA7">它只是不给你搬东西的路。</span></div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

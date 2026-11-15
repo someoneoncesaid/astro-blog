@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>边界与借鉴</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+<style>body{margin:0;background:#FBFAF6;font-family:"PingFang SC","Noto Sans CJK SC","Hiragino Sans GB",sans-serif}a{color:#002FA7}a:hover{color:#00205F}</style>
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:1080px;height:1440px;box-sizing:border-box;position:relative;padding:72px 77px 65px;background:#FBFAF6;color:#111110;display:flex;flex-direction:column;gap:29px">
+<div style="position:absolute;right:26px;top:150px;writing-mode:vertical-rl;font-family:ui-monospace,Menlo,monospace;font-size:14px;letter-spacing:0.34em;color:rgba(0,47,167,0.2)">SOMEONE ONCE SAID</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #111110;padding-bottom:17px;font-family:ui-monospace,Menlo,monospace;font-size:18px;letter-spacing:0.12em">
+<span>06 它不做的 · 07 可借鉴</span>
+<span>07 / 07</span>
+</div>
+<div style="font-size:62px;line-height:1.14;font-weight:800;letter-spacing:-0.035em">边界写在明处，<br>方法才可借鉴</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:17px;letter-spacing:0.12em;color:#002FA7">它不做的，和做不到的</div>
+<div style="display:flex;gap:17px;border-top:1px solid #DEDCD2;padding-top:14px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:18px;color:#002FA7;width:26px">1</div><div style="font-size:20px;line-height:1.62;color:#2B2B27">没有统一的「工具输出即数据」横幅——read 的文件正文、bash 的 stdout 都是原始文本</div></div>
+<div style="display:flex;gap:17px;border-top:1px solid #DEDCD2;padding-top:14px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:18px;color:#002FA7;width:26px">2</div><div style="font-size:20px;line-height:1.62;color:#2B2B27">auto-review 不是默认开启，也不覆盖 PTC run_code 的外层传输和程序内的直接 Node 效果</div></div>
+<div style="display:flex;gap:17px;border-top:1px solid #DEDCD2;padding-top:14px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:18px;color:#002FA7;width:26px">3</div><div style="font-size:20px;line-height:1.62;color:#2B2B27">沙箱只管文件；网络、进程可见性不在 SandboxMode 语义里，Windows ACL 后端还会报 partial</div></div>
+<div style="display:flex;gap:17px;border-top:1px solid #DEDCD2;padding-top:14px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:18px;color:#002FA7;width:26px">4</div><div style="font-size:20px;line-height:1.62;color:#2B2B27">SAFETY.md：实验性软件、未做安全审计，沙箱和审批「不能保证隔离或防止损害」</div></div>
+<div style="display:flex;gap:17px;border-top:1px solid #DEDCD2;border-bottom:1px solid #DEDCD2;padding:14px 0"><div style="font-family:ui-monospace,Menlo,monospace;font-size:18px;color:#002FA7;width:26px">5</div><div style="font-size:20px;line-height:1.62;color:#2B2B27">标注的强度取决于来源能否被证明——定时消息那条改动就是活例子</div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:17px;letter-spacing:0.12em;color:#002FA7">如果要借鉴，四条</div>
+<div style="display:flex;gap:17px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:20px;width:26px;color:#111110">01</div><div style="font-size:23px;line-height:1.55">先定义「谁能下指令」，再谈内容过滤</div></div>
+<div style="display:flex;gap:17px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:20px;width:26px;color:#111110">02</div><div style="font-size:23px;line-height:1.55">审批 fail closed，且只授权这一次：allowed-once</div></div>
+<div style="display:flex;gap:17px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:20px;width:26px;color:#111110">03</div><div style="font-size:23px;line-height:1.55">沙箱拒绝要给一条明确、需要人批准的出口</div></div>
+<div style="display:flex;gap:17px"><div style="font-family:ui-monospace,Menlo,monospace;font-size:20px;width:26px;color:#111110">04</div><div style="font-size:23px;line-height:1.55">「高风险即使被要求也拒绝」写成不可协商的规则</div></div>
+</div>
+<div style="margin-top:auto;border-top:1px solid #DEDCD2;padding-top:17px;display:flex;flex-direction:column;gap:10px">
+<div style="font-size:22px;line-height:1.6;color:#2B2B27">写这类分析最容易滑向「某某产品已经解决了注入」。DSH 自己没这么说，证据也不支持。</div>
+<div style="font-family:ui-monospace,Menlo,monospace;font-size:14px;line-height:1.6;color:#8C8C86">来源：docs/subsystems/sandbox · approval · permission-presets（.zh.md）／packages/experimental/auto-review/src/index.ts:54／packages/web/tool-web/trust.ts · fetch.ts · search.ts／SAFETY.md</div>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

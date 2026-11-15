@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>权限</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#F7F4EE}
+.card{position:relative;width:1080px;height:1440px;background:#F7F4EE;color:#17171A;overflow:hidden;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.card .pad{position:absolute;inset:0;padding:76px 96px 60px 80px;display:flex;flex-direction:column;box-sizing:border-box}
+.kick{display:flex;justify-content:space-between;align-items:baseline;font-size:21px;letter-spacing:.16em;color:#6E6A5E}
+.kick .b{font-weight:600;color:#17171A;letter-spacing:.10em}
+.rule{height:1px;background:#DCD5C6;margin-top:18px;flex:none}
+.eyebrow{margin-top:44px;font-size:22px;letter-spacing:.22em;color:#002FA7;font-weight:600}
+.h1{margin:18px 0 0;font-family:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:600;font-size:64px;line-height:1.30;letter-spacing:.01em}
+.deck{margin:26px 0 0;font-size:30px;line-height:1.76;color:#4E4B45;max-width:850px}
+.panel{margin-top:38px;background:#FFFDF8;border:1px solid #DCD5C6;border-radius:3px}
+.panel svg{display:block;width:100%;height:auto}
+.panel text{font-family:"PingFang SC","Hiragino Sans GB",system-ui,sans-serif}
+.note{margin-top:auto;padding-top:30px;font-size:24px;line-height:1.7;color:#6E6A5E}
+.note strong{color:#17171A;font-weight:600}
+.rail{display:flex;align-items:center;margin-top:18px}
+.rail span{flex:1;position:relative;padding-left:16px;font-size:18px;letter-spacing:.06em;color:#B5AE9E}
+.rail span::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:#CFC7B6;transform:translateY(-50%)}
+.rail span.on{color:#002FA7;font-weight:600}
+.rail span.on::before{background:#002FA7;width:7px;height:7px}
+.foot{margin-top:22px;padding-top:20px;border-top:1px solid #DCD5C6;display:flex;justify-content:space-between;gap:24px;font-size:19px;color:#8A8578;letter-spacing:.03em}
+.mark{position:absolute;top:104px;right:26px;writing-mode:vertical-rl;font-size:13px;letter-spacing:.34em;color:rgba(0,47,167,.20);font-family:"Helvetica Neue",Arial,sans-serif}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="card">
+  <span class="mark">SOMEONE ONCE SAID</span>
+  <div class="pad">
+    <div class="kick"><span><span class="b">常驻 AGENT</span> · 架构拆解</span><span>06 / 08</span></div>
+    <div class="rule"></div>
+    <div class="eyebrow">组件 04 · 权限</div>
+    <h1 class="h1">要人决定的时刻，<br>先挂起，再靠回复接回</h1>
+    <p class="deck">后台运行中的工具调用可以被允许、拦截，或等待用户批准。遇到需要用户决定的操作，系统保存会话并结束本次运行。</p>
+    <div class="panel">
+      <svg viewBox="0 0 904 500" role="img" aria-label="工具调用的三个分支：允许、拦截、等待用户批准并挂起">
+        <defs><marker id="a6" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="#A9A293"/></marker></defs>
+        <rect x="24" y="236" width="164" height="88" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="44" y="272" font-size="20" fill="#17171A">run 中的</text>
+        <text x="44" y="300" font-size="20" fill="#17171A">工具调用</text>
+        <path d="M188,280 L246,280 L246,140 L256,140" fill="none" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a6)"/>
+        <path d="M188,280 L256,280" fill="none" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a6)"/>
+        <path d="M188,280 L246,280 L246,420 L256,420" fill="none" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a6)"/>
+        <rect x="262" y="104" width="180" height="72" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="280" y="148" font-size="20" fill="#17171A">允许 → 执行</text>
+        <rect x="262" y="244" width="180" height="72" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="280" y="288" font-size="20" fill="#17171A">拦截 → 不执行</text>
+        <rect x="262" y="384" width="180" height="72" rx="3" fill="#E9EDF9" stroke="#002FA7" stroke-width="1.5"/>
+        <text x="280" y="418" font-size="20" fill="#1E2B54">需要用户决定</text>
+        <text x="280" y="444" font-size="17" fill="#3A3C4A">批准或补充信息</text>
+        <line x1="442" y1="420" x2="474" y2="420" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a6)"/>
+        <rect x="480" y="376" width="196" height="88" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="498" y="410" font-size="19" fill="#17171A">保存会话</text>
+        <text x="498" y="438" font-size="19" fill="#17171A">结束本次运行</text>
+        <line x1="676" y1="420" x2="708" y2="420" stroke="#A9A293" stroke-width="1.5" marker-end="url(#a6)"/>
+        <rect x="706" y="376" width="190" height="88" rx="3" fill="#FFFDF8" stroke="#C9C2B1" stroke-width="1.2"/>
+        <text x="724" y="410" font-size="19" fill="#17171A">回复进入收件箱</text>
+        <text x="724" y="438" font-size="19" fill="#17171A">唤醒新 run</text>
+        <path d="M801,376 L801,44 L106,44 L106,236" fill="none" stroke="#002FA7" stroke-width="1.5" stroke-dasharray="5 6" marker-end="url(#a6)"/>
+        <text x="330" y="34" font-size="19" fill="#002FA7">从挂起的位置继续</text>
+        <text x="24" y="486" font-size="19" fill="#8A8578">等待期间，worker 可以处理其他事件。</text>
+      </svg>
+    </div>
+    <div class="note"><strong>原文以 Claude Code 自动模式为例：</strong>分类器可以审查较高风险操作，重要决定仍交给用户。</div>
+    <div class="rail" aria-label="五个组件进度"><span>收件箱</span><span>定时器</span><span>记忆</span><span class="on">权限</span><span>发件箱</span></div>
+    <div class="foot"><span>William Hu · Anthropic《Building always-on agents》</span><span>权限与挂起</span></div>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

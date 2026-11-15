@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>插件排序</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.rc2card{position:relative;width:1080px;height:1440px;background:#faf9f4;padding:70px 82px 96px;overflow:hidden;background-image:linear-gradient(rgba(0,47,167,0.016) 1px,transparent 1px),linear-gradient(90deg,rgba(0,47,167,0.016) 1px,transparent 1px);background-size:54px 54px;font-family:"PingFang SC","Noto Sans CJK SC",sans-serif;color:#172033;box-sizing:border-box}
+.rc2card *{box-sizing:border-box}
+.rc2card:before{content:"";position:absolute;left:30px;top:30px;width:20px;height:20px;border-top:1px solid #002FA7;border-left:1px solid #002FA7}
+.rc2card .kicker{font-size:20px;letter-spacing:3px;color:#002FA7;font-weight:650;border-bottom:1px solid #d7dce5;padding-bottom:20px}
+.rc2card h1{font-size:64px;line-height:1.14;letter-spacing:-2px;margin:30px 0 16px;font-weight:720}
+.rc2card h1 em{font-style:normal;color:#002FA7}
+.rc2card .deck{font-size:25px;line-height:1.5;color:#667080;margin:0 0 24px}
+.rc2card .visual{position:relative;z-index:1}
+.rc2card .note{position:absolute;bottom:96px;left:82px;right:118px;font-size:20px;line-height:1.5;color:#667080;border-top:1px solid #d7dce5;padding-top:16px}
+.rc2card .footer{position:absolute;left:82px;right:82px;bottom:44px;display:flex;justify-content:space-between;font-size:20px;letter-spacing:2px;color:#002FA7}
+.rc2card .watermark{position:absolute;right:24px;top:700px;writing-mode:vertical-rl;letter-spacing:5px;font-size:17px;color:rgba(0,47,167,0.2);z-index:2}
+.rc2card .shot-label{display:flex;justify-content:space-between;gap:20px;border:1px solid #d7dce5;border-bottom:0;padding:15px 20px;background:#fffdf8;font-size:20px;color:#667080}
+.rc2card .shot-label b{color:#002FA7;font-weight:600}
+.rc2card .shot{margin:0;background:#ffffff;border:1px solid #d7dce5;overflow:hidden;position:relative}
+.rc2card .shot img{display:block;max-width:none;height:auto}
+.rc2card .plugin-overview{height:170px}
+.rc2card .plugin-overview img{width:100%}
+.rc2card .plugin-sort{height:470px}
+.rc2card .plugin-sort img{position:absolute;width:2600px;left:-1760px;top:-440px}
+.rc2card .evidence-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+.rc2card .evidence-row div{padding:17px 20px;border:1px solid #d7dce5;font-size:22px;line-height:1.5;background:#fffdf8}
+.rc2card .evidence-row b{display:block;color:#002FA7;margin-bottom:5px}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="rc2card">
+  <div class="kicker">06 / PLUGIN DISCOVERY</div>
+  <h1>找插件<br><em>多了两个参考指标</em></h1>
+  <p class="deck">插件索引可提供 GitHub Star 和 npm 周下载量，也可据此排序。</p>
+  <div class="visual">
+    <div class="shot-label"><b>插件 → 发现</b><span>测试插件市场</span></div>
+    <figure class="shot plugin-overview" style="margin:0"><img src="assets/rel-4cc83e83.png" alt="插件发现页，当前手动选择按 npm 周下载量排序"></figure>
+    <div class="shot-label" style="margin-top:16px"><b>排序菜单放大</b><span>默认顺序 · 发布时间 · Star · 周下载量</span></div>
+    <figure class="shot plugin-sort" style="margin:0"><img src="assets/rel-4cc83e83.png" alt="排序菜单中的默认顺序、发布时间、GitHub星标数、npm周下载量与升序选项"></figure>
+    <div class="evidence-row">
+      <div><b>默认怎么排？</b>仍按插件索引提供的顺序排列</div>
+      <div><b>想换个角度看？</b>索引提供指标时，可手动选择排序</div>
+    </div>
+  </div>
+  <div class="note">图中手动选了 npm 周下载量，不是默认排序；Star 和下载量可作参考，不代表质量保证。</div>
+  <span class="watermark">SOMEONE ONCE SAID</span>
+  <div class="footer"><span>DEEPSEEK HARNESS / 0.2.2-rc.2</span><span>07 / 11</span></div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

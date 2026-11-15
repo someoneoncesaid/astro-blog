@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.rc2card{position:relative;width:1080px;height:1440px;background:#faf9f4;padding:74px 82px 90px;overflow:hidden;background-image:linear-gradient(rgba(0,47,167,0.016) 1px,transparent 1px),linear-gradient(90deg,rgba(0,47,167,0.016) 1px,transparent 1px);background-size:54px 54px;font-family:"PingFang SC","Noto Sans CJK SC",sans-serif;color:#172033;box-sizing:border-box}
+.rc2card *{box-sizing:border-box}
+.rc2card:before{content:"";position:absolute;left:30px;top:30px;width:20px;height:20px;border-top:1px solid #002FA7;border-left:1px solid #002FA7}
+.rc2card .kicker{font-size:21px;letter-spacing:3px;color:#002FA7;font-weight:650;border-bottom:1px solid #d7dce5;padding-bottom:24px}
+.rc2card h1{font-size:87px;line-height:1.2;letter-spacing:-3px;margin:60px 0 25px;font-weight:720}
+.rc2card .cover-version-row{display:flex;align-items:center;gap:26px;margin-top:48px;white-space:nowrap}
+.rc2card .stamp{display:inline-block;background:#002FA7;color:#ffffff;font-size:78px;padding:18px 25px;font-weight:700;letter-spacing:0;transform:rotate(3deg)}
+.rc2card .cover-reading{font-size:53px;letter-spacing:-2px;color:#002FA7;font-weight:720}
+.rc2card .cover-invite{margin-top:130px;padding-top:34px;border-top:3px solid #002FA7}
+.rc2card .cover-summary-title{font-size:46px;line-height:1.4;font-weight:600;letter-spacing:-2px;margin:0 0 32px}
+.rc2card .cover-summary{display:grid;gap:26px}
+.rc2card .cover-summary>div{display:flex;align-items:baseline;gap:22px}
+.rc2card .cover-summary span{font-size:23px;font-weight:400;letter-spacing:2px;color:#002FA7}
+.rc2card .cover-summary strong{font-size:39px;line-height:1.45;font-weight:600;letter-spacing:-1px}
+.rc2card .cover-swipe{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(0,47,167,0.3);margin-top:65px;padding-top:28px;font-size:28px;letter-spacing:2px;color:#002FA7}
+.rc2card .cover-swipe>span:last-child{font-size:48px;line-height:1}
+.rc2card .footer{position:absolute;left:82px;right:82px;bottom:48px;display:flex;justify-content:space-between;font-size:20px;letter-spacing:2px;color:#002FA7}
+.rc2card .watermark{position:absolute;right:30px;top:475px;writing-mode:vertical-rl;letter-spacing:5px;font-size:19px;color:rgba(0,47,167,0.2);z-index:1}
+.rc2card-cover:after{content:"";position:absolute;width:800px;height:610px;right:-250px;top:715px;background:url("assets/083acfc16cf10986de78835513e31fa7.svg") center/contain no-repeat;opacity:.055;transform:rotate(-15deg);pointer-events:none}
+.rc2card .kicker,.rc2card .visual{position:relative;z-index:1}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="rc2card rc2card-cover">
+  <div class="kicker">DEEPSEEK HARNESS / RELEASE</div>
+  <h1>DeepSeek Harness</h1>
+  <div class="visual">
+    <div class="cover-version-row"><span class="stamp">0.2.2-rc.2</span><span class="cover-reading">协作与接管</span></div>
+    <div class="cover-invite">
+      <p class="cover-summary-title">审阅同步，终端可接管</p>
+      <div class="cover-summary">
+        <div><span>01</span><strong>GitHub 评审与已审阅同步</strong></div>
+        <div><span>02</span><strong>具名子代理，分工看得见</strong></div>
+        <div><span>03</span><strong>侧栏终端，输入即可接管</strong></div>
+      </div>
+      <div class="cover-swipe"><span>向左滑动，逐项看懂</span><span aria-hidden="true">→</span></div>
+    </div>
+  </div>
+  <span class="watermark">SOMEONE ONCE SAID</span>
+  <div class="footer"><span>DEEPSEEK HARNESS / 0.2.2-rc.2</span><span>01 / 11</span></div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

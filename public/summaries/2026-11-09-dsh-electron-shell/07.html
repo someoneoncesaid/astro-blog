@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>控制面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position:relative;width:1080px;height:1440px;background:#FBF8F3;overflow:hidden;font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;color:#17181A;display:flex;flex-direction:column;padding:72px 84px 56px;">
+
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="font-size:26px;font-weight:800;color:#002FA7;letter-spacing:2px;">06 / 07</div>
+    <div style="width:1px;height:24px;background:#D8D0BE;"></div>
+    <div style="font-size:26px;color:#6B665A;letter-spacing:6px;">控制面</div>
+  </div>
+  <h1 style="margin:16px 0 0;font-size:56px;line-height:1.28;font-weight:800;color:#17181A;">退出前，先确认任务状态</h1>
+  <div style="width:64px;height:6px;background:#002FA7;border-radius:3px;margin-top:24px;"></div>
+
+  <div style="margin-top:28px;font-size:26px;line-height:1.6;color:#3A382F;">除启动上报外，Shell 还能反向询问 Host——带 requestId 与死线的请求-响应消息，共用一个 <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:23px;">control()</span> 抽象：</div>
+
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px;">
+    <div style="background:#FFFFFF;border:1.5px solid #E3DCCB;border-radius:14px;padding:20px 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:24px;font-weight:700;color:#17181A;">quit-inspection</div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:20px;font-weight:700;color:#002FA7;background:rgba(0,47,167,0.08);border-radius:999px;padding:5px 14px;flex:none;">死线 2s</div>
+      </div>
+      <div style="margin-top:8px;font-size:23px;line-height:1.55;color:#3A382F;">超时或失败按「有活动任务」处理，弹退出确认框。</div>
+    </div>
+    <div style="background:#FFFFFF;border:1.5px solid #E3DCCB;border-radius:14px;padding:20px 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:24px;font-weight:700;color:#17181A;">update-tasks（inspect / lock / unlock）</div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:20px;font-weight:700;color:#002FA7;background:rgba(0,47,167,0.08);border-radius:999px;padding:5px 14px;flex:none;">死线 10s</div>
+      </div>
+      <div style="margin-top:8px;font-size:23px;line-height:1.55;color:#3A382F;">超时或 drain 超期即拒绝安装并解锁 admission，Host 仍在运行；DesktopHostUncleanExitError 来自 stop(requireGraceful) 的非优雅 teardown，不是超时错误，此时才恢复现版本 Host。</div>
+    </div>
+    <div style="background:#FFFFFF;border:1.5px solid #E3DCCB;border-radius:14px;padding:20px 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:24px;font-weight:700;color:#17181A;">file-drag-resource</div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:20px;font-weight:700;color:#002FA7;background:rgba(0,47,167,0.08);border-radius:999px;padding:5px 14px;flex:none;">死线 12s</div>
+      </div>
+      <div style="margin-top:8px;font-size:23px;line-height:1.55;color:#3A382F;">随时可取消；Host 异步读授权后返回 { path, sha256, size }，不回传文件字节。</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;background:rgba(0,47,167,0.07);border-radius:14px;padding:24px 26px;">
+    <div style="font-size:26px;line-height:1.55;font-weight:800;color:#002FA7;">三组死线的取向一致：宁可让控制方失败或弹框，也不要在超时后做破坏性动作。</div>
+    <div style="margin-top:8px;font-size:23px;line-height:1.6;color:#3A382F;">别写成「Host 未就绪就拒绝」：control() 不检查 ready；quit-inspection 遇到尚未 ready 或已 failed 的 Host，直接放行、不弹框。</div>
+  </div>
+
+  <div style="margin-top:auto;">
+    <div style="display:flex;gap:16px;">
+      <div style="width:12px;height:12px;border-radius:3px;background:#002FA7;flex:none;margin-top:12px;"></div>
+      <div style="flex:1;font-size:24px;line-height:1.58;color:#3A382F;"><b style="color:#17181A;">最小暴露</b>：file-drag 桥只用组合后的 fs 授权读资源，契约是「只借不删」；64 MiB 配额与取消广播见 apps/desktop/README.md。</div>
+    </div>
+    <div style="height:1px;background:#E3DCCB;margin:24px 0 22px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:23px;color:#6B665A;letter-spacing:1px;">DeepSeek Harness · Electron 桌面适配</div>
+      <div style="font-size:23px;color:#6B665A;">07 / 08</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;right:22px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:20px;letter-spacing:7px;font-weight:700;color:rgba(0,47,167,0.2);white-space:nowrap;">THIN SHELL · FULL WEB</div>
+
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

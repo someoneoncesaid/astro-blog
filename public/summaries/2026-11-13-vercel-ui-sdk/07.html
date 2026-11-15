@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>校验与操作</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.ui-card{font-family:-apple-system,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:#FBFAF6;color:#17171A;position:relative;width:1080px;height:1440px;box-sizing:border-box;display:flex;flex-direction:column;padding:80px 118px 64px 88px}
+.ui-mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="ui-card">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:26px;font-weight:700;letter-spacing:6px;color:#002FA7">闭环</div>
+    <div style="font-size:24px;color:#8A8A90" class="ui-mono">07 / 08</div>
+  </div>
+  <div style="height:1px;background:#E7E4DC;margin:32px 0 44px"></div>
+  <h1 style="margin:0;font-size:62px;line-height:1.22;font-weight:800">结果能自动校验，<br>界面能被 Agent 操作</h1>
+  <div style="width:72px;height:7px;background:#002FA7;border-radius:4px;margin:30px 0 30px"></div>
+  <div style="display:flex;flex-direction:column;gap:22px">
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:26px 30px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+        <span class="ui-mono" style="background:#002FA7;color:#FFFFFF;border-radius:8px;padding:4px 14px;font-size:20px;font-weight:700">@ui-sdk/core/testing</span>
+      </div>
+      <div style="font-size:24px;line-height:1.55;color:#54545A">按 WAI-ARIA 模式逐项核对生成结果，<b>RTL（从右到左）和 SSR</b> 也在检查范围内。</div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:26px 30px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+        <span class="ui-mono" style="background:#17171A;color:#FFFFFF;border-radius:8px;padding:4px 14px;font-size:20px;font-weight:700">@ui-sdk/core/agent</span>
+      </div>
+      <div style="font-size:24px;line-height:1.55;color:#54545A"><span class="ui-mono" style="font-size:21px">snapshot</span> 抓界面快照，<span class="ui-mono" style="font-size:21px">act</span> 直接操作控件——<b>不用截图</b>。官网自测：比看截图快 2 倍以上，成本不到一半。</div>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="border:1px solid #E7E4DC;border-radius:18px;background:#FFFFFF;padding:12px;box-shadow:0 2px 6px rgba(23,23,26,.06)">
+    <img src="assets/rel-b41fa170.jpg" alt="官网演示：Agent 读取表单并直接填写 Region、Plan、Instances 与 Preview deployments" style="width:100%;height:auto;border-radius:10px;display:block">
+  </div>
+  <div style="font-size:20px;color:#8A8A90;margin-top:12px">官网演示：Agent 读页面、直接把表单填对，不靠截图。</div>
+  <div aria-hidden="true" style="position:absolute;right:30px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:17px;letter-spacing:7px;color:#002FA7;opacity:.2;font-weight:700">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

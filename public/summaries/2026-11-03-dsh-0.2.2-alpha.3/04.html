@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文件预览</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+a{color:#002FA7}a:hover{color:#001E6B}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width:1080px;height:1440px;box-sizing:border-box;padding:76px 84px 60px;background:#F6F2E7;color:#211F1A;font-family:'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC',sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;font-family:'SF Mono','Menlo',monospace;font-size:19px;letter-spacing:2.4px;color:#6B665A">
+    <span>DEEPSEEK HARNESS</span>
+    <span>0.2.2-alpha.3 / 2026-11-03</span>
+  </div>
+  <div style="height:1px;background:#211F1A;margin-top:18px"></div>
+
+  <div style="margin-top:58px;font-family:'SF Mono','Menlo',monospace;font-size:22px;letter-spacing:1.6px;color:#002FA7">02 / FILE PREVIEW</div>
+  <div style="margin-top:14px;font-size:24px;letter-spacing:2px;color:#6B665A">常驻目录树 / 文件定位</div>
+  <h1 style="margin:24px 0 0;font-family:'Songti SC','STSong','Noto Serif CJK SC',serif;font-size:96px;line-height:1.18;font-weight:600;letter-spacing:-2px">预览旁边<br>常驻一棵目录树</h1>
+  <p style="margin:28px 0 0;font-size:28px;line-height:1.7;color:#4A463C;max-width:840px">以前看完一个文件想换同级的下一个，通常要退回资源管理，或者重新开一遍。</p>
+
+  <div style="margin-top:46px;border-top:1px solid #211F1A">
+    <div style="display:flex;gap:30px;border-bottom:1px solid #CFC6B2;padding:26px 0">
+      <span style="font-family:'SF Mono','Menlo',monospace;font-size:19px;letter-spacing:1px;color:#002FA7;padding-top:7px">01</span>
+      <div style="font-size:29px;line-height:1.6">打开文件时，目录树自动展开到它所在的位置。</div>
+    </div>
+    <div style="display:flex;gap:30px;border-bottom:1px solid #CFC6B2;padding:26px 0">
+      <span style="font-family:'SF Mono','Menlo',monospace;font-size:19px;letter-spacing:1px;color:#002FA7;padding-top:7px">02</span>
+      <div style="font-size:29px;line-height:1.6">看完同级文件，直接点下一个，不用退回列表。</div>
+    </div>
+    <div style="display:flex;gap:30px;border-bottom:1px solid #CFC6B2;padding:26px 0">
+      <span style="font-family:'SF Mono','Menlo',monospace;font-size:19px;letter-spacing:1px;color:#002FA7;padding-top:7px">03</span>
+      <div style="font-size:29px;line-height:1.6">目录树是常驻的，会占掉预览区一部分横向空间。</div>
+    </div>
+  </div>
+
+  <div style="margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #CFC6B2">
+    <div style="padding:22px 34px 0 0;border-right:1px solid #CFC6B2">
+      <div style="font-family:'SF Mono','Menlo',monospace;font-size:17px;letter-spacing:2px;color:#002FA7">待验证</div>
+      <p style="margin:9px 0 0;font-size:21px;line-height:1.65;color:#5F5A4E">窄屏下目录树是否默认收起，发布说明没有交代。</p>
+    </div>
+    <div style="padding:22px 0 0 34px">
+      <div style="font-family:'SF Mono','Menlo',monospace;font-size:17px;letter-spacing:2px;color:#002FA7">连带修复</div>
+      <p style="margin:9px 0 0;font-size:21px;line-height:1.65;color:#5F5A4E">文本与 Markdown 预览刷新后保留阅读位置，长文件能接着读。</p>
+    </div>
+  </div>
+
+  <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;font-size:18px;color:#6B665A">
+    <span>原文：「文件预览支持常驻目录树和文件定位功能。」</span>
+    <span style="font-family:'SF Mono','Menlo',monospace;letter-spacing:1px">04 / 08</span>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

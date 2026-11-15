@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>没有鼠标，功能怎么找？</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;font-family:'PingFang SC',-apple-system,'Helvetica Neue','Microsoft YaHei',sans-serif}
+a{color:#002FA7}a:hover{color:#001F73}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="position: relative; width: 1080px; height: 1440px; box-sizing: border-box; background: #F7F5F0; color: #17181C; display: flex; flex-direction: column; overflow: hidden">
+
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 56px 96px 0 88px">
+    <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 19px; letter-spacing: 0.2em; color: #5A5E66">鼠标与触摸</div>
+    <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 19px; letter-spacing: 0.16em; color: #5A5E66">05 / 10</div>
+  </div>
+  <div style="height: 1px; background: #D8D4C9; margin: 26px 96px 0 88px"></div>
+
+  <div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 44px 96px 0 88px">
+
+    <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 20px; letter-spacing: 0.18em; color: #002FA7">03 操作入口</div>
+    <h2 style="margin: 20px 0 0; font-size: 76px; line-height: 1.1; letter-spacing: -0.04em; font-weight: 800">没有鼠标，<br>功能怎么找？</h2>
+    <p style="margin: 24px 0 0; max-width: 840px; font-size: 28px; line-height: 1.6; color: #3A3E45; text-wrap: pretty">手机用户需要找得到的操作入口。先保证点按可用，再检查右键、双击和拖动是否有触摸替代。</p>
+
+    <div style="margin-top: 30px; border-top: 1px solid #A8A397">
+
+      <div style="display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid #D8D4C9">
+        <span style="font-size: 29px; font-weight: 600">单击</span>
+        <div>
+          <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 18px; letter-spacing: 0.02em; color: #002FA7">pointerdown → pointerup → click</div>
+          <div style="margin-top: 9px; font-size: 23px; line-height: 1.55; color: #2B2F36">普通操作使用 onClick；不要再用 touchend 重复执行同一个动作。</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid #D8D4C9">
+        <span style="font-size: 29px; font-weight: 600">双击</span>
+        <div>
+          <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 18px; letter-spacing: 0.02em; color: #002FA7">click → click → dblclick</div>
+          <div style="margin-top: 9px; font-size: 23px; line-height: 1.55; color: #2B2F36">会话行重命名也可从菜单进入；终端标签仍依赖双击，不能推断所有组件都有触摸替代入口。</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid #D8D4C9">
+        <span style="font-size: 29px; font-weight: 600">右键</span>
+        <div>
+          <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 18px; letter-spacing: 0.02em; color: #002FA7">contextmenu · ContextMenu · Shift+F10</div>
+          <div style="margin-top: 9px; font-size: 23px; line-height: 1.55; color: #2B2F36">共享 ui-context-menu 统一接管；已有 handler 调用过 preventDefault 时，它不再抢占。</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid #D8D4C9">
+        <span style="font-size: 29px; font-weight: 600">拖动</span>
+        <div>
+          <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 18px; letter-spacing: 0.02em; color: #002FA7">pointerdown → move → up / cancel</div>
+          <div style="margin-top: 9px; font-size: 23px; line-height: 1.55; color: #2B2F36">保存 pointerId 并 setPointerCapture；第二根手指不会误结束当前手势，手势区按需设 touch-action。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 30px; background: #FDFCF9; border: 1px solid #D8D4C9; padding: 24px 26px">
+      <div style="font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 17px; letter-spacing: 0.14em; color: #002FA7">触摸端的右键</div>
+      <div style="margin-top: 10px; font-size: 24px; line-height: 1.6; color: #2B2F36">没有自定义长按计时器：某些浏览器长按会发 contextmenu，另一些不会。所以会话行、工作区行都放了可见的省略号按钮；右栏标签目前仍以次键为主。</div>
+    </div>
+
+    <div style="margin-top: auto; padding-top: 22px"></div>
+  </div>
+
+  <div style="height: 1px; background: #D8D4C9; margin: 0 96px 0 88px"></div>
+  <div style="display: flex; justify-content: space-between; padding: 18px 96px 54px 88px; font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 17px; letter-spacing: 0.06em; color: #5A5E66">
+    <span>trigger.ts · Rows.tsx · dockkit pointer.ts</span>
+    <span>05</span>
+  </div>
+
+  <div style="position: absolute; right: 30px; bottom: 96px; writing-mode: vertical-rl; font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 13px; letter-spacing: 0.4em; color: #002FA7; opacity: 0.2">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>零件思维</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.ui-card{font-family:-apple-system,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:#FBFAF6;color:#17171A;position:relative;width:1080px;height:1440px;box-sizing:border-box;display:flex;flex-direction:column;padding:80px 118px 64px 88px}
+.ui-mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="ui-card">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:26px;font-weight:700;letter-spacing:6px;color:#002FA7">官网论证</div>
+    <div style="font-size:24px;color:#8A8A90" class="ui-mono">02 / 08</div>
+  </div>
+  <div style="height:1px;background:#E7E4DC;margin:32px 0 44px"></div>
+  <h1 style="margin:0;font-size:66px;line-height:1.22;font-weight:800">不是给整机，<br>而是给零件</h1>
+  <div style="width:72px;height:7px;background:#002FA7;border-radius:4px;margin:32px 0 36px"></div>
+  <div style="display:flex;flex-direction:column;gap:22px">
+    <div style="display:flex;gap:20px;align-items:flex-start">
+      <div class="ui-mono" style="flex:none;width:52px;height:52px;border-radius:50%;background:#FFFFFF;border:1.5px solid #B9B6AD;color:#8A8A90;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700">1</div>
+      <div style="font-size:27px;line-height:1.5;color:#54545A;padding-top:8px">给 Agent 一个现成的 <b>Select 组件</b>，它只能拼出一个 Select。</div>
+    </div>
+    <div style="display:flex;gap:20px;align-items:flex-start">
+      <div class="ui-mono" style="flex:none;width:52px;height:52px;border-radius:50%;background:#002FA7;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700">2</div>
+      <div style="font-size:27px;line-height:1.5;color:#17171A;padding-top:8px">换成给<b>做 Select 的零件</b>：弹出、选择、输入跳转——它就能拼出 Select、autocomplete、combobox，<b>甚至没人想过的组件</b>。</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:14px;margin:28px 0 26px">
+    <div style="flex:1;border:1px solid #E7E4DC;border-radius:12px;background:#FFFFFF;padding:16px 18px">
+      <div class="ui-mono" style="font-size:21px;color:#002FA7;font-weight:700">createPopup</div>
+      <div style="font-size:20px;color:#6B6B70;margin-top:6px">弹出 · 定位 · 关闭</div>
+    </div>
+    <div style="flex:1;border:1px solid #E7E4DC;border-radius:12px;background:#FFFFFF;padding:16px 18px">
+      <div class="ui-mono" style="font-size:21px;color:#002FA7;font-weight:700">createSelection</div>
+      <div style="font-size:20px;color:#6B6B70;margin-top:6px">选一个或多个</div>
+    </div>
+    <div style="flex:1;border:1px solid #E7E4DC;border-radius:12px;background:#FFFFFF;padding:16px 18px">
+      <div class="ui-mono" style="font-size:21px;color:#002FA7;font-weight:700">createTypeahead</div>
+      <div style="font-size:20px;color:#6B6B70;margin-top:6px">输入即跳转</div>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="border:1px solid #E7E4DC;border-radius:18px;background:#FFFFFF;padding:12px;box-shadow:0 2px 6px rgba(23,23,26,.06)">
+    <img src="assets/rel-b4337f4c.jpg" alt="官网把 Select 拆解成弹层、列表框、输入联想三个零件的蓝图演示截图" style="width:100%;height:auto;border-radius:10px;display:block">
+  </div>
+  <div style="font-size:20px;color:#8A8A90;margin-top:14px">官网演示：一个 Select 被拆成 popup / listbox / typeahead 三个编号零件。</div>
+  <div aria-hidden="true" style="position:absolute;right:30px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:17px;letter-spacing:7px;color:#002FA7;opacity:.2;font-weight:700">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

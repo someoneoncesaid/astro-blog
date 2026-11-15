@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>工程化与适合谁</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+.ui-card{font-family:-apple-system,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:#FBFAF6;color:#17171A;position:relative;width:1080px;height:1440px;box-sizing:border-box;display:flex;flex-direction:column;padding:80px 118px 64px 88px}
+.ui-mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div class="ui-card">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:26px;font-weight:700;letter-spacing:6px;color:#002FA7">收个尾</div>
+    <div style="font-size:24px;color:#8A8A90" class="ui-mono">08 / 08</div>
+  </div>
+  <div style="height:1px;background:#E7E4DC;margin:32px 0 44px"></div>
+  <h1 style="margin:0;font-size:64px;line-height:1.22;font-weight:800">工程很克制，<br>那适合谁用？</h1>
+  <div style="width:72px;height:7px;background:#002FA7;border-radius:4px;margin:32px 0 34px"></div>
+  <div style="display:flex;flex-direction:column;gap:22px">
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:26px 30px">
+      <div style="font-size:26px;font-weight:700;margin-bottom:14px">工程化细节</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:#002FA7"></span><span style="font-size:23px;line-height:1.5;color:#54545A">rolldown + esbuild 构建，Playwright 测试，<span class="ui-mono" style="font-size:20px">size-budget</span> 做包体积预算</span></div>
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:#002FA7"></span><span style="font-size:23px;line-height:1.5;color:#54545A">代码风格克制：无返回类型注解、注释罕见（<span class="ui-mono" style="font-size:20px">pnpm lint</span> 连注释长度都查）</span></div>
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:#002FA7"></span><span style="font-size:23px;line-height:1.5;color:#54545A">文档站在 <span class="ui-mono" style="font-size:20px">apps/docs</span>，交互演示在 <span class="ui-mono" style="font-size:20px">apps/playground</span></span></div>
+      </div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:26px 30px">
+      <div style="font-size:26px;font-weight:700;margin-bottom:14px">适合谁</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:#17171A"></span><span style="font-size:23px;line-height:1.5;color:#54545A">想在任意框架搭「行为可复用、可无障碍验证」组件体系的开发者</span></div>
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:#17171A"></span><span style="font-size:23px;line-height:1.5;color:#54545A">做 AI 生成 UI、需要给 Agent 一个可靠底层和自检机制的团队</span></div>
+      </div>
+    </div>
+    <div style="border:1px solid #E7E4DC;border-radius:16px;background:#FFFFFF;padding:26px 30px">
+      <div style="font-size:26px;font-weight:700;margin-bottom:12px">不想从零拼？也行</div>
+      <div style="font-size:23px;line-height:1.55;color:#54545A">官网同时提供 50 个现成组件起步：Color Picker、Token Input、Command、Calendar、Tree……全都由同一批行为组成。</div>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="border:1px solid #E7E4DC;border-radius:16px;background:#17171A;padding:24px 30px;display:flex;align-items:center;justify-content:space-between;gap:22px">
+    <div class="ui-mono" style="font-size:21px;color:#E8E8EC;line-height:1.6">npm install @ui-sdk/react @ui-sdk/core</div>
+    <div style="flex:none;background:#002FA7;color:#FFFFFF;border-radius:999px;padding:9px 20px;font-size:19px;font-weight:700">beta</div>
+  </div>
+  <div aria-hidden="true" style="position:absolute;right:30px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:17px;letter-spacing:7px;color:#002FA7;opacity:.2;font-weight:700">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>
