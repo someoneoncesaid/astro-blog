@@ -6,6 +6,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_TITLE } from '../consts';
+import { withBase } from '../utils/url';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -30,7 +31,7 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 		<Header />
 		<main class="article">
 			<div class="reading article-head">
-				<a class="back-link" href="/blog">
+				<a class="back-link" href={withBase('/blog')}>
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 					返回文章列表
 				</a>
@@ -57,7 +58,7 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 			{
 				heroImage && (
 					<figure class="article-hero reveal reveal--3">
-						<img width={1020} height={510} src={heroImage} alt="" />
+						<img width={1020} height={510} src={withBase(heroImage)} alt="" />
 						<figcaption>Fig. 01 — {title}</figcaption>
 					</figure>
 				)
@@ -84,13 +85,13 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 					(newer || older) && (
 						<nav class="post-nav" aria-label="文章导航">
 							{older && (
-								<a class="post-nav-item" href={`/blog/${older.id}/`}>
+								<a class="post-nav-item" href={withBase(`/blog/${older.id}/`)}>
 									<span class="eyebrow">← 更早一篇</span>
 									<span class="post-nav-title">{older.data.title}</span>
 								</a>
 							)}
 							{newer && (
-								<a class="post-nav-item is-right" href={`/blog/${newer.id}/`}>
+								<a class="post-nav-item is-right" href={withBase(`/blog/${newer.id}/`)}>
 									<span class="eyebrow">更新一篇 →</span>
 									<span class="post-nav-title">{newer.data.title}</span>
 								</a>
@@ -99,7 +100,7 @@ const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 					)
 				}
 
-				<a class="back-bottom" href="/blog">← 返回全部文章</a>
+				<a class="back-bottom" href={withBase('/blog')}>← 返回全部文章</a>
 			</div>
 		</main>
 		<Footer />

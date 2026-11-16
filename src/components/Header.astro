@@ -1,11 +1,12 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
+import { withBase } from '../utils/url';
 ---
 
 <header class="site-header">
 	<div class="container header-inner">
-		<a class="brand" href="/" aria-label={`${SITE_TITLE} 首页`}>
+		<a class="brand" href={withBase('/')} aria-label={`${SITE_TITLE} 首页`}>
 			<span class="brand-mark" aria-hidden="true"></span>
 			<span class="brand-name">{SITE_TITLE}</span>
 		</a>
@@ -18,7 +19,7 @@ import { SITE_TITLE } from '../consts';
 		</nav>
 
 		<div class="header-actions">
-			<a class="icon-link" href="/rss.xml" aria-label="RSS 订阅" title="RSS 订阅">
+			<a class="icon-link" href={withBase('/rss.xml')} aria-label="RSS 订阅" title="RSS 订阅">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
 					<path d="M4 11a9 9 0 0 1 9 9" stroke-linecap="round" />
 					<path d="M4 4a16 16 0 0 1 16 16" stroke-linecap="round" />
@@ -43,6 +44,12 @@ import { SITE_TITLE } from '../consts';
 		const root = document.documentElement;
 		const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
 		root.dataset.theme = next;
+		document
+			.getElementById('favicon')
+			?.setAttribute(
+				'href',
+				`${import.meta.env.BASE_URL}${next === 'dark' ? 'favicon-dark.svg' : 'favicon.svg'}`,
+			);
 		try {
 			localStorage.setItem('blog-theme', next);
 		} catch (e) {

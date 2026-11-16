@@ -6,6 +6,7 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import SummaryCardFrame from '../../components/SummaryCardFrame.astro';
 import { SITE_TITLE } from '../../consts';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
 	const entries = await getCollection('summaries');
@@ -52,7 +53,7 @@ const older =
 		<Header />
 		<main class="summary-page">
 			<div class="container summary-topbar">
-				<a class="back-link" href="/summaries">
+				<a class="back-link" href={withBase('/summaries')}>
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
 						<path d="M19 12H5M11 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
@@ -79,7 +80,7 @@ const older =
 							{cards.map((card, index) => (
 								<a
 									class="summary-slide summary-card-link"
-									href={card.src}
+									href={withBase(card.src)}
 									target="_blank"
 									rel="noopener"
 									draggable="false"
@@ -186,13 +187,13 @@ const older =
 
 					<nav class="summary-note-nav" aria-label="图文导航">
 						{older && (
-							<a class="summary-nav-item" href={`/summaries/${older.id}/`}>
+							<a class="summary-nav-item" href={withBase(`/summaries/${older.id}/`)}>
 								<span class="eyebrow">← 更早一组</span>
 								<span>{older.data.title}</span>
 							</a>
 						)}
 						{newer && (
-							<a class="summary-nav-item is-right" href={`/summaries/${newer.id}/`}>
+							<a class="summary-nav-item is-right" href={withBase(`/summaries/${newer.id}/`)}>
 								<span class="eyebrow">更新一组 →</span>
 								<span>{newer.data.title}</span>
 							</a>

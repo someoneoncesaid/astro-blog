@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/url';
+
 interface SummaryCard {
 	type: "html" | "image";
 	src: string;
@@ -27,7 +29,7 @@ const height = card.height ?? 1440;
 	{
 		card.type === "html" ? (
 			<iframe
-				src={card.src}
+				src={withBase(card.src)}
 				title={alt}
 				loading={loading}
 				scrolling="no"
@@ -36,7 +38,7 @@ const height = card.height ?? 1440;
 			/>
 		) : (
 			<img
-				src={card.src}
+				src={withBase(card.src)}
 				alt={alt}
 				width={width}
 				height={height}

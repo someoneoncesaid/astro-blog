@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { withBase } from '../utils/url';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
@@ -32,11 +33,11 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 						{SITE_DESCRIPTION} 这里没有时间线，只有一篇篇写完之后还愿意再读一遍的文字。
 					</p>
 					<div class="hero-actions reveal reveal--3">
-						<a class="btn btn--primary" href="/blog">
+						<a class="btn btn--primary" href={withBase('/blog')}>
 							开始阅读
 							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 						</a>
-						<a class="btn" href="/about">关于我</a>
+						<a class="btn" href={withBase('/about')}>关于我</a>
 					</div>
 					<div class="hero-foot reveal reveal--4">
 						<span class="hero-foot-rule"></span>
@@ -61,7 +62,7 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 						<p class="eyebrow">Latest writing · 最近在写</p>
 						<h2 class="section-title">文章选读</h2>
 					</div>
-					<a class="text-link" href="/blog">
+					<a class="text-link" href={withBase('/blog')}>
 						全部文章
 						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 					</a>
@@ -71,7 +72,7 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 					{
 						posts.map((post, i) => (
 							<li class="post-row">
-								<a href={`/blog/${post.id}/`}>
+								<a href={withBase(`/blog/${post.id}/`)}>
 									<span class="post-index">{String(i + 1).padStart(2, '0')}</span>
 									<span class="post-body">
 										<span class="post-meta">
@@ -101,7 +102,7 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 						<p>
 							写东西是一种整理：把散落的念头收拢，再按顺序放回去。这里收录关于代码、设计与日常的笔记，不追热点，也不赶进度。
 						</p>
-						<a class="btn" href="/about">
+						<a class="btn" href={withBase('/about')}>
 							认识一下
 							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 						</a>

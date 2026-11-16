@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+	<!-- 暗色主题：近黑墨面 + 提亮后的品牌蓝（与暗色主题强调色一致），对比度约 7.8:1 -->
+	<rect x="1.5" y="1.5" width="61" height="61" rx="10.5" fill="#16181d" stroke="#4a4c54" stroke-width="3" />
+	<g fill="#8fa6ff">
+		<circle cx="25" cy="25" r="8" />
+		<path d="M25 31c-1.5 6-5.5 10-11 12 8 1 13.5-2.5 15-9z" />
+		<circle cx="43" cy="25" r="8" />
+		<path d="M43 31c-1.5 6-5.5 10-11 12 8 1 13.5-2.5 15-9z" />
+	</g>
+</svg>

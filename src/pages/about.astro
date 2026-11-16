@@ -3,6 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { withBase } from '../utils/url';
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 			<div class="about-grid">
 				<figure class="about-photo reveal reveal--2">
-					<img src="/blog-placeholder-about.jpg" width={720} height={480} alt="一张暂用的书桌照片" />
+					<img src={withBase('/blog-placeholder-about.jpg')} width={720} height={480} alt="一张暂用的书桌照片" />
 					<figcaption>Fig. 01 — 一张暂用的照片</figcaption>
 				</figure>
 
@@ -49,7 +50,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			<div class="about-quote">
 				<p class="eyebrow">One more thing</p>
 				<blockquote>「写得慢一点，才看得清楚一点。」</blockquote>
-				<a class="btn" href="/blog">
+				<a class="btn" href={withBase('/blog')}>
 					去看看文章
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 				</a>

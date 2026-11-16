@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import SummaryCardFrame from '../../components/SummaryCardFrame.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { withBase } from '../../utils/url';
 import { getCollection } from 'astro:content';
 
 const allEntries = await getCollection('summaries');
@@ -58,7 +59,7 @@ const categories = [...new Set(entries.map((entry) => entry.data.category))];
 					<>
 						{featured && (
 							<section class="container">
-								<a class="summary-lead reveal" href={`/summaries/${featured.id}/`}>
+								<a class="summary-lead reveal" href={withBase(`/summaries/${featured.id}/`)}>
 									<div class="summary-lead-cover">
 										{featured.data.cards[0] ? (
 											<SummaryCardFrame
@@ -108,7 +109,7 @@ const categories = [...new Set(entries.map((entry) => entry.data.category))];
 								<div class="summary-grid">
 									{rest.map((entry) => (
 										<article class="summary-card reveal">
-											<a class="summary-link" href={`/summaries/${entry.id}/`}>
+											<a class="summary-link" href={withBase(`/summaries/${entry.id}/`)}>
 												<div class="summary-cover">
 													{entry.data.cards[0] ? (
 														<SummaryCardFrame

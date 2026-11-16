@@ -1,5 +1,6 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, SOCIAL_LINKS } from '../consts';
+import { withBase } from '../utils/url';
 
 const today = new Date();
 ---
@@ -14,25 +15,25 @@ const today = new Date();
 
 			<nav class="footer-nav" aria-label="页脚导航">
 				<p class="eyebrow">Navigate</p>
-				<a href="/">首页</a>
-				<a href="/blog">文章归档</a>
-				<a href="/summaries">图文摘要</a>
-				<a href="/about">关于我</a>
-				<a href="/rss.xml">RSS 订阅</a>
+				<a href={withBase('/')}>首页</a>
+				<a href={withBase('/blog')}>文章归档</a>
+				<a href={withBase('/summaries')}>图文摘要</a>
+				<a href={withBase('/about')}>关于我</a>
+				<a href={withBase('/rss.xml')}>RSS 订阅</a>
 			</nav>
 
 			<div class="footer-social">
 				<p class="eyebrow">Elsewhere</p>
 				<div class="social-links">
-					<a href="https://github.com/withastro/astro" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+					<a class="social-link" href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
 						<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" /></svg>
 					</a>
-					<a href="https://m.webtoo.ls/@astro" target="_blank" rel="noopener noreferrer" aria-label="Mastodon" title="Mastodon">
-						<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z" /></svg>
+					<a class="social-link" href={SOCIAL_LINKS.xiaohongshu} target="_blank" rel="noopener noreferrer" aria-label="小红书" title="小红书">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5Zm4-1v13l4-3 4 3V4H8Z" clip-rule="evenodd" /></svg>
 					</a>
-					<a href="https://twitter.com/astrodotbuild" target="_blank" rel="noopener noreferrer" aria-label="Twitter" title="Twitter">
-						<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" /></svg>
-					</a>
+					<button class="social-link" type="button" id="wechat-open" aria-label="微信公众号" title="微信公众号" aria-haspopup="dialog" aria-controls="wechat-dialog">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z" /></svg>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -42,7 +43,30 @@ const today = new Date();
 			<span class="footer-colophon">Built with Astro · Ink &amp; Paper</span>
 		</div>
 	</div>
+
+	<dialog id="wechat-dialog" class="wechat-dialog" aria-labelledby="wechat-dialog-title">
+		<div class="wechat-panel">
+			<p class="eyebrow" id="wechat-dialog-title">WeChat · 微信公众号</p>
+			<div class="wechat-qr">
+				<img src={withBase(SOCIAL_LINKS.wechatQr)} width={258} height={258} alt="微信公众号二维码" />
+			</div>
+			<p class="wechat-hint">扫码关注「{SITE_TITLE}」</p>
+			<button class="wechat-close" type="button" id="wechat-close">关闭</button>
+		</div>
+	</dialog>
 </footer>
+
+<script>
+	const wechatDialog = document.getElementById('wechat-dialog') as HTMLDialogElement | null;
+	const wechatOpen = document.getElementById('wechat-open');
+	const wechatClose = document.getElementById('wechat-close');
+
+	wechatOpen?.addEventListener('click', () => wechatDialog?.showModal());
+	wechatClose?.addEventListener('click', () => wechatDialog?.close());
+	wechatDialog?.addEventListener('click', (event) => {
+		if (event.target === wechatDialog) wechatDialog.close();
+	});
+</script>
 
 <style>
 	.site-footer {
@@ -102,28 +126,100 @@ const today = new Date();
 		gap: 0.6rem;
 	}
 
-	.social-links a {
+	.social-link {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		width: 34px;
 		height: 34px;
+		padding: 0;
 		border: 1px solid var(--line-strong);
 		border-radius: 50%;
+		background: transparent;
 		color: var(--accent);
 		text-decoration: none;
+		cursor: pointer;
 		transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 	}
 
-	.social-links svg {
+	.social-link svg {
 		width: 16px;
 		height: 16px;
 	}
 
-	.social-links a:hover {
+	.social-link:hover {
 		color: var(--accent-strong);
 		border-color: var(--accent);
 		background: var(--surface);
+	}
+
+	/* ---------- 微信公众号二维码 ---------- */
+
+	.wechat-dialog {
+		width: min(86vw, 340px);
+		max-width: none;
+		padding: 0;
+		border: 1px solid var(--line-strong);
+		border-radius: var(--radius-lg);
+		background: var(--surface);
+		color: var(--ink);
+		box-shadow: var(--shadow-md);
+	}
+
+	.wechat-dialog::backdrop {
+		background: rgba(18, 20, 25, 0.55);
+		backdrop-filter: blur(2px);
+	}
+
+	.wechat-panel {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		padding: 1.6rem 1.4rem 1.4rem;
+		text-align: center;
+	}
+
+	.wechat-panel .eyebrow {
+		margin: 0;
+		color: var(--muted);
+	}
+
+	.wechat-qr {
+		padding: 0.55rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: var(--paper);
+	}
+
+	.wechat-qr img {
+		width: auto;
+		max-width: 100%;
+		height: auto;
+		border-radius: 2px;
+	}
+
+	.wechat-hint {
+		margin: 0;
+		color: var(--ink-soft);
+		font-size: 0.84rem;
+	}
+
+	.wechat-close {
+		padding: 0.5rem 1.1rem;
+		border: 1px solid var(--line-strong);
+		border-radius: 100px;
+		background: transparent;
+		color: var(--ink);
+		font-family: var(--font-sans);
+		font-size: 0.78rem;
+		cursor: pointer;
+		transition: color 0.2s ease, border-color 0.2s ease;
+	}
+
+	.wechat-close:hover {
+		color: var(--accent);
+		border-color: var(--accent);
 	}
 
 	.footer-bottom {
