@@ -11,6 +11,11 @@ const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const [featured, ...rest] = posts;
+const summaries = (await getCollection('summaries'))
+	.filter((entry) => !entry.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const summarySearchText = ({ data, body }: (typeof summaries)[number]) =>
+	[data.title, data.description, data.category, ...data.tags, ...data.hashtags, body].join(' ');
 const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未分类';
 const searchTextOf = (post: (typeof posts)[number]) =>
 	[post.data.title, post.data.description, categoryOf(post), ...post.data.tags].join(' ');
@@ -118,6 +123,26 @@ const searchTextOf = (post: (typeof posts)[number]) =>
 					}
 				</div>
 			</section>
+			<section class="container grid-section" id="summary-results" hidden>
+				<div class="section-head">
+					<h2 class="section-title">图文摘要</h2>
+				</div>
+				<div class="card-grid">
+					{summaries.map((entry) => (
+						<article class="card" data-search={summarySearchText(entry)}>
+							<a href={withBase(`/summaries/${entry.id}/`)}>
+								<div class="card-body">
+									<span class="card-tag">{entry.data.category}</span>
+									<h3>{entry.data.title}</h3>
+									<div class="card-foot">
+										<FormattedDate date={entry.data.pubDate} />
+									</div>
+								</div>
+							</a>
+						</article>
+					))}
+				</div>
+			</section>
 		</main>
 		<Footer />
 		<script>
@@ -136,15 +161,15 @@ const searchTextOf = (post: (typeof posts)[number]) =>
 					if (hit) matches += 1;
 				}
 
-				const gridSection = document.getElementById('more-posts');
-				if (gridSection && !gridSection.querySelector('[data-search]:not(.is-search-hidden)')) {
-					gridSection.hidden = true;
+				for (const id of ['more-posts', 'summary-results']) {
+					const section = document.getElementById(id);
+					if (section) section.hidden = !section.querySelector('[data-search]:not(.is-search-hidden)');
 				}
 
 				const status = document.getElementById('search-status');
 				const statusText = document.getElementById('search-status-text');
 				if (status && statusText) {
-					statusText.textContent = `搜索「${query}」：${matches} 篇结果`;
+					statusText.textContent = `搜索「${query}」：${matches} 条结果`;
 					status.hidden = false;
 				}
 			}

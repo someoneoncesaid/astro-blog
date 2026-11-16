@@ -1,0 +1,190 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const items = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+{
+	items.length >= 2 && (
+		<details class="toc" data-toc open>
+			<summary class="toc-summary">
+				<span class="eyebrow">Contents · 目录</span>
+				<span class="toc-count">{items.length} 节</span>
+				<svg class="toc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+					<path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			</summary>
+			<nav aria-label="文章目录">
+				<ol class="toc-list">
+					{items.map((heading) => (
+						<li class:list={['toc-item', `toc-item--h${heading.depth}`]}>
+							<a href={`#${heading.slug}`} data-toc-link>{heading.text}</a>
+						</li>
+					))}
+				</ol>
+			</nav>
+		</details>
+	)
+}
+
+<script>
+	const toc = document.querySelector<HTMLDetailsElement>('[data-toc]');
+
+	if (toc) {
+		const mobile = window.matchMedia('(max-width: 719px)');
+		const desktop = window.matchMedia('(min-width: 1260px)');
+
+		if (mobile.matches) toc.open = false;
+
+		desktop.addEventListener('change', () => {
+			if (desktop.matches) toc.open = true;
+		});
+
+		const links = Array.from(toc.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+		const items = links
+			.map((link) => {
+				const id = decodeURIComponent(link.hash.slice(1));
+				const heading = document.getElementById(id);
+				return heading ? { link, heading } : null;
+			})
+			.filter((item): item is { link: HTMLAnchorElement; heading: HTMLElement } => item !== null);
+
+		let activeLink: HTMLAnchorElement | null = null;
+		const setActive = (link: HTMLAnchorElement) => {
+			if (link === activeLink) return;
+			activeLink?.classList.remove('is-active');
+			activeLink = link;
+			link.classList.add('is-active');
+		};
+
+		let ticking = false;
+		const updateActive = () => {
+			ticking = false;
+			if (!items.length) return;
+
+			let current = items[0];
+			for (const item of items) {
+				if (item.heading.getBoundingClientRect().top <= 150) current = item;
+				else break;
+			}
+			setActive(current.link);
+		};
+		const requestUpdate = () => {
+			if (ticking) return;
+			ticking = true;
+			window.requestAnimationFrame(updateActive);
+		};
+
+		window.addEventListener('scroll', requestUpdate, { passive: true });
+		window.addEventListener('resize', requestUpdate);
+		updateActive();
+
+		links.forEach((link) => {
+			link.addEventListener('click', () => {
+				if (mobile.matches) toc.open = false;
+				setActive(link);
+			});
+		});
+	}
+</script>
+
+<style>
+	.toc {
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: color-mix(in srgb, var(--surface) 75%, transparent);
+		color: var(--ink-soft);
+		overflow: hidden;
+	}
+
+	.toc-summary {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.9rem 1.1rem;
+		cursor: pointer;
+		list-style: none;
+		user-select: none;
+	}
+
+	.toc-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.toc-summary .eyebrow {
+		margin: 0;
+	}
+
+	.toc-count {
+		margin-left: auto;
+		color: var(--muted);
+		font-size: 0.66rem;
+		letter-spacing: 0.05em;
+		white-space: nowrap;
+	}
+
+	.toc-chevron {
+		width: 14px;
+		height: 14px;
+		color: var(--muted);
+		transition: transform 0.2s ease;
+	}
+
+	.toc[open] .toc-chevron {
+		transform: rotate(180deg);
+	}
+
+	.toc-list {
+		margin: 0;
+		padding: 0 1.1rem 0.95rem;
+		list-style: none;
+	}
+
+	.toc-item a {
+		display: block;
+		padding: 0.34rem 0 0.34rem 0.8rem;
+		border-left: 1px solid var(--line);
+		color: var(--muted);
+		font-size: 0.8rem;
+		line-height: 1.55;
+		text-decoration: none;
+		transition: color 0.2s ease, border-color 0.2s ease;
+	}
+
+	.toc-item--h3 a {
+		padding-left: 1.55rem;
+		font-size: 0.75rem;
+	}
+
+	.toc-item a:hover {
+		color: var(--ink);
+		border-color: var(--line-strong);
+	}
+
+	.toc-item a.is-active {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	@media (min-width: 1260px) {
+		.toc {
+			max-height: calc(100vh - 9rem);
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			scrollbar-width: thin;
+		}
+
+		.toc-summary {
+			display: none;
+		}
+
+		.toc-list {
+			padding-top: 1rem;
+		}
+	}
+</style>

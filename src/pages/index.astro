@@ -8,6 +8,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { withBase } from '../utils/url';
 import { getCollection } from 'astro:content';
 
+const avatarUrl = withBase('/avatar.jpg');
+
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
@@ -23,6 +25,15 @@ const eligibleSummaries = (await getCollection('summaries'))
 			!postTitles.has(entry.data.title.trim()),
 	)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const searchResults = [
+	...posts.map(({ id, data }) => ({
+		...data, href: `/blog/${id}/`, label: '文章', extra: '',
+	})),
+	...(await getCollection('summaries', ({ data }) => !data.draft)).map(({ id, data, body }) => ({
+		...data, href: `/summaries/${id}/`, label: '图文摘要', extra: [...data.hashtags, body].join(' '),
+	})),
+].sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf());
+
 const summaries = eligibleSummaries.slice(0, 2);
 
 const categoryOf = (data: { category?: string }) => data.category || '未分类';
@@ -153,10 +164,18 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 								<circle cx="11" cy="11" r="7" />
 								<path d="m16.6 16.6 3.9 3.9" stroke-linecap="round" />
 							</svg>
-							<label class="sr-only" for="board-search">搜索文章</label>
-							<input id="board-search" type="search" name="q" placeholder="搜索文章标题、分类或标签…" autocomplete="off" />
+							<label class="sr-only" for="board-search">搜索文章和图文摘要</label>
+							<input id="board-search" type="search" name="q" placeholder="搜索文章和图文摘要…" autocomplete="off" />
 							<kbd aria-hidden="true">/</kbd>
-							<button class="sr-only" type="submit">搜索</button>
+							<div class="board-search-results" id="board-search-results" hidden>
+								<p data-search-empty role="status" hidden>没有找到匹配的内容</p>
+								{searchResults.map((result) => (
+									<a href={withBase(result.href)} data-search-text={[result.title, result.description, result.category, ...result.tags, result.extra].join(' ').toLowerCase()} hidden>
+										<span>{result.title}</span>
+										<small>{result.label}</small>
+									</a>
+								))}
+							</div>
 						</form>
 						<p class="board-canvas-hint">拖动或滚动平移 · ⌘ / Ctrl + 滚轮缩放</p>
 					</div>
@@ -234,9 +253,20 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 							</div>
 						</div>
 
-						<div class="board-art">
-							<img src="https://github.com/someoneoncesaid.png?size=384" alt="Someone Once Said 的头像" width="144" height="144" decoding="async" />
-						</div>
+						<button
+							class="board-art"
+							type="button"
+							data-about-open
+							aria-haspopup="dialog"
+							aria-controls="about-dialog"
+							aria-label="打开关于我"
+						>
+							<img src={avatarUrl} alt="" width="144" height="144" decoding="async" />
+							<span class="board-art-copy">
+								<span class="board-art-title">关于我 <span aria-hidden="true">↗</span></span>
+								<span class="board-art-note">这个博客与写它的人</span>
+							</span>
+						</button>
 					</div>
 					</div>
 				</div>
@@ -340,17 +370,149 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 						<p>
 							写东西是一种整理：把散落的念头收拢，再按顺序放回去。这里收录关于代码、设计与日常的笔记，不追热点，也不赶进度。
 						</p>
-						<a class="btn" href={withBase('/about')}>
+						<button
+							class="btn"
+							type="button"
+							data-about-open
+							aria-haspopup="dialog"
+							aria-controls="about-dialog"
+						>
 							认识一下
 							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-						</a>
+						</button>
 					</div>
 				</div>
 			</section>
 		</main>
+
+		<dialog id="about-dialog" class="about-dialog" aria-labelledby="about-dialog-title">
+			<button class="about-dialog-close" type="button" data-about-close aria-label="关闭关于">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+					<path d="m6 6 12 12M18 6 6 18" stroke-linecap="round" />
+				</svg>
+			</button>
+
+			<div class="about-dialog-panel">
+				<div class="about-dialog-head">
+					<img class="about-dialog-avatar" src={avatarUrl} alt="" width="88" height="88" decoding="async" />
+					<div>
+						<p class="eyebrow">About · 关于我</p>
+						<h2 id="about-dialog-title">你好，我是<br /><em>这个博客的作者。</em></h2>
+					</div>
+				</div>
+
+				<p class="about-dialog-lead">
+					喜欢把复杂的事情讲清楚，也喜欢把一件小事慢慢写完整。这里是我留给自己的一块安静地方。
+				</p>
+
+				<div class="about-dialog-body">
+					<p>
+						我是一名写代码的人，日常在界面、文档和各种细节之间来回折腾。工作之外，会读一点书，记一点笔记，偶尔把想明白的事情写成文章。
+					</p>
+					<p>
+						开这个博客不是为了追热点，更多是想给那些「一时说不清、但值得再想想」的问题留个位置。写下来之后，思路往往会比在脑子里更清楚一些。
+					</p>
+				</div>
+
+				<dl class="about-dialog-facts">
+					<div><dt>现在在做</dt><dd>前端与工具链</dd></div>
+					<div><dt>常写的话题</dt><dd>代码 · 设计 · 日常</dd></div>
+					<div><dt>更新频率</dt><dd>不定期，慢慢写</dd></div>
+				</dl>
+
+				<p class="about-dialog-quote">「写得慢一点，才看得清楚一点。」</p>
+
+				<div class="about-dialog-actions">
+					<a class="btn btn--primary" href={withBase('/blog/')}>
+						去看看文章
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+					</a>
+					<SocialLinks compact />
+				</div>
+			</div>
+		</dialog>
+
 		<Footer />
 		<script>
 			const boardSearch = document.getElementById('board-search') as HTMLInputElement | null;
+			const searchForm = boardSearch?.form;
+			const results = document.getElementById('board-search-results');
+			let highlightedHref: string | undefined;
+			const highlightCard = (link?: HTMLAnchorElement) => {
+				highlightedHref = link?.href;
+				document.querySelectorAll<HTMLAnchorElement>('.board-cards a.board-card').forEach((card) => {
+					card.classList.toggle('is-search-highlighted', card.href === highlightedHref);
+				});
+			};
+			if (boardSearch && searchForm && results) {
+				const links = Array.from(results.querySelectorAll<HTMLAnchorElement>('a'));
+				const empty = results.querySelector<HTMLElement>('[data-search-empty]');
+				let hovered: HTMLAnchorElement | undefined;
+				let focused: HTMLAnchorElement | undefined;
+				const syncHighlight = () => highlightCard(hovered ?? focused);
+				const close = () => {
+					results.hidden = true;
+					hovered = undefined;
+					focused = undefined;
+					syncHighlight();
+				};
+				for (const link of links) {
+					link.addEventListener('pointerenter', () => {
+						hovered = link;
+						syncHighlight();
+					});
+					link.addEventListener('pointerleave', () => {
+						if (hovered === link) hovered = undefined;
+						syncHighlight();
+					});
+					link.addEventListener('focus', () => {
+						focused = link;
+						hovered = undefined;
+						syncHighlight();
+					});
+					link.addEventListener('blur', () => {
+						if (focused === link) focused = undefined;
+						syncHighlight();
+					});
+				}
+				const update = () => {
+					const query = boardSearch.value.trim().toLowerCase();
+					let matches = 0;
+					for (const link of links) {
+						link.hidden = !query || !link.dataset.searchText?.includes(query);
+						if (!link.hidden) matches += 1;
+					}
+					if (empty) empty.hidden = matches > 0;
+					close();
+					results.hidden = !query;
+					results.scrollTop = 0;
+				};
+				boardSearch.addEventListener('input', update);
+				boardSearch.addEventListener('focus', update);
+				searchForm.addEventListener('focusout', (event) => {
+					if (!searchForm.contains(event.relatedTarget as Node | null)) close();
+				});
+				document.addEventListener('pointerdown', (event) => {
+					if (!searchForm.contains(event.target as Node)) close();
+				});
+				searchForm.addEventListener('submit', (event) => event.preventDefault());
+				searchForm.addEventListener('keydown', (event) => {
+					if (event.key === 'Escape' && !results.hidden) {
+						event.preventDefault();
+						boardSearch.focus();
+						close();
+					}
+					if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+					if (results.hidden) update();
+					const visible = links.filter((link) => !link.hidden);
+					if (!visible.length) return;
+					event.preventDefault();
+					const index = visible.indexOf(document.activeElement as HTMLAnchorElement);
+					const next = event.key === 'ArrowDown' ? index + 1 : index - 1;
+					(visible[next] ?? (index < 0 ? visible.at(-1) : boardSearch))?.focus();
+				});
+			}
+
 			document.addEventListener('keydown', (event) => {
 				const target = event.target as HTMLElement | null;
 				const isTyping = target?.closest('input, textarea, select, [contenteditable="true"]');
@@ -525,6 +687,7 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 					if (!link || !cardLayer) return null;
 
 					link.href = card.href;
+					link.classList.toggle('is-search-highlighted', link.href === highlightedHref);
 					link.style.left = `${position.x}px`;
 					link.style.top = `${position.y}px`;
 					link.setAttribute('draggable', 'false');
@@ -775,7 +938,7 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 				board.addEventListener(
 					'wheel',
 					(event) => {
-						if (!canvasEnabled) return;
+						if (!canvasEnabled || (event.target as Element)?.closest('.board-search')) return;
 						event.preventDefault();
 
 						if (event.ctrlKey || event.metaKey) {
@@ -825,6 +988,35 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 
 				canvasMedia.addEventListener('change', syncCanvas);
 				syncCanvas();
+			}
+
+			const aboutDialog = document.getElementById('about-dialog') as HTMLDialogElement | null;
+			const aboutTriggers = document.querySelectorAll<HTMLElement>('[data-about-open]');
+			const openAbout = () => {
+				if (aboutDialog && !aboutDialog.open) aboutDialog.showModal();
+			};
+
+			aboutTriggers.forEach((trigger) => {
+				trigger.addEventListener('click', openAbout);
+			});
+
+			aboutDialog?.querySelectorAll<HTMLElement>('[data-about-close]').forEach((close) => {
+				close.addEventListener('click', () => aboutDialog.close());
+			});
+
+			aboutDialog?.addEventListener('click', (event) => {
+				if (event.target === aboutDialog) aboutDialog.close();
+			});
+
+			aboutDialog?.addEventListener('close', () => {
+				const url = new URL(window.location.href);
+				if (!url.searchParams.has('about')) return;
+				url.searchParams.delete('about');
+				window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+			});
+
+			if (new URLSearchParams(window.location.search).get('about') === '1') {
+				openAbout();
 			}
 		</script>
 	</body>
@@ -1062,6 +1254,7 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 	}
 
 	.board-search {
+		position: relative;
 		display: flex;
 		align-items: center;
 		gap: 0.65rem;
@@ -1073,6 +1266,52 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		background: var(--surface);
 		box-shadow: var(--shadow-sm);
 		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.board-search-results {
+		position: absolute;
+		z-index: 2;
+		inset: calc(100% + 0.5rem) 0 auto;
+		max-height: min(35vh, 18rem);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 0.35rem;
+		border: 1px solid var(--line);
+		border-radius: 14px;
+		background: var(--surface);
+		box-shadow: var(--shadow-sm);
+		text-align: left;
+	}
+
+	.board-search-results a {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.75rem;
+		padding: 0.65rem 0.75rem;
+		border-radius: 8px;
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.board-search-results a[hidden] {
+		display: none;
+	}
+
+	.board-search-results a:hover,
+	.board-search-results a:focus-visible {
+		background: var(--accent-soft);
+	}
+
+	.board-search-results small {
+		flex-shrink: 0;
+		color: var(--ink-soft);
+	}
+
+	.board-search-results p {
+		margin: 0;
+		padding: 0.65rem 0.75rem;
+		color: var(--ink-soft);
 	}
 
 	.board-search:focus-within {
@@ -1144,6 +1383,16 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		animation: rise 0.7s var(--ease) backwards;
 		animation-delay: var(--card-delay, 0ms);
 		transition: transform 0.28s var(--ease), box-shadow 0.28s ease, border-color 0.2s ease;
+	}
+
+	.board-card.is-search-highlighted {
+		z-index: 2;
+		outline: 3px solid var(--accent);
+		outline-offset: 4px;
+	}
+
+	.board-card.is-search-highlighted .board-card-title {
+		color: var(--accent);
 	}
 
 	.board-card:hover {
@@ -1328,26 +1577,83 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 
 	.board-art {
 		position: absolute;
-		top: calc(50% + 24px);
+		bottom: calc(8% + 188px + 12px);
 		right: 4.5%;
-		display: grid;
-		place-items: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.55rem;
 		width: 176px;
 		height: 176px;
-		padding: 1rem;
+		padding: 0.75rem;
 		border: 1px solid var(--line);
 		border-radius: 14px;
 		background: var(--surface);
 		box-shadow: var(--shadow-sm);
-		pointer-events: none;
+		color: var(--muted);
+		font-family: var(--font-sans);
+		text-align: center;
+		cursor: pointer;
+		pointer-events: auto;
+		transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.28s ease,
+			transform 0.28s var(--ease);
+	}
+
+	.board-art:hover {
+		border-color: var(--accent);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-3px);
+	}
+
+	.board-art:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 3px;
 	}
 
 	.board-art img {
-		width: 100%;
-		height: auto;
+		width: 112px;
+		height: 112px;
 		aspect-ratio: 1;
 		object-fit: cover;
+		border: 1px solid var(--line);
 		border-radius: 50%;
+		background: var(--surface-soft);
+		transition: transform 0.35s var(--ease), border-color 0.2s ease;
+	}
+
+	.board-art:hover img {
+		border-color: var(--accent);
+		transform: scale(1.035);
+	}
+
+	.board-art-copy {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.12rem;
+	}
+
+	.board-art-title {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		font-size: 0.7rem;
+		letter-spacing: 0.1em;
+		white-space: nowrap;
+		transition: color 0.2s ease;
+	}
+
+	.board-art-title span {
+		font-size: 0.62rem;
+	}
+
+	.board-art:hover .board-art-title {
+		color: var(--accent);
+	}
+
+	.board-art-note {
+		display: none;
 	}
 
 	/* ---------- 画布滚动加载的卡片 ---------- */
@@ -1612,6 +1918,177 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		line-height: 1.9;
 	}
 
+	/* ---------- 关于弹窗 ---------- */
+
+	.about-dialog {
+		width: min(92vw, 620px);
+		max-width: none;
+		max-height: none;
+		padding: 0;
+		border: 1px solid var(--line-strong);
+		border-radius: var(--radius-lg);
+		background: var(--surface);
+		color: var(--ink);
+		box-shadow: var(--shadow-md);
+		overflow: visible;
+	}
+
+	.about-dialog::backdrop {
+		background: rgba(18, 20, 25, 0.55);
+		backdrop-filter: blur(2px);
+	}
+
+	.about-dialog[open] {
+		animation: about-pop 0.28s var(--ease) both;
+	}
+
+	@keyframes about-pop {
+		from {
+			opacity: 0;
+			transform: translateY(10px) scale(0.985);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	.about-dialog-panel {
+		max-height: min(86vh, 760px);
+		padding: clamp(1.5rem, 4vw, 2.4rem);
+		border-radius: inherit;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+
+	.about-dialog-close {
+		position: absolute;
+		top: 0.85rem;
+		right: 0.85rem;
+		z-index: 1;
+		display: grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		border: 1px solid var(--line);
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--surface) 92%, transparent);
+		color: var(--muted);
+		cursor: pointer;
+		touch-action: manipulation;
+		transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+	}
+
+	.about-dialog-close:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+		background: var(--surface);
+	}
+
+	.about-dialog-close svg {
+		width: 15px;
+		height: 15px;
+	}
+
+	.about-dialog-head {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding-right: 2.6rem;
+	}
+
+	.about-dialog-avatar {
+		flex-shrink: 0;
+		width: 76px;
+		height: 76px;
+		border: 1px solid var(--line);
+		border-radius: 50%;
+		background: var(--surface-soft);
+		object-fit: cover;
+	}
+
+	.about-dialog-head .eyebrow {
+		margin: 0 0 0.35rem;
+	}
+
+	.about-dialog-head h2 {
+		margin: 0;
+		font-size: clamp(1.4rem, 3vw, 1.8rem);
+		line-height: 1.3;
+		letter-spacing: -0.025em;
+	}
+
+	.about-dialog-head h2 em {
+		color: var(--accent);
+		font-style: normal;
+	}
+
+	.about-dialog-lead {
+		margin: 1.4rem 0 0;
+		color: var(--ink-soft);
+		font-size: 0.95rem;
+		line-height: 1.9;
+	}
+
+	.about-dialog-body {
+		margin-top: 1rem;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+		line-height: 1.9;
+	}
+
+	.about-dialog-body p {
+		margin: 0 0 0.7rem;
+	}
+
+	.about-dialog-body p:last-child {
+		margin-bottom: 0;
+	}
+
+	.about-dialog-facts {
+		margin: 1.5rem 0 0;
+		padding-top: 0.35rem;
+		border-top: 1px solid var(--line);
+	}
+
+	.about-dialog-facts div {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.52rem 0;
+		border-bottom: 1px solid var(--line);
+		font-size: 0.82rem;
+	}
+
+	.about-dialog-facts dt {
+		color: var(--muted);
+	}
+
+	.about-dialog-facts dd {
+		margin: 0;
+		color: var(--ink);
+	}
+
+	.about-dialog-quote {
+		margin: 1.4rem 0 0;
+		color: var(--muted);
+		font-family: var(--font-serif);
+		font-size: 0.92rem;
+		font-style: italic;
+		text-align: center;
+	}
+
+	.about-dialog-actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-top: 1.1rem;
+		padding-top: 1.2rem;
+		border-top: 1px solid var(--line);
+	}
+
 	/* ---------- 响应式 ---------- */
 
 	@media (max-width: 1080px) {
@@ -1663,8 +2140,14 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		}
 
 		.board-art {
-			width: 150px;
-			height: 150px;
+			width: 160px;
+			height: 160px;
+			padding: 0.7rem;
+		}
+
+		.board-art img {
+			width: 100px;
+			height: 100px;
 		}
 	}
 
@@ -1731,7 +2214,49 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		}
 
 		.board-art {
-			display: none;
+			position: static;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-start;
+			gap: 0.85rem;
+			width: auto;
+			height: auto;
+			padding: 0.95rem 1.1rem;
+			grid-column: 1 / -1;
+			order: -1;
+			text-align: left;
+			transform: none;
+		}
+
+		.board-art:hover {
+			transform: none;
+		}
+
+		.board-art img {
+			width: 52px;
+			height: 52px;
+			flex-shrink: 0;
+		}
+
+		.board-art-copy {
+			align-items: flex-start;
+			gap: 0.18rem;
+		}
+
+		.board-art-title {
+			color: var(--ink);
+			font-family: var(--font-serif);
+			font-size: 1rem;
+			font-weight: 600;
+			letter-spacing: -0.01em;
+		}
+
+		.board-art-note {
+			display: block;
+			color: var(--muted);
+			font-size: 0.74rem;
+			letter-spacing: 0.02em;
 		}
 
 		.board-card--more,
@@ -1744,6 +2269,34 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 	@media (max-width: 720px) {
 		.hero-board {
 			margin-top: 1rem;
+		}
+
+		.about-dialog {
+			width: calc(100vw - 1.5rem);
+		}
+
+		.about-dialog-panel {
+			max-height: 88vh;
+			padding: 1.3rem 1.15rem 1.15rem;
+		}
+
+		.about-dialog-head {
+			gap: 0.8rem;
+			padding-right: 2rem;
+		}
+
+		.about-dialog-avatar {
+			width: 58px;
+			height: 58px;
+		}
+
+		.about-dialog-head h2 {
+			font-size: 1.25rem;
+		}
+
+		.about-dialog-actions {
+			flex-direction: column;
+			align-items: flex-start;
 		}
 
 		.board {
