@@ -12,6 +12,8 @@ const posts = (await getCollection('blog')).sort(
 );
 const [featured, ...rest] = posts;
 const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未分类';
+const searchTextOf = (post: (typeof posts)[number]) =>
+	[post.data.title, post.data.description, categoryOf(post), ...post.data.tags].join(' ');
 ---
 
 <!doctype html>
@@ -31,9 +33,16 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 				</div>
 			</section>
 
+			<div class="container search-status-wrap">
+				<p class="search-status" id="search-status" hidden>
+					<span id="search-status-text"></span>
+					<a href={withBase('/blog/')}>清除搜索</a>
+				</p>
+			</div>
+
 			{
 				featured && (
-					<section class="container">
+					<section class="container" data-search={searchTextOf(featured)}>
 						<a class="featured" href={withBase(`/blog/${featured.id}/`)}>
 							<div class="featured-media">
 								{
@@ -69,7 +78,7 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 				)
 			}
 
-			<section class="container grid-section">
+			<section class="container grid-section" id="more-posts">
 				<div class="section-head">
 					<div>
 						<p class="eyebrow">More stories</p>
@@ -80,7 +89,7 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 				<div class="card-grid">
 					{
 						rest.map((post) => (
-							<article class="card reveal">
+							<article class="card reveal" data-search={searchTextOf(post)}>
 								<a href={withBase(`/blog/${post.id}/`)}>
 									<div class="card-media">
 										{
@@ -111,10 +120,75 @@ const categoryOf = (post: (typeof posts)[number]) => post.data.category || '未�
 			</section>
 		</main>
 		<Footer />
+		<script>
+			const params = new URLSearchParams(window.location.search);
+			const query = params.get('q')?.trim();
+
+			if (query) {
+				const needle = query.toLocaleLowerCase();
+				const items = Array.from(document.querySelectorAll<HTMLElement>('[data-search]'));
+				let matches = 0;
+
+				for (const item of items) {
+					const haystack = (item.dataset.search ?? '').toLocaleLowerCase();
+					const hit = haystack.includes(needle);
+					item.classList.toggle('is-search-hidden', !hit);
+					if (hit) matches += 1;
+				}
+
+				const gridSection = document.getElementById('more-posts');
+				if (gridSection && !gridSection.querySelector('[data-search]:not(.is-search-hidden)')) {
+					gridSection.hidden = true;
+				}
+
+				const status = document.getElementById('search-status');
+				const statusText = document.getElementById('search-status-text');
+				if (status && statusText) {
+					statusText.textContent = `搜索「${query}」：${matches} 篇结果`;
+					status.hidden = false;
+				}
+			}
+		</script>
 	</body>
 </html>
 
 <style>
+	.search-status-wrap {
+		margin-top: 1.5rem;
+	}
+
+	.search-status {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin: 0;
+		padding: 0.85rem 1.1rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: var(--surface);
+		color: var(--ink-soft);
+		font-size: 0.82rem;
+	}
+
+	.search-status[hidden] {
+		display: none;
+	}
+
+	.search-status a {
+		margin-left: auto;
+		color: var(--accent);
+		font-size: 0.78rem;
+		text-decoration: none;
+	}
+
+	.search-status a:hover {
+		color: var(--accent-strong);
+	}
+
+	.is-search-hidden {
+		display: none !important;
+	}
+
 	.archive-head {
 		padding: clamp(3rem, 7vw, 5.5rem) 0 2.5rem;
 		border-bottom: 1px solid var(--line-strong);
