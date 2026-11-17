@@ -133,11 +133,11 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		<main class="home">
 			<section class="container hero-board">
 				<div class="board reveal">
-					<a class="board-open" href={withBase('/blog/')} aria-label="打开全部文章" title="打开全部文章">
+					<button class="board-open" type="button" data-share-open aria-label="分享首页" title="分享首页" aria-haspopup="dialog">
 						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-							<path d="M15 3h6v6M21 3 10 14M9 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M12 15V3m-4 4 4-4 4 4M6 11H4v10h16V11h-2" stroke-linecap="round" stroke-linejoin="round" />
 						</svg>
-					</a>
+					</button>
 
 					<div class="board-zoom" data-canvas-control role="group" aria-label="画布缩放">
 						<button type="button" data-zoom-out aria-label="缩小">−</button>
@@ -433,7 +433,222 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		</dialog>
 
 		<Footer />
+		<dialog class="share-dialog" aria-labelledby="share-title">
+			<form method="dialog">
+				<button class="share-close" aria-label="关闭分享">×</button>
+			</form>
+			<div class="share-card">
+				<div class="share-orbit" aria-hidden="true">
+					{boardCards.slice(0, 4).map((card) => (
+						<div class="share-orbit-card">
+							<span>{card.typeLabel} · {card.category}</span>
+							<strong>{card.title}</strong>
+						</div>
+					))}
+				</div>
+				<img class="share-avatar" src={avatarUrl} alt="" width="64" height="64" />
+				<h2 id="share-title">Someone Once Said<span class="board-title-dot">.</span></h2>
+				<p data-share-description>{SITE_DESCRIPTION}</p>
+				<div class="share-qr">
+					<img src={withBase('/share-qr.svg')} alt="扫描二维码打开网站首页" width="108" height="108" />
+					<span>someoneoncesaid.github.io/astro-blog</span>
+				</div>
+				<div class="share-social" role="group" aria-label="社交媒体">
+					<SocialLinks compact />
+				</div>
+			</div>
+			<div class="share-actions">
+				<button type="button" data-share-download>下载图片</button>
+				<button type="button" data-share-copy>复制链接</button>
+				<button type="button" data-share-native hidden>分享</button>
+			</div>
+			<input class="share-link" aria-label="首页链接" readonly hidden />
+			<p class="share-status" role="status"></p>
+		</dialog>
+
 		<script>
+			const shareDialog = document.querySelector<HTMLDialogElement>('.share-dialog');
+			const shareStatus = shareDialog?.querySelector<HTMLElement>('.share-status');
+			const shareLink = shareDialog?.querySelector<HTMLInputElement>('.share-link');
+			const nativeShare = shareDialog?.querySelector<HTMLButtonElement>('[data-share-native]');
+			const shareUrl = new URL(window.location.pathname, window.location.origin);
+			if (shareLink) shareLink.value = shareUrl.href;
+			if (nativeShare && typeof navigator.share === 'function') nativeShare.hidden = false;
+			document.querySelector('[data-share-open]')?.addEventListener('click', () => {
+				if (shareStatus) shareStatus.textContent = '';
+				if (shareLink) shareLink.hidden = true;
+				shareDialog?.showModal();
+			});
+			shareDialog?.querySelector('[data-share-copy]')?.addEventListener('click', async () => {
+				try {
+					await navigator.clipboard.writeText(shareUrl.href);
+					if (shareStatus) shareStatus.textContent = '链接已复制';
+				} catch {
+					if (shareLink) {
+						shareLink.hidden = false;
+						shareLink.focus();
+						shareLink.select();
+					}
+				}
+			});
+			const downloadShare = shareDialog?.querySelector<HTMLButtonElement>('[data-share-download]');
+			downloadShare?.addEventListener('click', async () => {
+				downloadShare.disabled = true;
+				if (shareStatus) shareStatus.textContent = '';
+				try {
+					const card = shareDialog?.querySelector<HTMLElement>('.share-card');
+					const avatar = card?.querySelector<HTMLImageElement>('.share-avatar');
+					const qr = card?.querySelector<HTMLImageElement>('.share-qr img');
+					if (!card || !avatar || !qr) throw new Error('Share card assets are missing');
+					await Promise.all([avatar.decode(), qr.decode(), document.fonts.ready]);
+
+					const canvas = document.createElement('canvas');
+					canvas.width = 1080;
+					canvas.height = 1440;
+					const context = canvas.getContext('2d');
+					if (!context) throw new Error('Canvas is unavailable');
+					const style = getComputedStyle(card);
+					const accent = style.getPropertyValue('--accent').trim() || '#002FA7';
+					const ink = style.color;
+					const serif = style.getPropertyValue('--font-serif').trim() || 'serif';
+					const orbit = Array.from(card.querySelectorAll<HTMLElement>('.share-orbit-card'));
+
+					context.fillStyle = style.backgroundColor;
+					context.fillRect(0, 0, canvas.width, canvas.height);
+					context.strokeStyle = style.getPropertyValue('--line').trim() || '#ded8cc';
+					context.lineWidth = 2;
+					context.save();
+					context.globalAlpha = 0.52;
+					context.beginPath();
+					for (let x = 0; x < canvas.width; x += 90) {
+						context.moveTo(x, 0);
+						context.lineTo(x, canvas.height);
+					}
+					for (let y = 0; y < canvas.height; y += 90) {
+						context.moveTo(0, y);
+						context.lineTo(canvas.width, y);
+					}
+					context.stroke();
+					context.restore();
+
+					const drawLabel = (value: string, x: number, y: number, width: number) => {
+						let label = value;
+						if (context.measureText(label).width > width) {
+							const characters = Array.from(label);
+							do {
+								characters.pop();
+								label = characters.join('') + '…';
+							} while (characters.length && context.measureText(label).width > width);
+						}
+						context.fillText(label, x, y);
+					};
+
+					const orbitPositions = [[54, 58, 340], [686, 94, 340], [54, 1260, 313], [713, 1285, 313]];
+					orbit.forEach((tile, index) => {
+						const [x, y, width] = orbitPositions[index];
+						const tileStyle = getComputedStyle(tile);
+						context.beginPath();
+						context.roundRect(x, y, width, 126, 20);
+						context.fillStyle = tileStyle.backgroundColor;
+						context.fill();
+						context.stroke();
+						context.save();
+						context.clip();
+						context.fillStyle = tileStyle.color;
+						context.font = '24px sans-serif';
+						drawLabel(tile.querySelector('span')?.textContent ?? '', x + 24, y + 40, width - 48);
+						context.font = `600 31px ${serif}`;
+						drawLabel(tile.querySelector('strong')?.textContent ?? '', x + 24, y + 89, width - 48);
+						context.restore();
+					});
+
+					context.save();
+					context.beginPath();
+					context.arc(540, 315, 96, 0, Math.PI * 2);
+					context.clip();
+					const crop = Math.min(avatar.naturalWidth, avatar.naturalHeight);
+					context.drawImage(avatar, (avatar.naturalWidth - crop) / 2, (avatar.naturalHeight - crop) / 2, crop, crop, 444, 219, 192, 192);
+					context.restore();
+
+					context.font = `700 96px ${serif}`;
+					const title = 'Someone Once Said';
+					const titleWidth = context.measureText(title + '.').width;
+					const titleScale = Math.min(1, 960 / titleWidth);
+					context.save();
+					context.translate((canvas.width - titleWidth * titleScale) / 2, 0);
+					context.scale(titleScale, 1);
+					context.fillStyle = ink;
+					context.fillText(title, 0, 540);
+					context.fillStyle = accent;
+					context.fillText('.', context.measureText(title).width, 540);
+					context.restore();
+
+					context.textAlign = 'center';
+					context.font = '36px sans-serif';
+					context.fillStyle = ink;
+					context.fillText(card.querySelector('[data-share-description]')?.textContent?.trim() ?? '', 540, 632, 940);
+
+					context.imageSmoothingEnabled = false;
+					context.save();
+					context.beginPath();
+					context.roundRect(411, 755, 258, 258, 12);
+					context.clip();
+					context.drawImage(qr, 417, 761, 246, 246);
+					context.restore();
+					context.stroke();
+					context.font = '30px sans-serif';
+					context.fillStyle = accent;
+					context.fillText(card.querySelector('.share-qr span')?.textContent?.trim() ?? '', 540, 1070);
+					context.beginPath();
+					context.moveTo(310, 1158);
+					context.lineTo(770, 1158);
+					context.stroke();
+					const icons = Array.from(card.querySelectorAll<SVGSVGElement>('.share-social svg'));
+					icons.forEach((icon, index) => {
+						const x = 540 + (index - (icons.length - 1) / 2) * 90;
+						const y = 1230;
+						context.beginPath();
+						context.arc(x, y, 34, 0, Math.PI * 2);
+						context.stroke();
+						const { x: viewX, y: viewY, width, height } = icon.viewBox.baseVal;
+						const scale = 30 / Math.max(width, height);
+						context.save();
+						context.translate(x - (viewX + width / 2) * scale, y - (viewY + height / 2) * scale);
+						context.scale(scale, scale);
+						context.fillStyle = accent;
+						icon.querySelectorAll('path[d]').forEach((path) => {
+							const shape = new Path2D(path.getAttribute('d') ?? '');
+							context.fill(shape, path.getAttribute('fill-rule') === 'evenodd' ? 'evenodd' : 'nonzero');
+						});
+						context.restore();
+					});
+
+					const image = await new Promise<Blob>((resolve, reject) => {
+						canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('PNG export failed')), 'image/png');
+					});
+					const url = URL.createObjectURL(image);
+					const link = document.createElement('a');
+					link.href = url;
+					link.download = 'someone-once-said.png';
+					link.click();
+					window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+					if (shareStatus) shareStatus.textContent = '图片已生成';
+				} catch {
+					if (shareStatus) shareStatus.textContent = '图片生成失败，请重试';
+				} finally {
+					downloadShare.disabled = false;
+				}
+			});
+			nativeShare?.addEventListener('click', async () => {
+				try {
+					await navigator.share({ title: 'Someone Once Said.', url: shareUrl.href });
+				} catch (error) {
+					if (!(error instanceof DOMException && error.name === 'AbortError') && shareStatus) {
+						shareStatus.textContent = '分享未完成，可以复制链接';
+					}
+				}
+			});
+
 			const boardSearch = document.getElementById('board-search') as HTMLInputElement | null;
 			const searchForm = boardSearch?.form;
 			const results = document.getElementById('board-search-results');
@@ -1048,6 +1263,147 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		--art-blush: #3a2e27;
 	}
 
+	.share-dialog {
+		position: fixed;
+		width: min(32rem, calc(100% - 2rem));
+		padding: 1rem;
+		border: 1px solid var(--line);
+		border-radius: 16px;
+		background: var(--surface);
+		color: var(--ink);
+	}
+
+	.share-dialog::backdrop { background: rgb(18 22 34 / 40%); }
+
+	.share-close {
+		display: block;
+		margin: 0 0 0.5rem auto;
+		border: 0;
+		background: transparent;
+		color: inherit;
+		font-size: 1.5rem;
+		cursor: pointer;
+	}
+
+	.share-card {
+		container-type: inline-size;
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: clamp(0.35rem, 2vw, 0.75rem);
+		aspect-ratio: 3 / 4;
+		padding: clamp(0.75rem, 4vw, 1.75rem);
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background-color: color-mix(in srgb, var(--surface-soft) 62%, var(--paper));
+		background-image:
+			linear-gradient(to right, color-mix(in srgb, var(--line) 52%, transparent) 1px, transparent 1px),
+			linear-gradient(to bottom, color-mix(in srgb, var(--line) 52%, transparent) 1px, transparent 1px);
+		background-size: 36px 36px;
+		text-align: center;
+	}
+
+	.share-card > :not(.share-orbit) {
+		position: relative;
+	}
+
+	.share-orbit {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.share-orbit-card {
+		position: absolute;
+		width: 31.5%;
+		padding: 2%;
+		border: 1px solid var(--line);
+		border-radius: 8px;
+		background: var(--surface);
+		box-shadow: var(--shadow-sm);
+		color: var(--ink);
+		text-align: left;
+	}
+
+	.share-orbit-card:nth-child(1) { top: 4%; left: 5%; }
+	.share-orbit-card:nth-child(2) { top: 6.5%; right: 5%; }
+	.share-orbit-card:nth-child(3) { bottom: 5%; left: 5%; width: 29%; }
+	.share-orbit-card:nth-child(4) { bottom: 3%; right: 5%; width: 29%; }
+
+	.share-orbit-card span,
+	.share-orbit-card strong {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.share-orbit-card span { color: var(--ink-soft); font-size: clamp(0.48rem, 1.4vw, 0.66rem); }
+	.share-orbit-card strong { font-family: var(--font-serif); font-size: clamp(0.57rem, 1.6vw, 0.85rem); }
+
+	.share-avatar {
+		width: clamp(48px, 17cqw, 76px);
+		height: auto;
+		aspect-ratio: 1;
+		border: 1px solid var(--line-strong);
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.share-card h2 {
+		margin: 0;
+		font-family: var(--font-serif);
+		font-size: min(9cqw, 2.75rem);
+		white-space: nowrap;
+		line-height: 1.1;
+		letter-spacing: -0.04em;
+	}
+
+	.share-card p { margin: 0; color: var(--ink-soft); }
+
+	.share-qr {
+		display: grid;
+		justify-items: center;
+		gap: 0.35rem;
+		margin-top: 0.5rem;
+		color: var(--accent);
+		font-size: 0.72rem;
+		overflow-wrap: anywhere;
+	}
+
+	.share-qr img {
+		display: block;
+		width: min(108px, 24vw);
+		height: auto;
+		border: 1px solid var(--line);
+		border-radius: 6px;
+	}
+
+	.share-social {
+		display: flex;
+		justify-content: center;
+		width: min(100%, 13rem);
+		padding-top: 0.6rem;
+		border-top: 1px solid var(--line);
+	}
+
+	.share-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+	.share-actions button {
+		padding: 0.5rem 0.9rem;
+		border: 1px solid var(--line);
+		border-radius: 100px;
+		background: var(--surface);
+		color: var(--accent);
+		cursor: pointer;
+	}
+
+	.share-link { width: 100%; margin-top: 0.75rem; }
+	.share-status { margin: 0; color: var(--ink-soft); font-size: 0.8rem; }
+	.share-status:not(:empty) { margin-top: 0.6rem; }
+
 	.board-open {
 		position: absolute;
 		top: 1rem;
@@ -1057,6 +1413,8 @@ const moreCardsJson = JSON.stringify(moreCards).replace(/</g, '\\u003c');
 		place-items: center;
 		width: 38px;
 		height: 38px;
+		padding: 0;
+		cursor: pointer;
 		border: 1px solid var(--line);
 		border-radius: 50%;
 		background: var(--surface);
