@@ -1,6 +1,7 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION, SOCIAL_LINKS } from '../consts';
 import SocialLinks from './SocialLinks.astro';
+import SiteMetrics from './SiteMetrics.astro';
 import { withBase } from '../utils/url';
 
 const today = new Date();
@@ -12,6 +13,7 @@ const today = new Date();
 			<div class="footer-brand">
 				<p class="footer-logo">{SITE_TITLE}</p>
 				<p class="footer-desc">{SITE_DESCRIPTION}</p>
+				<SiteMetrics />
 			</div>
 
 			<nav class="footer-nav" aria-label="页脚导航">

@@ -2,6 +2,7 @@
 // 全局样式与主题初始化脚本，所有页面通过 <BaseHead /> 引入
 import '../styles/global.css';
 import { absoluteUrl, withBase } from '../utils/url';
+import { METRICS } from '../consts';
 
 interface Props {
 	title: string;
@@ -12,6 +13,9 @@ interface Props {
 const canonicalURL = absoluteUrl(Astro.url.pathname, Astro.site);
 const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 const imageURL = absoluteUrl(image, Astro.site);
+
+// 51.LA 的 SDK 会拒绝 localhost 等 Referer（返回 403），本地开发时跳过加载
+const analyticsEnabled = METRICS.enable && import.meta.env.PROD;
 ---
 
 <meta charset="utf-8" />
@@ -59,3 +63,31 @@ const imageURL = absoluteUrl(image, Astro.site);
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={imageURL} />
+
+<!-- 51.LA 网站统计 -->
+{
+	analyticsEnabled && (
+		<>
+			<script is:inline charset="UTF-8" id="LA_COLLECT" src={METRICS.sdk} />
+			<script
+				is:inline
+				define:vars={{
+					laId: METRICS.id,
+					laCk: METRICS.ck,
+					laAutoTrack: METRICS.autoTrack,
+					laHashMode: METRICS.hashMode,
+				}}
+			>
+				// 广告拦截插件有时会拦掉 SDK，加载失败时静默跳过
+				if (window.LA) {
+					LA.init({
+						id: laId,
+						ck: laCk,
+						autoTrack: laAutoTrack,
+						hashMode: laHashMode,
+					});
+				}
+			</script>
+		</>
+	)
+}

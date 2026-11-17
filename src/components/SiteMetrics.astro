@@ -1,0 +1,133 @@
+---
+// 51.LA 访问统计：直接读取官方数据挂件 quote.js 里的数字，自行渲染样式
+import { METRICS } from '../consts';
+
+// index 对应 quote.js 中 0-6 号数据：最近活跃 / 今日人数 / 今日访问 / 昨日人数 / 昨日访问 / 本月访问 / 总访问量
+const stats = [
+	{ index: 6, label: '累计浏览' },
+	{ index: 2, label: '今日浏览' },
+	{ index: 0, label: '最近活跃', live: true },
+];
+---
+
+<section class="site-metrics" data-site-metrics hidden aria-label="访问统计">
+	<dl>
+		{stats.map((stat) => (
+			<div class="site-metric">
+				<dt>
+					{stat.live && <span class="site-metrics-dot" aria-hidden="true" />}
+					{stat.label}
+				</dt>
+				<dd data-metric={stat.index}>—</dd>
+			</div>
+		))}
+	</dl>
+</section>
+
+<script
+	is:inline
+	define:vars={{ laWidget: METRICS.widget, laEnabled: METRICS.enable }}
+>
+	(() => {
+		if (!laEnabled || !laWidget) return;
+		const section = document.querySelector('[data-site-metrics]');
+		if (!section) return;
+
+		fetch(laWidget, { cache: 'no-store' })
+			.then((response) => {
+				if (!response.ok) throw new Error(`HTTP ${response.status}`);
+				return response.text();
+			})
+			.then((text) => {
+				const pairs = [...text.matchAll(/<p><span>(\d+)<\/span><span>([^<]*)<\/span><\/p>/g)];
+				const values = new Map(pairs.map((match) => [Number(match[1]), match[2].trim()]));
+				const metrics = [...section.querySelectorAll('[data-metric]')];
+				if (!metrics.every((node) => values.has(Number(node.dataset.metric)))) {
+					throw new Error('51.LA 数据格式不匹配');
+				}
+
+				metrics.forEach((node) => {
+					const raw = values.get(Number(node.dataset.metric)) || '';
+					const count = Number(raw.replace(/,/g, ''));
+					node.textContent =
+						raw && Number.isFinite(count) ? count.toLocaleString('en-US') : raw || '—';
+				});
+
+				// 有人在看时，让「最近活跃」的圆点亮起来
+				const liveNode = section.querySelector('[data-metric="0"]');
+				const liveCount = Number((liveNode?.textContent || '').replace(/,/g, ''));
+				liveNode?.closest('.site-metric')?.classList.toggle('is-active', liveCount > 0);
+
+				section.hidden = false;
+			})
+			.catch((error) => {
+				// 数据挂件未开启、被广告拦截或接口异常时，不把空壳展示给访客
+				console.warn('51.LA 访问统计加载失败：', error);
+				section.remove();
+			});
+	})();
+</script>
+
+<style>
+	.site-metrics {
+		margin-top: 1.1rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--line);
+	}
+
+	.site-metrics dl {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.35rem 0;
+		margin: 0;
+	}
+
+	.site-metric {
+		display: flex;
+		align-items: baseline;
+		gap: 0.4rem;
+		padding-inline: 0.7rem;
+		box-shadow: inset 1px 0 var(--line);
+		white-space: nowrap;
+	}
+
+	.site-metric:first-child {
+		padding-inline-start: 0;
+		box-shadow: none;
+	}
+
+	.site-metric dt {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		color: var(--muted);
+		font-size: 0.7rem;
+	}
+
+	.site-metric dd {
+		margin: 0;
+		color: var(--ink);
+		font-family: var(--font-serif);
+		font-size: 0.95rem;
+		font-variant-numeric: tabular-nums;
+		line-height: 1;
+	}
+
+	.site-metric:first-child dd {
+		color: var(--accent);
+		font-size: 1.15rem;
+	}
+
+	.site-metrics-dot {
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--accent);
+		opacity: 0.3;
+	}
+
+	.site-metric.is-active .site-metrics-dot {
+		opacity: 1;
+	}
+</style>
