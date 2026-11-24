@@ -3,38 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Profile 配置</title>
+<title>接入方式对比</title>
 
 <style>
 html,body{margin:0;padding:0;overflow:hidden;background:transparent}
-#xhs-card{position:relative;width:900px;height:1200px;overflow:hidden;transform-origin:top left}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
 </style>
-<style>body{margin:0;font-family:Inter,"PingFang SC","Noto Sans CJK SC",sans-serif;background:#f3f1e9;color:#171a1f}a{color:#1646a0}a:hover{color:#0e3174}</style>
+
+<style>
+body{margin:0}
+a{color:#002FA7}a:hover{color:#002080}
+</style>
+
+
 </head>
 <body>
 <div id="xhs-card">
 
-<div style="width:900px;height:1200px;box-sizing:border-box;padding:66px 68px 50px;background:#f3f1e9;display:flex;flex-direction:column;gap:24px">
-<div style="display:flex;justify-content:space-between;border-bottom:2px solid #171a1f;padding-bottom:14px;font-size:16px;letter-spacing:1px"><span>PROFILE 配置</span><span>最小补丁：只接入 Codex</span></div>
-<div style="font-size:53px;line-height:1.1;font-weight:850;letter-spacing:-2px">让 subagent_oar<br>连上 Codex CLI</div>
-<div style="font-size:18px;line-height:1.45">先在组合中声明以上两个包的依赖，再将补丁加入 Profile 配置层。Codex CLI 需已安装并登录。</div>
-<div style="padding:25px 24px;background:#171a1f;color:#edf0f4"><div style="font-size:15px;letter-spacing:1px;color:#a9c1ff;margin-bottom:16px">PATCH · YAML</div><div style="font-family:ui-monospace,monospace;font-size:15px;line-height:1.58;white-space:pre-wrap">- insert:
-    - name: '@deepseek-ai/dsh-experimental-subagent-oar'
-      config:
-        runtime: codex
-        providerName: oar-codex
-        launchArgs: ['-c', 'sandbox_mode="workspace-write"']
-    - name: '@deepseek-ai/dsh-experimental-tool-subagent-oar'
-      config:
-        providers:
-          codex: oar-codex</div></div>
-<div style="padding:22px 24px;border:1px solid #171a1f;display:flex;flex-direction:column;gap:12px"><div style="font-size:16px;color:#1646a0;font-weight:800">补丁对应的接入关系</div><div style="font-size:18px;line-height:1.45">提供方配置 runtime: codex，名称为 oar-codex；工具包的 providers 映射将 codex 指向 oar-codex。</div></div>
-<div style="margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid #8d918f;padding-top:14px;font-size:15px"><span>原生 CLI 需单独安装与认证</span><span>07 / 08</span></div>
-</div></div>
+<div style="position:relative;width:1080px;height:1440px;box-sizing:border-box;padding:87px;background:#faf9f5;color:#3B403B;display:flex;flex-direction:column;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif">
+<div style="position:absolute;right:15px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;letter-spacing:.18em;color:#002FA7;opacity:.2;font-weight:800;font-size:21px;line-height:1">SOMEONE ONCE SAID</div>
+<div style="display:flex;align-items:center;justify-content:space-between;color:#6B6E68;font-size:27px;font-weight:650;letter-spacing:.05em"><span>06 / 总结对比</span><span style="color:#002FA7;font-weight:800">专用适配 vs 统一适配</span></div>
+<h2 style="font-size:86px;line-height:1.05;letter-spacing:-.04em;margin:3% 0 2%;font-weight:850;color:#3B403B">都能调用多种 Agent，<br><span style="color:#002FA7;text-decoration:underline;text-decoration-color:#C8D5F1;text-decoration-thickness:.08em;text-underline-offset:.12em">接入方式有何不同？</span></h2>
+<p style="font-size:27px;line-height:1.35;color:#474c55;margin:0">DSH 专用接入和 OAR 接入，都能把任务交给 Codex 或 Claude Code。</p>
+<div style="display:grid;gap:15px;margin:3% 0 2%">
+<div style="display:grid;grid-template-columns:56px 1fr;gap:18px;padding:18px 20px;border:2px solid #D8DCE7;border-radius:25px;background:#F7F8FC"><span style="display:grid;place-items:center;width:56px;height:56px;border-radius:17px;background:#E9EDF8;color:#002FA7;border:2px solid #C8D2E8"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"></rect><path d="m7 9 3 3-3 3M12 16h5"></path></svg></span><div><h3 style="margin:0;font-size:30px;line-height:1.25">DSH 专用接入 <span style="display:inline-block;margin-left:8px;color:#002FA7;font-size:22px;font-weight:700">官方插件</span></h3><p style="margin:6px 0 0;color:#6B6E68;font-size:22px;line-height:1.35"><b>入口：</b>subagent_codex / subagent_claude_code<br><b>适配：</b>分别对接 Codex app-server / Claude SDK<br><b>安装：</b>专用 Bundle 提供对应原生载荷<br><b>进程：</b>纳入 DSH 子进程管理</p></div></div>
+<div style="display:grid;grid-template-columns:56px 1fr;gap:18px;padding:18px 20px;border:2px solid #9DB6F3;border-radius:25px;background:#E9EDF8"><span style="display:grid;place-items:center;width:56px;height:56px;border-radius:17px;background:#fff;color:#002FA7;border:2px solid #C8D2E8"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="8" height="8" rx="2"></rect><path d="M12 3v5M12 16v5M3 12h5M16 12h5M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"></path><circle cx="12" cy="3" r="1"></circle><circle cx="21" cy="12" r="1"></circle><circle cx="12" cy="21" r="1"></circle><circle cx="3" cy="12" r="1"></circle></svg></span><div><h3 style="margin:0;font-size:30px;line-height:1.25">OAR 接入 <span style="display:inline-block;margin-left:8px;color:#002FA7;font-size:22px;font-weight:700">实验性统一入口</span></h3><p style="margin:6px 0 0;color:#4b5057;font-size:22px;line-height:1.35"><b>入口：</b>subagent_oar，用 runtime 选择已配置后端<br><b>适配：</b>DSH → OAR → Codex / Claude Code<br><b>安装：</b>自行安装、认证和维护原生 CLI<br><b>进程：</b>由 OAR 管理</p></div></div>
+<div style="display:grid;grid-template-columns:56px 1fr;gap:18px;padding:18px 20px;border:2px solid #D8DCE7;border-radius:25px;background:#F7F8FC"><span style="display:grid;place-items:center;width:56px;height:56px;border-radius:17px;background:#E9EDF8;color:#002FA7;border:2px solid #C8D2E8"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h13m0 0-3-3m3 3-3 3M19 17H6m0 0 3-3m-3 3 3 3"></path></svg></span><div><h3 style="margin:0;font-size:30px;line-height:1.25">例：Codex 改代码，Claude 审查</h3><p style="margin:6px 0 0;color:#6B6E68;font-size:22px;line-height:1.35"><b>专用接入：</b>先调用 Codex 工具，再调用 Claude 工具。<br><b>OAR 接入：</b>调用同一个工具，分别传 codex、claude。</p></div></div>
+</div>
+<div style="padding:16px 20px;border-left:6px solid #002FA7;border-radius:0 19px 19px 0;background:#E9EDF8;font-size:22px;line-height:1.4"><b style="color:#002FA7">核心差异：</b>专用接入分别适配各产品；OAR 用统一接口适配多个产品。两者均为独立的一次性任务，不支持续聊或恢复。</div>
+<p style="font-size:20px;line-height:1.45;color:#777d84;margin:2.5% 0 0">依据：DSH <a href="../../../素材/参考文档/subagent-codex.md" style="color:#002FA7;text-decoration:none">Codex</a>、<a href="../../../素材/参考文档/subagent-claude-code.md" style="color:#002FA7;text-decoration:none">Claude Code</a>、<a href="../../../素材/参考文档/subagent-oar.md" style="color:#002FA7;text-decoration:none">OAR</a> 提供方文档。OAR 其他运行时尚未经 DSH 验证。</p>
+<div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:#7b8088;font-size:25px"><span>不同工具选后端 / 同一工具传参数</span><span>07 / 07</span></div>
+</div>
+</div>
 <script>
 (function(){
   var card = document.getElementById('xhs-card');
-  var W = 900, H = 1200;
+  var W = 1080, H = 1440;
   function fit(){
     var vw = document.documentElement.clientWidth || window.innerWidth;
     var vh = document.documentElement.clientHeight || window.innerHeight;
