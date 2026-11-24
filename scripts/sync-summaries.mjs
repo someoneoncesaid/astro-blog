@@ -596,15 +596,22 @@ function readDesignSet(designDir) {
 	const cards = [];
 	const seenTitles = new Set();
 
+	// 有些项目同时存在「重排版主画板」和「src-* 原版画板」（标题形如「01 封面」vs「原 01 封面」）。
+	// src-* 原版才是对外发布（小红书导出）的成品；主画板是未发布的重排草稿，可能增删过卡片。
+	// 因此一旦项目里存在 src-* 原版，就整套采用 src-*，完全忽略主画板，避免混入草稿卡或尺寸不一致。
+	const hasSrcOriginals = files.some((file) => file.startsWith('src-'));
+
+	const normalizeBoardTitle = (raw) =>
+		String(raw).replace(/^原\s*/, '').replace(/^\d{1,2}\s*/, '').trim();
+
 	for (const file of files) {
+		// 存在 src- 原版时只取 src-；否则按 canvas.order 取主画板。
+		if (hasSrcOriginals && !file.startsWith('src-')) continue;
 		const fullPath = path.join(projectDir, file);
 		const source = readText(fullPath);
 		const board = canvas.boards?.[file];
 		const rawTitle = board?.title || extractTitleTag(source) || file.replace(/\.dc\.html$/i, '');
-		const normalizedTitle = String(rawTitle)
-			.replace(/^原\s*/, '')
-			.replace(/^\d{1,2}\s*/, '')
-			.trim();
+		const normalizedTitle = normalizeBoardTitle(rawTitle);
 		if (seenTitles.has(normalizedTitle)) continue;
 		seenTitles.add(normalizedTitle);
 
@@ -839,9 +846,11 @@ function buildProjectEntry(project, forcedDesignSet) {
 	const manuscript = readManuscript(project.dir);
 	const xhs = parseXhsCopy(project.dir);
 	const designSet = forcedDesignSet || listDesignSets(project.dir)[0] || null;
-	const imageSet = !designSet && INCLUDE_IMAGES ? findImageSet(project.dir) : null;
+	const previewFile = !designSet ? findPreviewFile(project.dir) : null;
+	const previewSet = previewFile ? splitPreview(previewFile) : null;
+	const imageSet = !designSet && !previewSet && INCLUDE_IMAGES ? findImageSet(project.dir) : null;
 
-	if (!designSet && !imageSet) return null;
+	if (!designSet && !previewSet && !imageSet) return null;
 
 	const folderName = path.basename(project.dir);
 	const folderDate = normalizeDate(folderName.match(/^\d{4}-\d{2}-\d{2}/)?.[0] || '');
@@ -911,10 +920,14 @@ function buildProjectEntry(project, forcedDesignSet) {
 	const slug =
 		CONFIG.slugs?.[project.rel] || fallbackSlug(project.rel, pubDate);
 
-	const cardSource = designSet ? designSet.cards : imageSet.cards;
+	const cardSource = designSet
+		? designSet.cards
+		: previewSet
+			? previewSet.cards
+			: imageSet.cards;
 	const cards = cardSource.map((card, index) => {
 		const number = String(index + 1).padStart(2, '0');
-		if (designSet) {
+		if (designSet || previewSet) {
 			return {
 				type: 'html',
 				src: `/summaries/${slug}/${number}.html`,
@@ -934,7 +947,13 @@ function buildProjectEntry(project, forcedDesignSet) {
 	});
 
 	const signature = [];
-	for (const card of cardSource) signature.push(statSig(card.file));
+	if (previewSet) {
+		signature.push(statSig(previewSet.file));
+		/* 预览引用的本地资源（字体等）也纳入变更检测 */
+		for (const assetFile of previewSet.assets) signature.push(statSig(assetFile));
+	} else {
+		for (const card of cardSource) signature.push(statSig(card.file));
+	}
 	if (designSet) {
 		const assetsDir = path.join(designSet.projectDir, 'assets');
 		if (exists(assetsDir)) {
@@ -990,7 +1009,9 @@ function buildProjectEntry(project, forcedDesignSet) {
 		sourceHash,
 		cardPlan: designSet
 			? { type: 'design', designSet }
-			: { type: 'images', imageSet },
+			: previewSet
+				? { type: 'preview', previewSet }
+				: { type: 'images', imageSet },
 	};
 }
 
@@ -1173,6 +1194,121 @@ ${styleLinks}
 	fs.writeFileSync(card.targetFile, html, 'utf8');
 }
 
+const PREVIEW_FILE_NAMES = ['预览.html'];
+
+function findPreviewFile(projectDir) {
+	for (const name of PREVIEW_FILE_NAMES) {
+		const file = path.join(projectDir, '小红书', name);
+		if (exists(file)) return file;
+	}
+	return null;
+}
+
+/**
+ * 预览里相对路径引用的本地资源（字体等）绝对路径，用于变更检测与拷贝。
+ * data: / http(s): / file:/// 与根相对路径跳过。
+ */
+function previewAssetRefs(style, previewDir) {
+	const refs = [];
+	for (const match of String(style || '').matchAll(/url\(\s*(['"]?)([^'")]+)\1\s*\)/g)) {
+		const reference = match[2];
+		if (/^(https?:|data:|file:|\/\/)/i.test(reference) || reference.startsWith('/')) continue;
+		const absolute = path.resolve(previewDir, reference);
+		if (exists(absolute)) refs.push(absolute);
+	}
+	return unique(refs);
+}
+
+/**
+ * 把一张「整页预览」HTML 拆成逐卡数据：共享 <style> 抽出，每个 <article class="card"> 单独一页。
+ * 返回 null 表示不是可拆的整页预览。
+ */
+function splitPreview(previewFile) {
+	const source = readText(previewFile);
+	const matches = [
+		...source.matchAll(/<article\b[^>]*\bclass=["'][^"']*\bcard\b[^"']*["'][^>]*>[\s\S]*?<\/article>/gi),
+	];
+	if (matches.length === 0) return null;
+
+	const style = source.match(/<style[\s\S]*?<\/style>/i)?.[0] || '';
+	const dir = path.dirname(previewFile);
+	const size = cardDimensions(source, null);
+
+	const cards = matches.map((match, index) => {
+		const number = String(index + 1).padStart(2, '0');
+		const eyebrow = match[0].match(/class=["'][^"']*\beyebrow\b[^"']*["'][^>]*>([\s\S]*?)<\//i)?.[1];
+		return {
+			number,
+			inner: match[0],
+			title: stripHtml(eyebrow) || `第 ${number} 页`,
+			width: size.width,
+			height: size.height,
+		};
+	});
+
+	return {
+		file: previewFile,
+		dir,
+		style,
+		size,
+		cards,
+		assets: previewAssetRefs(style, dir),
+	};
+}
+
+/**
+ * 把预览 CSS 里相对路径引用的本地资源（字体等）拷进卡片 assets，并改写 url()。
+ * data: / http(s): / file:/// 保持原样。
+ */
+function materializePreviewAssets(style, previewDir, assetDir) {
+	ensureDir(assetDir);
+	return String(style || '').replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/g, (full, quote, reference) => {
+		if (/^(https?:|data:|file:|\/\/)/i.test(reference) || reference.startsWith('/')) return full;
+		const absolute = path.resolve(previewDir, reference);
+		if (!exists(absolute)) return full;
+		const outputName = `rel-${crypto.createHash('sha1').update(absolute).digest('hex').slice(0, 8)}${path.extname(absolute)}`;
+		fs.copyFileSync(absolute, path.join(assetDir, outputName));
+		return `url(${quote}assets/${outputName}${quote})`;
+	});
+}
+
+function buildPreviewCardHtml(card, styleWithAssets) {
+	const width = card.width;
+	const height = card.height;
+
+	return `<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escapeHtml(card.title)}</title>
+${styleWithAssets}
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:${width}px;height:${height}px;overflow:hidden;transform-origin:top left}
+</style>
+</head>
+<body>
+<div id="xhs-card">${card.inner}</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = ${width}, H = ${height};
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>`;
+}
+
 function materializeCards(entry) {
 	const finalDir = path.join(PUBLIC_DIR, entry.slug);
 	const tempDir = path.join(PUBLIC_DIR, `.${entry.slug}.tmp`);
@@ -1189,6 +1325,17 @@ function materializeCards(entry) {
 					{ ...designSet.cards[index], targetFile: path.join(tempDir, path.basename(card.src)) },
 					tempDir,
 					assetMap,
+				);
+			});
+		} else if (entry.cardPlan.type === 'preview') {
+			const preview = entry.cardPlan.previewSet;
+			const assetDir = path.join(tempDir, 'assets');
+			const styleWithAssets = materializePreviewAssets(preview.style, preview.dir, assetDir);
+			entry.cards.forEach((card, index) => {
+				fs.writeFileSync(
+					path.join(tempDir, path.basename(card.src)),
+					buildPreviewCardHtml(preview.cards[index], styleWithAssets),
+					'utf8',
 				);
 			});
 		} else {
