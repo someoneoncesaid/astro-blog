@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>office 技能</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 文件</p>
+    <p class="so-index" style="color: #002FA7">03 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">Office 技能从四个入口合为一个</h2>
+    <div class="release-rows">
+      <div class="release-row">
+        <h3>以前</h3>
+        <p><code>/office</code> 负责按任务分流。也可以用 <code>/office-docx</code>、<code>/office-pptx</code> 或 <code>/office-xlsx</code> 直接加载对应格式的指引。</p>
+      </div>
+      <div class="release-row">
+        <h3>现在</h3>
+        <p>三个格式的指引合进 <code>/office</code>。例如，输入「<code>/office</code> 把 A1 改成 42」。</p>
+      </div>
+    </div>
+    <div class="release-figures">
+      <figure>
+        <img src="assets/rel-ae2a0a98.jpg" alt="输入 /office 后出现的技能候选">
+        <figcaption>输入 /office 后出现的技能候选</figcaption>
+      </figure>
+    </div>
+    <p class="so-text release-callout">斜杠命令先把技能说明交给模型。渲染、格式转换和公式重算工具从模型的下一步开始可用。</p>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">来源　Office 升级指南 · PR #8061</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

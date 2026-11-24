@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>设置页实拍</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>body{margin:0}</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF9F4; color: #1C1B17; font-family: 'Noto Sans SC', 'PingFang SC', sans-serif">
+
+  <div style="padding: 64px 132px 0 76px">
+    <div style="display: flex; align-items: center; gap: 16px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .2em; color: #6D6A62">RC.5 · SETTINGS</span>
+      <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 21px; line-height: 1; color: #002FA7; border: 1.5px solid rgba(0,47,167,.35); border-radius: 999px; padding: 9px 20px; white-space: nowrap">设置页实拍</span>
+    </div>
+    <h2 style="margin: 18px 0 0; font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 900; font-size: 62px; line-height: 1.26; letter-spacing: .01em">默认已经是「自动选择」</h2>
+    <div style="height: 1.5px; background: #E5E2D9; margin-top: 24px"></div>
+  </div>
+
+  <div style="padding: 34px 132px 0 76px">
+    <p style="margin: 0; font-size: 30px; line-height: 1.62; color: #3D3B34">网页搜索提供方现在有三项，默认「自动选择」——升级后没动过设置，就已经在这一项上。</p>
+
+    <div style="margin-top: 28px; border: 1.5px solid #E5E2D9; border-radius: 14px; overflow: hidden; background: #FFFFFF">
+      <img src="assets/rel-f76c77f2.png" alt="DeepSeek Harness 设置页的网页搜索提供方下拉菜单，三个选项为自动选择、DeepSeek Search API、DeepSeek 服务端搜索" style="display: block; width: 100%; height: auto">
+    </div>
+    <div style="margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 18px; letter-spacing: .1em; color: #6D6A62">设置 → 网页搜索与获取 · 搜索提供方下拉</div>
+
+    <div style="margin-top: 30px; display: grid; gap: 16px">
+      <div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 21px; color: #002FA7">自动选择</div>
+        <div style="margin-top: 4px; font-size: 25px; line-height: 1.5; color: #1C1B17">默认：DeepSeek 模型走服务端搜索，其他走 Search API</div>
+      </div>
+      <div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 21px; color: #002FA7">DeepSeek 服务端搜索</div>
+        <div style="margin-top: 4px; font-size: 25px; line-height: 1.5; color: #1C1B17">服务端搜索；不计费，只算 Token</div>
+      </div>
+      <div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 21px; color: #002FA7">DeepSeek Search API</div>
+        <div style="margin-top: 4px; font-size: 25px; line-height: 1.5; color: #1C1B17">独立检索接口；按次计费，低延迟</div>
+      </div>
+    </div>
+
+    <p style="margin: 28px 0 0; font-size: 25px; line-height: 1.55; color: #6D6A62">旧名「DeepSeek（旧版）」就是现在的「DeepSeek 服务端搜索」；<br>网页获取不受影响。</p>
+  </div>
+
+  <div style="position: absolute; left: 76px; right: 132px; bottom: 48px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid #E5E2D9; padding-top: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 20px; letter-spacing: .12em; color: #6F6B61">
+    <span>DEEPSEEK HARNESS · 0.2.2-rc.5</span>
+    <span>08 / 09</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; right: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; letter-spacing: .58em; color: rgba(0,47,167,.2); user-select: none; pointer-events: none">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

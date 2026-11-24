@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Windows 两段式</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF8F3; color: #17181C; padding: 72px 84px 64px; display: flex; flex-direction: column; font-family: 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;">
+  <div style="position: absolute; top: 220px; right: 26px; writing-mode: vertical-rl; font-size: 17px; letter-spacing: 0.42em; color: rgba(0, 47, 167, 0.2);">SOMEONE ONCE SAID</div>
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 20px; border-bottom: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; letter-spacing: 0.3em; color: #002FA7; font-weight: 600;">DEEPSEEK&nbsp;HARNESS</div>
+    <div style="font-size: 21px; letter-spacing: 0.12em; color: #6B7078;">源码拆解 · 05 / 06</div>
+  </div>
+  <div style="margin-top: 56px; font-size: 22px; letter-spacing: 0.24em; color: #002FA7; font-weight: 600;">win32 后端</div>
+  <h2 style="margin: 18px 0 0; font-size: 54px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 800;">拆成服务 + runner</h2>
+  <p style="margin: 20px 0 0; font-size: 25px; line-height: 1.7; color: #4A4E55;">Windows 没有只读挂载。要限制写，得同时动令牌、DACL 与完整性标签，而且前两样必须在 spawn 之前备好。</p>
+  <div style="margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 56px 1fr; gap: 22px;">
+      <div style="font-size: 24px; font-weight: 700; color: #002FA7;">①</div>
+      <div>
+        <div style="font-size: 28px; font-weight: 700;">目录先备好</div>
+        <div style="margin-top: 10px; font-size: 23px; line-height: 1.65; color: #2C2F35;">一次 SetNamedSecurityInfoW 落三处：capability ACE、对 Everyone 拒 FILE_DELETE_CHILD、Low 强制标签。常驻 ACE 只物化一次，之后靠精确命中跳过整树重传播。</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 56px 1fr; gap: 22px;">
+      <div style="font-size: 24px; font-weight: 700; color: #002FA7;">②</div>
+      <div>
+        <div style="font-size: 28px; font-weight: 700;">造受限令牌</div>
+        <div style="margin-top: 10px; font-size: 23px; line-height: 1.65; color: #2C2F35;">CreateRestrictedToken(WRITE_RESTRICTED)：列表是 logon SID + Everyone（保活组），workspace-write 再加 workspace 与 temp 两个 SID；令牌再降到 Low 完整性。</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 56px 1fr; gap: 22px;">
+      <div style="font-size: 24px; font-weight: 700; color: #002FA7;">③</div>
+      <div>
+        <div style="font-size: 28px; font-weight: 700;">runner 起子进程</div>
+        <div style="margin-top: 10px; font-size: 23px; line-height: 1.65; color: #2C2F35;">CreateProcessAsUserW + KILL_ON_JOB_CLOSE（父死子死），TMP/TEMP 改到私有目录，退出码全宽镜像；失败打 windows-acl-run: 并退 127，判「沙箱坏了」。</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 25px; line-height: 1.6; font-weight: 700;">所以它仍然上报 partial。</div>
+    <div style="margin-top: 8px; font-size: 22px; line-height: 1.62; color: #4A4E55;">硬链接能把授权文件别名到路径之外；读不受限（WRITE_RESTRICTED 只交写类访问）；被别的 AppContainer 工具 ACL 过的目录，低完整性令牌读不到。</div>
+  </div>
+  <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: baseline; font-size: 20px; color: #6B7078;">
+    <div>核对 dsh 0.2.2-rc.5 · sandbox-windows-acl</div>
+    <div style="color: #002FA7; font-weight: 700;">05</div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

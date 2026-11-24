@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>alpha.2 Node.js 版本要求</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.2 · 升级</p>
+    <p class="so-index" style="color: #002FA7">11 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">升级前先看<br>Node.js 版本</h2>
+    <p class="so-lead">用 npm 安装 CLI 或从源码运行 DSH，先用 <code>node -v</code> 检查当前版本。</p>
+    <div class="release-rows">
+      <div class="release-row">
+        <h3>alpha.1</h3>
+        <p><strong><code>&gt;=24.9.0</code></strong>Node.js 24.9.0 起。</p>
+      </div>
+      <div class="release-row">
+        <h3>alpha.2</h3>
+        <p><strong><code>^24.22.3 || &gt;=26.13.1</code></strong>24.x 至少要 24.22.3，或使用 26.13.1 及以上版本。</p>
+      </div>
+    </div>
+    <p class="so-text release-callout">例如，Node.js 24.21 和 26.12 都需要升级。</p>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">来源　alpha.2 发布说明 · package.json · PR #8837</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

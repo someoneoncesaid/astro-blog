@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>四个包</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF8F3; color: #17181C; padding: 72px 84px 64px; display: flex; flex-direction: column; font-family: 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;">
+  <div style="position: absolute; top: 220px; right: 26px; writing-mode: vertical-rl; font-size: 17px; letter-spacing: 0.42em; color: rgba(0, 47, 167, 0.2);">SOMEONE ONCE SAID</div>
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 20px; border-bottom: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; letter-spacing: 0.3em; color: #002FA7; font-weight: 600;">DEEPSEEK&nbsp;HARNESS</div>
+    <div style="font-size: 21px; letter-spacing: 0.12em; color: #6B7078;">源码拆解 · 03 / 06</div>
+  </div>
+  <div style="margin-top: 58px; font-size: 22px; letter-spacing: 0.24em; color: #002FA7; font-weight: 600;">包职责</div>
+  <h2 style="margin: 18px 0 0; font-size: 56px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 800;">四个包，各管一段</h2>
+  <p style="margin: 22px 0 0; font-size: 26px; line-height: 1.7; color: #4A4E55;">package group 不是一个包。一个只定义词汇，一个知道本机怎么关，一个只决定这次用哪个 mode，最后一个把 Windows 的写权限做出来。</p>
+  <div style="margin-top: 36px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 26px;">
+      <div>
+        <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 25px; font-weight: 700; letter-spacing: -0.01em;">sandbox/</div>
+        <div style="margin-top: 8px; font-size: 20px; color: #002FA7;">契约 · ctx.sandbox</div>
+      </div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">词汇、错误码、升级阶梯、可写根推导、stderr 分类。不含任何平台代码。</div>
+    </div>
+  </div>
+  <div style="margin-top: 20px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 26px;">
+      <div>
+        <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 25px; font-weight: 700; letter-spacing: -0.01em;">sandbox-local/</div>
+        <div style="margin-top: 8px; font-size: 20px; color: #002FA7;">实现 · ctx.sandbox</div>
+      </div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">选择链与探针、三套 profile、Windows 授权生命周期。不解析策略优先级。</div>
+    </div>
+  </div>
+  <div style="margin-top: 20px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 26px;">
+      <div>
+        <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 25px; font-weight: 700; letter-spacing: -0.01em;">sandbox-policy/</div>
+        <div style="margin-top: 8px; font-size: 20px; color: #002FA7;">策略 · ctx.sandboxPolicy</div>
+      </div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">部署默认、sandbox/mode 事件、workspace root、额外可写根。没有强制力。</div>
+    </div>
+  </div>
+  <div style="margin-top: 20px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 26px;">
+      <div>
+        <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 24px; font-weight: 700; letter-spacing: -0.01em;">sandbox-windows-acl/</div>
+        <div style="margin-top: 8px; font-size: 20px; color: #002FA7;">win32 后端 · 无服务键</div>
+      </div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">受限令牌、DACL 与 Low 标签、runner、FFI。被 sandbox-local 挂载。</div>
+    </div>
+  </div>
+  <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 24px; line-height: 1.6; color: #2C2F35;">装配在 <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: #002FA7;">bundle/base</span>：sandbox-local 与 sandbox-policy 各占一个 ctx 键，bash / pwsh 执行器与 fs 围栏各自消费同一份策略。</div>
+    <div style="margin-top: 8px; font-size: 21px; color: #6B7078;">windows-acl 不出现在装配里——它只被 sandbox-local 在运行时 import。</div>
+  </div>
+  <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: baseline; font-size: 20px; color: #6B7078;">
+    <div>核对 dsh 0.2.2-rc.5 · packages/sandbox</div>
+    <div style="color: #002FA7; font-weight: 700;">03</div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

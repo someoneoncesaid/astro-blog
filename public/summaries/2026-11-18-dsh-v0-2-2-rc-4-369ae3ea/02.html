@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>拒答曾被误报</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>body{margin:0}</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF9F4; color: #1C1B17; font-family: 'Noto Sans SC', 'PingFang SC', sans-serif">
+
+  <div style="padding: 64px 132px 0 76px">
+    <div style="display: flex; align-items: center; gap: 16px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .2em; color: #6D6A62">REFUSAL · 0.2.2-RC.4</span>
+      <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 21px; line-height: 1; color: #002FA7; border: 1.5px solid rgba(0,47,167,.35); border-radius: 999px; padding: 9px 20px; white-space: nowrap">此前的问题</span>
+    </div>
+    <h2 style="margin: 18px 0 0; font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 900; font-size: 62px; line-height: 1.26; letter-spacing: .01em">拒答，曾被当成<br>「响应格式错误」</h2>
+    <div style="height: 1.5px; background: #E5E2D9; margin-top: 24px"></div>
+  </div>
+
+  <div style="padding: 34px 132px 0 76px">
+    <p style="margin: 0; font-size: 30px; line-height: 1.62; color: #3D3B34">DeepSeek 官方 API 在内容安全审查不通过时，会以 <span style="font-family: 'JetBrains Mono', monospace; font-size: 26px; color: #002FA7">stop_reason: "refusal"</span> 结束流——官方文档要求调用方处理这个终止原因。rc.3 的适配器没认，直接当成格式损坏。</p>
+
+    <div style="margin-top: 30px; background: #161A22; border-radius: 18px; padding: 26px 34px; font-family: 'JetBrains Mono', monospace; font-size: 22px; line-height: 1.62; color: #D7DBE2">
+      <div><span style="color: #7B8494">// rc.3 的 stopReason()：四种停止原因之外一律兜底</span></div>
+      <div><span style="color: #9CC79C">case</span> 'end_turn': <span style="color: #9CC79C">case</span> 'tool_use': …</div>
+      <div><span style="color: #9CC79C">default</span>: malformed(<span style="color: #CD8272">`unsupported stop reason ${raw}`</span>)</div>
+      <div style="height: 12px"></div>
+      <div><span style="color: #7B8494">// DeepSeek 以 refusal 结束流时 ↓</span></div>
+      <div><span style="color: #CD8272">→ MALFORMED_RESPONSE</span> <span style="color: #7B8494">// "unsupported stop reason refusal"</span></div>
+    </div>
+
+    <div style="border-top: 1.5px solid #E5E2D9; margin-top: 34px">
+      <div style="display: flex; gap: 24px; padding: 28px 0; border-bottom: 1.5px solid #E5E2D9">
+        <span style="flex: none; min-width: 54px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 28px; line-height: 1.4; color: #002FA7">01</span>
+        <div>
+          <div style="font-size: 34px; font-weight: 700; line-height: 1.35">语义错位</div>
+          <div style="font-size: 29px; line-height: 1.55; color: #6D6A62; margin-top: 8px">提供方拒绝回答，用户看到的却是「格式错误」，<br>排查方向被带偏。</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 24px; padding: 28px 0; border-bottom: 1.5px solid #E5E2D9">
+        <span style="flex: none; min-width: 54px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 28px; line-height: 1.4; color: #002FA7">02</span>
+        <div>
+          <div style="font-size: 34px; font-weight: 700; line-height: 1.35">重试错配</div>
+          <div style="font-size: 29px; line-height: 1.55; color: #6D6A62; margin-top: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 25px">MALFORMED_RESPONSE</span> 是可选重试码；<br>对注定再被拒的请求重试，白烧 token。</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin: 30px 0 0; font-size: 29px; line-height: 1.55; color: #6D6A62">拒答是提供方的正常决定，不是格式损坏——rc.4 给它<strong style="color: #1C1B17; font-weight: 700">单独分类</strong>。</p>
+  </div>
+
+  <div style="position: absolute; left: 76px; right: 132px; bottom: 48px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid #E5E2D9; padding-top: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 20px; letter-spacing: .12em; color: #6F6B61">
+    <span>DEEPSEEK HARNESS · 0.2.2-rc.4</span>
+    <span>02 / 09</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; right: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; letter-spacing: .58em; color: rgba(0,47,167,.2); user-select: none; pointer-events: none">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

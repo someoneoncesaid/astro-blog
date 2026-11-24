@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>代码审阅</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 代码审阅</p>
+    <p class="so-index" style="color: #002FA7">08 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">代码评审</h2>
+    <section class="review-section">
+      <h3>独立评审页</h3>
+      <figure class="review-overview">
+        <div class="review-crop">
+          <img src="assets/rel-5da6b705.png" width="1766" height="1190" alt="独立评审页左侧列出测试 PR，右侧显示所选 PR 的概要">
+          <span class="review-mark" aria-hidden="true" style="--mark-x:0.7%;--mark-y:21.5%;--mark-w:35%;--mark-h:76%"></span>
+        </div>
+        <figcaption>左侧切换「待我评审」「我创建的」「与我有关」</figcaption>
+      </figure>
+    </section>
+    <section class="review-section">
+      <h3>会话变更视图支持插件扩展</h3>
+      <div class="review-extension-grid">
+        <figure class="review-extension">
+          <div class="review-crop">
+            <img src="assets/rel-fb28c73f.jpg" width="1059" height="955" alt="会话变更视图，蓝框标出公开接口透镜、本地注解按钮，以及分别显示在文件顶部和第 8 行下方的注解">
+            <span class="review-mark" aria-hidden="true" style="--mark-x:45.5%;--mark-y:12.4%;--mark-w:10.6%;--mark-h:5.1%"></span>
+            <span class="review-mark" aria-hidden="true" style="--mark-x:64%;--mark-y:12.4%;--mark-w:7.2%;--mark-h:5.1%"></span>
+            <span class="review-mark" aria-hidden="true" style="--mark-x:24.5%;--mark-y:47.2%;--mark-w:68.2%;--mark-h:7%"></span>
+            <span class="review-mark" aria-hidden="true" style="--mark-x:24.5%;--mark-y:83.7%;--mark-w:68.2%;--mark-h:7%"></span>
+          </div>
+          <figcaption>自定义筛选、注解开关和行注解</figcaption>
+        </figure>
+        <div class="review-action-figures">
+          <figure>
+            <div class="review-crop">
+              <img src="assets/rel-6f20aeb8.jpg" width="148" height="93" alt="文件菜单中新增的添加文件注解操作">
+              <span class="review-mark" aria-hidden="true" style="--mark-x:4%;--mark-y:63%;--mark-w:91%;--mark-h:31%"></span>
+            </div>
+            <figcaption>文件菜单</figcaption>
+          </figure>
+          <figure>
+            <div class="review-crop">
+              <img src="assets/rel-fd075b23.jpg" width="117" height="60" alt="评论框中新增的存为本地注解按钮">
+              <span class="review-mark" aria-hidden="true" style="--mark-x:10%;--mark-y:23%;--mark-w:81%;--mark-h:52%"></span>
+            </div>
+            <figcaption>评论框</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">支持 GitLab MR · PR #8321 #8362 #8317</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+/* Someone Once Said — generated from tokens.json */
+:root, [data-theme="paper"] {
+  --surface: #fbf9f3; /* 卡片与页面的底色：暖白纸。字落在它上面用 ink、ink-muted、klein。 */
+  --surface-tint: #f2eee4; /* 中性衬底：引言块、截图空位。上面用 ink、ink-muted、klein。 */
+  --line: #e1dacb; /* 1px 细线：页眉线、页脚线、要点分隔、截图边框、封面上的分界。只做分界，不做控件边框。 */
+  --ink: #1a1815; /* 主字色：title、lead、body，落在 surface 和 surface-tint 上。 */
+  --ink-muted: #6b6659; /* 次级字：caption、来源行、运行页眉，落在 surface 和 surface-tint 上。不写正文。 */
+  --klein: #002fa7; /* 唯一的强调色：编号、关键词、2px 强调线、右边缘水印。作为文字时落在 surface、surface-tint、klein-tint 上；作为色块时不超过一张卡的一成面积。 */
+  --klein-tint: #e9eef8; /* 蓝色的影子：一句关键话的衬底、封面上那条边。上面用 ink、klein。 */
+  --on-klein: #ffffff; /* klein 色块上的字与记号。不要把它放在 klein-tint 或 surface-tint 上。 */
+}
+:root {
+  --space-1: 8px; /* 最小间距：编号与它那一行字之间。 */
+  --space-2: 16px; /* 截图与说明之间、标签与文字之间。 */
+  --space-3: 24px; /* 页眉线的内边距、编号与标题之间。 */
+  --space-4: 32px; /* 段落之间、标题与 lead 之间。 */
+  --space-5: 48px; /* 页眉到正文、正文到页脚。 */
+  --space-6: 64px; /* 封面主句与它下面那句之间。 */
+  --space-7: 80px; /* 要点块之间的呼吸，一页最多用一次。 */
+  --space-8: 96px; /* 卡片四边的安全边距：1080−2×96=888 的版心（frame-measure）。 */
+  --radius-none: 0px; /* 卡片、截图、封面所有色块的圆角，一律 0。 */
+  --radius-xs: 2px; /* 截图编号这类小标签的圆角，除此之外不用。 */
+  --stroke-hair: 1px; /* 所有细线：页眉线、页脚线、要点分隔、截图边框。 */
+  --stroke-rule: 2px; /* klein 强调线：封面主句下那条、正文里标重点的那条。一页最多一条。 */
+  --stroke-mark: 6px; /* 页眉左侧的蓝色小竖条，标「这是一组卡里的一张」。 */
+  --mark-opacity: 0.2; /* 右边缘 SOMEONE ONCE SAID 水印的不透明度，klein 色。 */
+  --frame-width: 1080px; /* 卡片宽度；导出 PNG 用这个像素宽度。 */
+  --frame-height: 1440px; /* 卡片高度，3:4。 */
+  --frame-measure: 888px; /* 版心宽度：正文、标题、截图都不超过它；36px 的 body 一行约 24 个汉字。 */
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", "Roboto Mono", Menlo, Consolas, monospace;
+  --text-display: 600 96px/112px var(--font-sans); /* 封面主句，最多两行，一行不超过 9 个汉字。 */
+  --text-title: 600 64px/84px var(--font-sans); /* 正文卡标题，一行不超过 13 个汉字；有截图时只给一行。 */
+  --text-subtitle: 500 48px/68px var(--font-sans); /* 要点标题、正文里的小标题。 */
+  --text-lead: 400 40px/60px var(--font-sans); /* 标题下的一句话，最多两行；说清这张卡在回答什么。 */
+  --text-body: 400 36px/56px var(--font-sans); /* 正文，一行约 24 个汉字，最多三段，每段不超过三行。 */
+  --text-caption: 400 28px/42px var(--font-sans); /* 截图说明、来源行、页脚元信息。 */
+  --text-label: 500 24px/34px var(--font-sans); /* 行内小标签，例如「来源」「图 1」。 */
+  --text-code: 400 30px/46px var(--font-mono); /* 代码、字段名、命令、报错原文。 */
+  --text-meta: 500 22px/32px var(--font-mono); /* 页眉、页码、水印、封面编号；只给短标签，不排句子。 */
+}
+.display {
+  font-family: var(--font-sans);
+  font-size: 96px;
+  line-height: 112px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.title {
+  font-family: var(--font-sans);
+  font-size: 64px;
+  line-height: 84px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.subtitle {
+  font-family: var(--font-sans);
+  font-size: 48px;
+  line-height: 68px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.lead {
+  font-family: var(--font-sans);
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.body {
+  font-family: var(--font-sans);
+  font-size: 36px;
+  line-height: 56px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.caption {
+  font-family: var(--font-sans);
+  font-size: 28px;
+  line-height: 42px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.label {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.code {
+  font-family: var(--font-mono);
+  font-size: 30px;
+  line-height: 46px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.meta {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}

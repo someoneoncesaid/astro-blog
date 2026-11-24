@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>上下文</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#F7F4EE}
+/* ---------- card system ---------- */
+.card{position:relative;width:1080px;height:1440px;background:#F7F4EE;color:#17171A;overflow:hidden;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.card .pad{position:absolute;inset:0;padding:76px 96px 60px 80px;display:flex;flex-direction:column}
+.card .pad > *{flex:none}
+.kick{display:flex;justify-content:space-between;align-items:baseline;font-size:20px;letter-spacing:.14em;color:#6E6A5E;font-variant-numeric:tabular-nums}
+.kick .b{font-weight:600;color:#17171A;letter-spacing:.10em}
+.rule{height:1px;background:#DCD5C6;margin-top:18px;flex:none}
+.eyebrow{margin-top:40px;font-size:21px;letter-spacing:.16em;color:#C05200;font-weight:700}
+.h1{margin:16px 0 0;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;font-weight:700;font-size:64px;line-height:1.28;letter-spacing:-.01em}
+.h1 em{font-style:normal;color:#C05200}
+.deck{margin:24px 0 0;font-size:29px;line-height:1.72;color:#3F3C37;max-width:860px;letter-spacing:.005em}
+.panel{margin-top:34px;background:#FFFDF8;border:1px solid #DCD5C6;border-radius:3px}
+.panel svg{display:block;width:100%;height:auto}
+.panel text{font-family:"PingFang SC","Hiragino Sans GB",system-ui,sans-serif}
+.fig{margin-top:34px;background:#fff;border:1px solid #E3DCCB;border-radius:3px;overflow:hidden;padding:16px}
+.fig img,.fig svg{display:block;width:100%;height:auto}
+.figcap{margin-top:12px;font-size:18px;color:#8A8578;letter-spacing:.02em}
+.code{margin-top:32px;background:#1E1A16;border-radius:3px;padding:30px 34px;color:#EADFCF}
+.code pre{margin:0;font-family:"SF Mono",Menlo,"JetBrains Mono",monospace;font-size:20px;line-height:1.72;white-space:pre;overflow:hidden}
+.code .k{color:#F0A46A}
+.code .c{color:#9B8E7F}
+.code .s{color:#E7C08A}
+.note{margin-top:auto;padding-top:24px;font-size:22px;line-height:1.62;color:#5F5B52}
+.note strong{color:#17171A;font-weight:600}
+.chips{display:flex;gap:22px;margin-top:26px}
+.chips .chip{flex:1;border-top:2px solid #C05200;padding-top:12px}
+.chips .chip b{display:block;font-size:20px;margin-bottom:4px;color:#17171A}
+.chips .chip span{font-size:18px;line-height:1.6;color:#6E6A5E;display:block}
+.map{margin-top:24px;display:flex;flex-direction:column}
+.map .row{display:flex;align-items:baseline;gap:26px;padding:13px 0;border-top:1px solid #E2DBCB}
+.map .row:last-child{border-bottom:1px solid #E2DBCB}
+.map b{flex:none;width:196px;font-size:21px;font-weight:600;color:#17171A}
+.map span{font-size:20px;color:#6E6A5E}
+.map span i{font-style:normal;font-family:"SF Mono",Menlo,monospace;font-size:19px;color:#C05200}
+.steps{margin-top:22px;display:flex;flex-direction:column;gap:0}
+.steps .row{display:flex;gap:18px;align-items:baseline;padding:15px 0;border-top:1px solid #E2DBCB}
+.steps .row:first-child{border-top:0}
+.steps .n{flex:none;width:34px;height:34px;border-radius:50%;background:#C05200;color:#FFFDF8;font-size:17px;line-height:34px;text-align:center}
+.steps .t{font-size:20px;line-height:1.6;color:#17171A}
+.steps .t code{font-family:"SF Mono",Menlo,monospace;font-size:18px;color:#C05200}
+.rail{display:flex;align-items:center;margin-top:16px}
+.rail span{flex:1;position:relative;padding-left:16px;font-size:18px;letter-spacing:.06em;color:#B5AE9E}
+.rail span::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:#CFC7B6;transform:translateY(-50%)}
+.rail span.on{color:#C05200;font-weight:600}
+.rail span.on::before{background:#C05200;width:7px;height:7px}
+.foot{margin-top:20px;padding-top:18px;border-top:1px solid #DCD5C6;display:flex;justify-content:space-between;gap:24px;font-size:19px;color:#8A8578;letter-spacing:.03em}
+.mark{position:absolute;top:104px;right:26px;writing-mode:vertical-rl;font-size:13px;letter-spacing:.34em;color:rgba(0,47,167,.20);font-family:"Helvetica Neue",Arial,sans-serif}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="card">
+  <span class="mark">SOMEONE ONCE SAID</span>
+  <div class="pad">
+    <div class="kick"><span><span class="b">常驻 AGENT</span> · 后端实现</span><span>07 / 09</span></div>
+    <div class="rule"></div>
+    <div class="eyebrow">组件 03 · 上下文</div>
+    <h1 class="h1" style="font-size:58px">会话越长，<br>越要提前决定留什么</h1>
+    <p class="deck">会话由两部分组成：系统提示、工具定义、记忆是每次都要装的固定开销，恢复旧会话还要带回完整记录。</p>
+    <div class="fig"><svg xmlns:ns0="http://www.w3.org/2000/svg" viewBox="101.5 45.0 1271.0 778.5" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" preserveAspectRatio="xMidYMid meet" role="img" aria-label="上下文随运行变化：固定开销、累积、压缩与新会话" style="width:100%;height:auto;aspect-ratio:1271/778"><defs><marker id="ar-orange" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1 L11 6 L0 11 Z" fill="#D55E00"></path></marker><marker id="ar-ink" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1 L11 6 L0 11 Z" fill="#1F1F1E"></path></marker></defs><rect width="1440" height="840" fill="#FFFFFF"></rect><text x="720" y="86" font-size="40" font-weight="600" fill="#1F1F1E" text-anchor="middle">上下文随运行变化</text><line x1="110" y1="96" x2="110" y2="600" stroke="#1F1F1E" stroke-width="3"></line><line x1="110" y1="600" x2="1360" y2="600" stroke="#1F1F1E" stroke-width="3"></line><polygon points="1352,593 1366,600 1352,607" fill="#1F1F1E"></polygon><line x1="130" y1="150" x2="1330" y2="150" stroke="#6E6A5E" stroke-width="2" stroke-dasharray="10 8"></line><text x="1330" y="136" font-size="21" font-weight="400" fill="#6E6A5E" text-anchor="end">上下文上限</text><text x="120" y="124" font-size="21" font-weight="400" fill="#6E6A5E" text-anchor="start">已用上下文</text><rect x="110" y="540" width="1250" height="60" rx="0" fill="#F1EFE8" stroke="none" stroke-width="0"></rect><text x="735" y="578" font-size="22" font-weight="400" fill="#4E4B45" text-anchor="middle">每次运行：系统提示、工具定义、记忆</text><path d="M150,540 L150,470 L250,470 L320,470 L470,360 L620,210 L620,300 L720,300 L780,470 L930,350 L1150,350 L1150,540 Z" fill="#F7DFCD" stroke="none"></path><path d="M150,470 L250,470 L320,470 L470,360 L620,210 L620,300 L720,300 L780,470 L930,350 L1150,350" fill="none" stroke="#1F1F1E" stroke-width="4"></path><circle cx="150" cy="470" r="6" fill="#1F1F1E"></circle><circle cx="620" cy="300" r="6" fill="#1F1F1E"></circle><circle cx="780" cy="470" r="6" fill="#1F1F1E"></circle><circle cx="1150" cy="350" r="6" fill="#1F1F1E"></circle><text x="330" y="442" font-size="24" font-weight="600" fill="#1F1F1E" text-anchor="start">已有会话</text><text x="646" y="178" font-size="25" font-weight="600" fill="#D55E00" text-anchor="start">压缩上下文</text><text x="646" y="214" font-size="21" font-weight="400" fill="#6E6A5E" text-anchor="start">将较早的记录转为摘要</text><path d="M648,206 L626,252" fill="none" stroke="#D55E00" stroke-width="2"></path><text x="796" y="424" font-size="25" font-weight="600" fill="#D55E00" text-anchor="start">新会话</text><line x1="256" y1="486" x2="314" y2="486" stroke="#6E6A5E" stroke-width="2" stroke-dasharray="7 7"></line><text x="256" y="512" font-size="20" font-weight="400" fill="#6E6A5E" text-anchor="start">休眠</text><line x1="726" y1="486" x2="774" y2="486" stroke="#6E6A5E" stroke-width="2" stroke-dasharray="7 7"></line><text x="726" y="512" font-size="20" font-weight="400" fill="#6E6A5E" text-anchor="start">休眠</text><line x1="330" y1="640" x2="330" y2="492" stroke="#D55E00" stroke-width="3" marker-end="url(#ar-orange)"></line><text x="330" y="682" font-size="24" font-weight="600" fill="#D55E00" text-anchor="middle">加载完整记录</text><line x1="830" y1="640" x2="830" y2="492" stroke="#D55E00" stroke-width="3" marker-end="url(#ar-orange)"></line><text x="830" y="682" font-size="24" font-weight="600" fill="#D55E00" text-anchor="middle">加载最近几条消息</text><rect x="110" y="712" width="1250" height="54" rx="8" fill="#F1EFE8" stroke="none" stroke-width="0"></rect><text x="735" y="747" font-size="22" font-weight="400" fill="#4E4B45" text-anchor="middle">持久化状态 · 供后续运行使用</text><text x="720" y="814" font-size="26" font-weight="600" fill="#D55E00" text-anchor="middle">继续运行 · 历史再次增长</text></svg></div>
+    <div class="note"><strong>压缩把较早内容转成摘要，开新会话则从零开始，</strong>两者都会丢细节。要留的结论在运行中写回记忆，别指望会话替你记。</div>
+    <div class="rail" aria-label="五个组件进度"><span>收件箱</span><span>定时器</span><span class="on">记忆</span><span>权限</span><span>发件箱</span></div>
+    <div class="foot"><span>William Hu · Anthropic《Building always-on agents》</span><span>记忆与上下文</span></div>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

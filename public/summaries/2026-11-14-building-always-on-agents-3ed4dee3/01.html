@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>备选封面 · 报纸拼贴</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+<style>
+#card-01{position:relative;width:1080px;height:1440px;overflow:hidden;background:#efe9db;color:#a9472e;font-family:"Songti SC",Georgia,serif}
+#card-01 *{box-sizing:border-box}
+#card-01 h1{position:absolute;top:568px;left:73px;right:68px;margin:0;font-size:77px;font-weight:700;letter-spacing:-1px;line-height:1.43}
+#card-01 small{display:block;font:700 31px/1.2 Georgia,serif;letter-spacing:1px;margin-bottom:30px}
+#card-01 .article-title-main,#card-01 .article-title-sub{display:block;white-space:nowrap}
+#card-01 .article-title-sub{font-size:61px;margin-top:14px}
+#card-01 .ink-circle{position:relative;display:inline-block}
+#card-01 .marker-ring{position:absolute;left:-6%;top:-12%;width:111%;height:120%;fill:none;stroke:#a9472e;pointer-events:none}
+#card-01 .sub{position:absolute;left:76px;top:1002px;margin:0;color:#63564b;font:31px/1.4 "PingFang SC",sans-serif}
+#card-01 .cover-open{position:absolute;left:76px;right:76px;bottom:105px;padding-top:33px;border-top:1px solid #c9ae9a;display:flex;align-items:center;justify-content:space-between;font-size:40px}
+#card-01 .cover-open svg{width:43px;height:30px}
+#card-01 .watermark{position:absolute;right:30px;bottom:205px;writing-mode:vertical-rl;font:17px Arial,sans-serif;letter-spacing:4px;color:rgba(169,71,46,.23)}
+#card-01 .newspaper-background{position:absolute;inset:-30px -22px;display:grid;grid-template-columns:1fr 1fr;gap:46px;font-family:"Songti SC",Georgia,serif;font-size:30px;line-height:1.53;letter-spacing:.1px;text-align:justify;color:#665e53;opacity:.14;transform:rotate(-.5deg);overflow:hidden;pointer-events:none}
+#card-01 .newspaper-background{transform:none}
+#card-01 .newspaper-wash{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 49%,#efe9dbd9 4%,#efe9db70 45%,transparent 76%);pointer-events:none}
+#card-01{isolation:isolate}
+#card-01 .newspaper-background,#card-01 .newspaper-wash{z-index:0}
+#card-01 h1,#card-01 .sub,#card-01 .cover-open,#card-01 .watermark{z-index:1}
+</style>
+<article class="card" id="card-01"><div class="eyebrow"></div><h1><small>BUILDING ALWAYS-ON AGENTS</small><span class="article-title-main">构建常驻 Agent</span><span class="article-title-sub"><span>如何</span><span class="ink-circle">被唤醒<svg class="marker-ring" viewBox="0 0 360 150" preserveAspectRatio="none" aria-hidden="true"><path d="M292 20C244 3 131 5 66 28C13 47 -2 80 31 109C72 147 212 151 293 117C345 95 356 56 317 34C301 25 276 19 254 17" stroke-width="7" opacity=".83"></path><path d="M284 13C222 0 114 13 57 40C17 59 7 86 48 112C95 141 219 141 291 109C329 92 346 62 318 42" stroke-width="2.7" opacity=".53"></path><path d="M33 104C60 125 99 134 139 136" stroke-width="3.5" opacity=".42"></path></svg></span><span>，并接续上一次的工作</span></span></h1><p class="sub">Anthropic 技术文章译读</p><div class="body"><div class="newspaper-background" aria-hidden="true"><div>Building always-on agents. Over the past few months, we’ve seen a resurgence of always-on agents. Always-on agents are stateful and proactive, meaning they manage context across sessions and take actions without direct supervision. Underneath, they run on the same core loop as other agents. The difference is the surrounding architecture, which is built from primitives that control when the agents wake up, what carries over between runs, and how their work reaches the user. The resurgence is largely due to recent model advancements, which have made always-on agents more practical to run. First, the latest models have better judgment: they’re more reliable at understanding user intent and knowing when to check in. Second, intelligence is becoming cheaper, with long-horizon tasks benefiting the most. For example, on one long-horizon coding benchmark, Opus 5.5 cost 78% less per solved task than Opus 5, compared with 40% less on typical workloads. Customers have started to ask us how to integrate this type of experience into their own products. Some companies want to make their existing agents more proactive, while others are looking to build them from the ground up. This post breaks down the primitives behind always-on agents and walks through how they fit together.</div><div>The cycle behind the always-on agent
+An always-on agent is not actually “always on.” This is just a description of the user experience. In reality, the agent spends most of its time asleep, waking up periodically to do work. Each stretch of work is called a run: the agent receives an event, completes its task, and then saves information about what happened. A run works inside a session, which is the transcript of messages and tool calls. Once the run is finished, the agent goes back to sleep, and the cycle repeats indefinitely. Animated diagram of an always-on agent’s timeline: long stretches asleep with no tokens spent, broken by brief runs. Each run has four steps: an event arrives, a session starts, the agent loop runs, and the run writes back to stored state that carries over between runs.
+The core primitives
+The surrounding architecture of an always-on agent has five core primitives: an event inbox, timers, memory, permissions, and an outbox. Let’s take a look at each. Event inbox
+Most AI agents only run when the user sends a message. In contrast, always-on agents can be triggered by many types of events, including webhooks, scheduled tasks, and background jobs. One tempting approach is to have each event source call the agent directly, but that has a few failure modes. For example, two events arriving at the same time can start competing runs, and a crash can lose an event entirely. This is where the event inbox comes in. Instead of calling the agent, every source sends an event to an inbox, where a worker picks it up.</div></div><div class="newspaper-wash" aria-hidden="true"></div><div class="cover-open"><span>拆解常驻 Agent 的五个组件</span><svg viewBox="0 0 170 50" aria-hidden="true"><path d="M4 25H160M139 5L161 25L139 45" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div><div class="watermark">SOMEONE ONCE SAID</div><footer class="foot"><span></span></footer></article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

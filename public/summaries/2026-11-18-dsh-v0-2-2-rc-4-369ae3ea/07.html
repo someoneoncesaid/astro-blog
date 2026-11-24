@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>搜索账单的两条路</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>body{margin:0}</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF9F4; color: #1C1B17; font-family: 'Noto Sans SC', 'PingFang SC', sans-serif">
+
+  <div style="padding: 64px 132px 0 76px">
+    <div style="display: flex; align-items: center; gap: 16px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .2em; color: #6D6A62">RC.5 · SEARCH BILLING</span>
+      <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 21px; line-height: 1; color: #002FA7; border: 1.5px solid rgba(0,47,167,.35); border-radius: 999px; padding: 9px 20px; white-space: nowrap">官方口径</span>
+    </div>
+    <h2 style="margin: 18px 0 0; font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 900; font-size: 62px; line-height: 1.26; letter-spacing: .01em">搜索的账单，分了两条路</h2>
+    <div style="height: 1.5px; background: #E5E2D9; margin-top: 24px"></div>
+  </div>
+
+  <div style="padding: 34px 132px 0 76px">
+    <p style="margin: 0; font-size: 30px; line-height: 1.62; color: #3D3B34">价目表照旧：<strong style="font-weight: 700">Search / Fetch API 每 1,000 次成功请求 5 元</strong>。<br>同一页新加了一段——调用模型时触发的服务端搜索与网页抓取，不再计费。</p>
+
+    <div style="position: relative; margin-top: 28px; border: 1.5px solid #E5E2D9; border-radius: 14px; overflow: hidden; background: #FFFFFF">
+      <img src="assets/rel-b7f12237.png" alt="DeepSeek API 文档「Search 与 Fetch API 价格」整段：上半是价目表，Search API（文字）与 Fetch API 均为每 1,000 次成功请求 5 元；下半是新说明，自北京时间 2026 年 11 月 18 日 12:00 起，调用模型时触发的服务端搜索、网页抓取不再计费" style="display: block; width: 100%; height: auto">
+    </div>
+    <div style="margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 18px; letter-spacing: .1em; color: #6D6A62">DEEPSEEK API DOCS · 上：价目表 · 下：新增说明 · 2026-11-19 截图</div>
+
+    <div style="margin-top: 28px; border-left: 3px solid #002FA7; padding: 6px 0 6px 26px">
+      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 17px; letter-spacing: .2em; color: #002FA7">同一页的新说明</div>
+      <div style="margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 22px; line-height: 1.4; color: #1C1B17">自北京时间 2026 年 11 月 18 日 12:00 起</div>
+      <div style="margin-top: 6px; font-size: 28px; line-height: 1.55; color: #1C1B17">调用模型时触发的服务端搜索、网页抓取不再计费，仅按模型 Token 用量计费。</div>
+    </div>
+
+    <div style="margin-top: 26px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 17px; letter-spacing: .2em; color: #002FA7">两种收费</div>
+    <div style="margin-top: 12px; display: flex; align-items: stretch; gap: 12px">
+      <div style="flex: 1; min-width: 0; border: 1.5px solid rgba(0,47,167,.35); border-radius: 14px; padding: 20px 22px; background: rgba(0,47,167,.05)">
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; letter-spacing: .12em; color: #002FA7">服务端搜索 · 模型触发</div>
+        <div style="margin-top: 10px; font-size: 31px; font-weight: 700; line-height: 1.25">只算 Token</div>
+        <div style="margin-top: 6px; font-size: 22px; line-height: 1.45; color: #3D3B34">无按次费用，计入模型轮次</div>
+      </div>
+      <div style="flex: none; align-self: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; letter-spacing: .12em; color: #6D6A62">VS</div>
+      <div style="flex: 1; min-width: 0; border: 1.5px solid #E5E2D9; border-radius: 14px; padding: 20px 22px; background: #FFFFFF">
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; letter-spacing: .12em; color: #6D6A62">独立 API · 按次计费</div>
+        <div style="margin-top: 10px; font-size: 31px; font-weight: 700; line-height: 1.25">5 元 / 1,000 次</div>
+        <div style="margin-top: 6px; font-size: 22px; line-height: 1.45; color: #6D6A62">每次成功请求计费，与模型无关</div>
+      </div>
+    </div>
+    <div style="margin-top: 12px; font-size: 19px; line-height: 1.5; color: #6D6A62">服务端搜索的触发口：联网工具 · Anthropic API <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px">web_search</span> · Responses API <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px">web_search</span></div>
+    <div style="margin-top: 18px; font-size: 27px; line-height: 1.5; color: #1C1B17">rc.5 的 DeepSeek 模型默认走左边：只多一轮 Token，不多一次检索费。</div>
+  </div>
+
+  <div style="position: absolute; left: 76px; right: 132px; bottom: 48px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid #E5E2D9; padding-top: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 20px; letter-spacing: .12em; color: #6F6B61">
+    <span>DEEPSEEK HARNESS · 0.2.2-rc.5</span>
+    <span>07 / 09</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; right: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; letter-spacing: .58em; color: rgba(0,47,167,.2); user-select: none; pointer-events: none">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

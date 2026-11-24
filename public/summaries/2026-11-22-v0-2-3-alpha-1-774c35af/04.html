@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>时间线</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 时间线</p>
+    <p class="so-index" style="color: #002FA7">04 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">看见智能体的任务进度</h2>
+    <p class="so-lead">点击输入框上方的进度条，即可展开时间线。</p>
+    <div class="release-figures timeline-figures">
+      <figure>
+        <div class="timeline-crop" style="--crop-ratio: 1030 / 100; --crop-offset: -0.8%">
+          <img src="assets/rel-3782683b.png" alt="输入框上方的时间线进度条显示 50%">
+        </div>
+        <figcaption>会话进度条 · 点击打开时间线</figcaption>
+      </figure>
+      <figure>
+        <div class="timeline-crop" style="--crop-ratio: 1964 / 744; --crop-offset: -11.8%">
+          <img src="assets/rel-3d014053.png" alt="任务树显示两项任务，一项已完成，一项进行中">
+        </div>
+        <figcaption>任务树 · 查看每项状态，也可以请求暂停</figcaption>
+      </figure>
+      <figure>
+        <div class="timeline-crop" style="--crop-ratio: 1932 / 400; --crop-offset: -12.3%">
+          <img src="assets/rel-e2f4671a.png" alt="报告页展示 15 分钟、1 小时和 4 小时三列">
+        </div>
+        <figcaption>报告 · 按 15 分钟、1 小时、4 小时查看阶段进展</figcaption>
+      </figure>
+    </div>
+    <p class="so-text release-callout">时间线是实验性插件，需先启用。任务与报告语言可设为「跟随对话」。</p>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">DSH 界面实拍 · PR #7973 / #8630</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

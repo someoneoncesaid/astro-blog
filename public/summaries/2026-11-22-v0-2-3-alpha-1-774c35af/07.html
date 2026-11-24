@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web 端远程连接</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 升级</p>
+    <p class="so-index" style="color: #002FA7">07 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">Web 端支持远程连接</h2>
+    <p class="so-lead">在另一台设备的浏览器里，可以打开登录链接、扫描一次性登录二维码，或发起设备配对申请。</p>
+    <figure class="remote-pairing-shot">
+      <img src="assets/rel-8d5ceea3.png" width="1674" height="1606" alt="远程连接设置中的二维码登录与配对申请，二维码由 DeepSeek 标志替代，配对码可见">
+      <figcaption>设置 → 远程连接 · 二维码登录和配对申请</figcaption>
+    </figure>
+    <p class="so-text release-callout">跨设备访问需先连通 Host。批准前请核对两端配对码。</p>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">来源　远程连接 README · PR #7675</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

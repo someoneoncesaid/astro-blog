@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>系统全景</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#F7F4EE}
+/* ---------- card system ---------- */
+.card{position:relative;width:1080px;height:1440px;background:#F7F4EE;color:#17171A;overflow:hidden;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.card .pad{position:absolute;inset:0;padding:76px 96px 60px 80px;display:flex;flex-direction:column}
+.card .pad > *{flex:none}
+.kick{display:flex;justify-content:space-between;align-items:baseline;font-size:20px;letter-spacing:.14em;color:#6E6A5E;font-variant-numeric:tabular-nums}
+.kick .b{font-weight:600;color:#17171A;letter-spacing:.10em}
+.rule{height:1px;background:#DCD5C6;margin-top:18px;flex:none}
+.eyebrow{margin-top:40px;font-size:21px;letter-spacing:.16em;color:#C05200;font-weight:700}
+.h1{margin:16px 0 0;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;font-weight:700;font-size:64px;line-height:1.28;letter-spacing:-.01em}
+.h1 em{font-style:normal;color:#C05200}
+.deck{margin:24px 0 0;font-size:29px;line-height:1.72;color:#3F3C37;max-width:860px;letter-spacing:.005em}
+.panel{margin-top:34px;background:#FFFDF8;border:1px solid #DCD5C6;border-radius:3px}
+.panel svg{display:block;width:100%;height:auto}
+.panel text{font-family:"PingFang SC","Hiragino Sans GB",system-ui,sans-serif}
+.fig{margin-top:34px;background:#fff;border:1px solid #E3DCCB;border-radius:3px;overflow:hidden;padding:16px}
+.fig img,.fig svg{display:block;width:100%;height:auto}
+.figcap{margin-top:12px;font-size:18px;color:#8A8578;letter-spacing:.02em}
+.code{margin-top:32px;background:#1E1A16;border-radius:3px;padding:30px 34px;color:#EADFCF}
+.code pre{margin:0;font-family:"SF Mono",Menlo,"JetBrains Mono",monospace;font-size:20px;line-height:1.72;white-space:pre;overflow:hidden}
+.code .k{color:#F0A46A}
+.code .c{color:#9B8E7F}
+.code .s{color:#E7C08A}
+.note{margin-top:auto;padding-top:24px;font-size:22px;line-height:1.62;color:#5F5B52}
+.note strong{color:#17171A;font-weight:600}
+.chips{display:flex;gap:22px;margin-top:26px}
+.chips .chip{flex:1;border-top:2px solid #C05200;padding-top:12px}
+.chips .chip b{display:block;font-size:20px;margin-bottom:4px;color:#17171A}
+.chips .chip span{font-size:18px;line-height:1.6;color:#6E6A5E;display:block}
+.map{margin-top:24px;display:flex;flex-direction:column}
+.map .row{display:flex;align-items:baseline;gap:26px;padding:13px 0;border-top:1px solid #E2DBCB}
+.map .row:last-child{border-bottom:1px solid #E2DBCB}
+.map b{flex:none;width:196px;font-size:21px;font-weight:600;color:#17171A}
+.map span{font-size:20px;color:#6E6A5E}
+.map span i{font-style:normal;font-family:"SF Mono",Menlo,monospace;font-size:19px;color:#C05200}
+.steps{margin-top:22px;display:flex;flex-direction:column;gap:0}
+.steps .row{display:flex;gap:18px;align-items:baseline;padding:15px 0;border-top:1px solid #E2DBCB}
+.steps .row:first-child{border-top:0}
+.steps .n{flex:none;width:34px;height:34px;border-radius:50%;background:#C05200;color:#FFFDF8;font-size:17px;line-height:34px;text-align:center}
+.steps .t{font-size:20px;line-height:1.6;color:#17171A}
+.steps .t code{font-family:"SF Mono",Menlo,monospace;font-size:18px;color:#C05200}
+.rail{display:flex;align-items:center;margin-top:16px}
+.rail span{flex:1;position:relative;padding-left:16px;font-size:18px;letter-spacing:.06em;color:#B5AE9E}
+.rail span::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:#CFC7B6;transform:translateY(-50%)}
+.rail span.on{color:#C05200;font-weight:600}
+.rail span.on::before{background:#C05200;width:7px;height:7px}
+.foot{margin-top:20px;padding-top:18px;border-top:1px solid #DCD5C6;display:flex;justify-content:space-between;gap:24px;font-size:19px;color:#8A8578;letter-spacing:.03em}
+.mark{position:absolute;top:104px;right:26px;writing-mode:vertical-rl;font-size:13px;letter-spacing:.34em;color:rgba(0,47,167,.20);font-family:"Helvetica Neue",Arial,sans-serif}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="card">
+  <span class="mark">SOMEONE ONCE SAID</span>
+  <div class="pad">
+    <div class="kick"><span><span class="b">常驻 AGENT</span> · 后端实现</span><span>02 / 09</span></div>
+    <div class="rule"></div>
+    <div class="eyebrow">系统全景</div>
+    <h1 class="h1">五个组件，五种落点</h1>
+    <div class="fig">
+      <svg viewBox="23.6 20.4 477.3 257.2" role="img" font-family="PingFang SC, Microsoft YaHei, Noto Sans CJK SC, sans-serif" preserveAspectRatio="xMidYMid meet" aria-label="五个核心组件的协作闭环" style="width:100%;height:auto;aspect-ratio:477/257"><defs><marker id="black" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto-start-reverse"><path d="M0 0L6 3L0 6Z" fill="#252525"></path></marker><marker id="orange" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto-start-reverse"><path d="M0 0L6 3L0 6Z" fill="#df6000"></path></marker></defs><rect x="0" y="0" width="534" height="300" rx="0" fill="#FFFFFF" stroke="none"></rect><rect x="30" y="24" width="83" height="228" rx="5" fill="#eeece4" stroke="none"></rect><rect x="125" y="24" width="225" height="228" rx="5" fill="#eeece4" stroke="none"></rect><rect x="362" y="24" width="84" height="228" rx="5" fill="#eeece4" stroke="none"></rect><text x="71.5" y="39" font-size="8" fill="#252525" font-weight="650" text-anchor="middle">什么触发运行</text><text x="237.5" y="39" font-size="8" fill="#252525" font-weight="650" text-anchor="middle">运行时用到什么</text><text x="404" y="39" font-size="8" fill="#252525" font-weight="650" text-anchor="middle">运行后如何输出</text><rect x="37" y="53" width="68" height="37" rx="3" fill="white" stroke="#ddd8cc"></rect><text x="71.0" y="75" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">定时器</text><rect x="37" y="130" width="68" height="37" rx="3" fill="white" stroke="#ddd8cc"></rect><text x="71.0" y="152" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">事件收件箱</text><rect x="182" y="130" width="112" height="37" rx="3" fill="white" stroke="#252525"></rect><text x="238.0" y="146" font-size="10" fill="#252525" font-weight="650" text-anchor="middle">一次运行</text><text x="238.0" y="158" font-size="7" fill="#77746a" font-weight="400" text-anchor="middle">在会话中执行</text><rect x="160" y="208" width="68" height="36" rx="3" fill="white" stroke="#ddd8cc"></rect><text x="194.0" y="230" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">记忆</text><rect x="248" y="208" width="68" height="36" rx="3" fill="white" stroke="#ddd8cc"></rect><text x="282.0" y="230" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">权限</text><rect x="369" y="130" width="69" height="37" rx="3" fill="white" stroke="#ddd8cc"></rect><text x="403.5" y="152" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">发件箱</text><path d="M71 94V127" fill="none" stroke="#252525" stroke-width="0.7" stroke-dasharray="" marker-end="url(#black)"></path><path d="M109 148H179" fill="none" stroke="#df6000" stroke-width="1" stroke-dasharray="" marker-end="url(#orange)"></path><path d="M194 170V205" fill="none" stroke="#252525" stroke-width="0.7" stroke-dasharray="" marker-end="url(#black)" marker-start="url(#black)"></path><path d="M282 172V205" fill="none" stroke="#252525" stroke-width="0.7" stroke-dasharray="" marker-end="url(#black)"></path><path d="M298 148H366" fill="none" stroke="#df6000" stroke-width="1" stroke-dasharray="" marker-end="url(#orange)"></path><path d="M442 148H469" fill="none" stroke="#df6000" stroke-width="1" stroke-dasharray="" marker-end="url(#orange)"></path><path d="M483 175V266Q483 274 475 274H79Q71 274 71 266V171" fill="none" stroke="#252525" stroke-width="0.7" stroke-dasharray="" marker-end="url(#black)"></path><path d="M238 127V80Q238 71 229 71H109" fill="none" stroke="#252525" stroke-width="0.7" stroke-dasharray="" marker-end="url(#black)"></path><text x="78" y="111" font-size="7" fill="#77746a" font-weight="400" text-anchor="start">到期触发</text><text x="133" y="134" font-size="7" fill="#77746a" font-weight="400" text-anchor="start">启动或恢复</text><text x="200" y="186" font-size="7" fill="#77746a" font-weight="400" text-anchor="start">读写记忆</text><text x="288" y="186" font-size="7" fill="#77746a" font-weight="400" text-anchor="start">检查工具调用</text><text x="313" y="134" font-size="7" fill="#77746a" font-weight="400" text-anchor="start">按需发送</text><text x="241" y="269" font-size="7" fill="#77746a" font-weight="400" text-anchor="start">回复作为新事件</text><text x="158" y="66" font-size="7" fill="#77746a" font-weight="400" text-anchor="start">设置后续提醒</text><circle cx="483" cy="138" r="5.5" fill="#252525"></circle><path d="M471 160a12 14 0 0 1 24 0Z" fill="#252525"></path><text x="483" y="169" font-size="8" fill="#252525" font-weight="650" text-anchor="middle">用户</text><g opacity="1"><rect x="35" y="128" width="72" height="41" rx="4" fill="none" stroke="#edb58d"></rect><rect x="37" y="130" width="68" height="37" rx="3" fill="#fceadc" stroke="#df6000"></rect><text x="71.0" y="152" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">事件收件箱</text></g><g opacity="1"><rect x="180" y="128" width="116" height="41" rx="4" fill="none" stroke="#edb58d"></rect><rect x="182" y="130" width="112" height="37" rx="3" fill="#fceadc" stroke="#df6000"></rect><text x="238.0" y="146" font-size="10" fill="#252525" font-weight="650" text-anchor="middle">一次运行</text><text x="238.0" y="158" font-size="7" fill="#77746a" font-weight="400" text-anchor="middle">在会话中执行</text></g><g opacity="1"><rect x="158" y="206" width="72" height="40" rx="4" fill="none" stroke="#edb58d"></rect><rect x="160" y="208" width="68" height="36" rx="3" fill="#fceadc" stroke="#df6000"></rect><text x="194.0" y="230" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">记忆</text></g><g opacity="1"><rect x="246" y="206" width="72" height="40" rx="4" fill="none" stroke="#edb58d"></rect><rect x="248" y="208" width="68" height="36" rx="3" fill="#fceadc" stroke="#df6000"></rect><text x="282.0" y="230" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">权限</text></g><g opacity="1"><rect x="367" y="128" width="73" height="41" rx="4" fill="none" stroke="#edb58d"></rect><rect x="369" y="130" width="69" height="37" rx="3" fill="#fceadc" stroke="#df6000"></rect><text x="403.5" y="152" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">发件箱</text></g><g opacity="1"><rect x="35" y="51" width="72" height="41" rx="4" fill="none" stroke="#edb58d"></rect><rect x="37" y="53" width="68" height="37" rx="3" fill="#fceadc" stroke="#df6000"></rect><text x="71.0" y="75" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">定时器</text></g><g opacity="1"><rect x="35" y="128" width="72" height="41" rx="4" fill="none" stroke="#edb58d"></rect><rect x="37" y="130" width="68" height="37" rx="3" fill="#fceadc" stroke="#df6000"></rect><text x="71.0" y="152" font-size="10" fill="#df6000" font-weight="650" text-anchor="middle">事件收件箱</text></g><g opacity="1"></g><g opacity="1"></g><g opacity="1"></g><g opacity="1"></g><g opacity="1"></g><g opacity="1"></g><g opacity="1"></g><g opacity="1"></g></svg>
+    </div>
+    <div class="map">
+      <div class="row"><b>事件收件箱</b><span><i>inbox</i> 表：HTTP 端点写入，worker 取</span></div>
+      <div class="row"><b>定时器</b><span><i>timers</i> 表：调度器轮询到期项</span></div>
+      <div class="row"><b>记忆</b><span>目录 / 对象存储：每次运行重新装载</span></div>
+      <div class="row"><b>权限</b><span>凭据代理 + 分类器：拿不准就挂起</span></div>
+      <div class="row"><b>发件箱</b><span><i>outbox</i> 表：dispatcher 控节奏投递</span></div>
+    </div>
+    <div class="note"><strong>闭环之所以能持续，</strong>是因为每一站都写进了持久化存储：定时器与收件箱触发运行，运行读写记忆、检查工具权限，结果进发件箱再送达。用户回复又回到收件箱，循环不依赖单个进程一直活着。</div>
+    <div class="foot"><span>William Hu · Anthropic《Building always-on agents》</span><span>系统全景</span></div>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>插件源与模型设置</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 设置</p>
+    <p class="so-index" style="color: #002FA7">09 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">插件源与模型设置</h2>
+    <section class="combined-settings-row">
+      <div>
+        <h3>用 Git 仓库作插件源</h3>
+        <p>在「插件 → 发现 → 管理索引源」添加仓库。有访问权限时，也能浏览和安装私有仓库里的插件。</p>
+      </div>
+      <figure><img src="assets/rel-3b25b770.png" alt="插件索引源对话框支持 Git 仓库地址"></figure>
+    </section>
+    <section class="combined-settings-row">
+      <div>
+        <h3>自定义推理档位</h3>
+        <p>在「设置 → 模型」里编辑内置目录模型的档位和 API 参数值。关闭自定义后，沿用目录默认档位。</p>
+      </div>
+      <figure class="reasoning-settings-crop">
+        <img src="assets/rel-c691dcf4.png" alt="推理等级开关、档位与 API 参数值">
+      </figure>
+    </section>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">界面实拍 · 插件索引源 · PR #8827</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

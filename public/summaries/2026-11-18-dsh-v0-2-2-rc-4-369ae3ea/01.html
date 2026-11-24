@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面 · 双版本速览</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>body{margin:0}</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF9F4; color: #1C1B17; font-family: 'Noto Sans SC', 'PingFang SC', sans-serif; display: flex; flex-direction: column; padding: 76px 88px 78px 82px">
+  <svg aria-hidden="true" viewBox="0 0 1080 1440" width="1080" height="1440" style="position: absolute; left: 0; top: 0; pointer-events: none">
+    <g stroke="rgba(0,47,167,.06)" stroke-width="1">
+      <line x1="108" y1="0" x2="108" y2="1440"></line>
+      <line x1="216" y1="0" x2="216" y2="1440"></line>
+      <line x1="324" y1="0" x2="324" y2="1440"></line>
+      <line x1="432" y1="0" x2="432" y2="1440"></line>
+      <line x1="540" y1="0" x2="540" y2="1440"></line>
+      <line x1="648" y1="0" x2="648" y2="1440"></line>
+      <line x1="756" y1="0" x2="756" y2="1440"></line>
+      <line x1="864" y1="0" x2="864" y2="1440"></line>
+      <line x1="972" y1="0" x2="972" y2="1440"></line>
+    </g>
+    <circle cx="1180" cy="1600" r="330" fill="rgba(0,47,167,.05)" stroke="none"></circle>
+    <circle cx="1180" cy="1600" r="392" fill="none" stroke="rgba(0,47,167,.16)" stroke-width="1.5"></circle>
+    <circle cx="1180" cy="1600" r="482" fill="none" stroke="rgba(0,47,167,.10)" stroke-width="1.5"></circle>
+  </svg>
+
+  <div style="position: relative; z-index: 1; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1.2; letter-spacing: .18em; color: #6D6A62">DEEPSEEK HARNESS / RELEASE</div>
+
+  <p style="position: relative; z-index: 1; margin: 26px 0 0; font-weight: 900; font-size: 62px; line-height: 1.1; letter-spacing: -.04em">DeepSeek Harness</p>
+
+  <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 30px; margin-top: 72px; white-space: nowrap">
+    <span style="display: inline-block; padding: 17px 24px; background: #002FA7; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 46px; line-height: 1.1; letter-spacing: -.04em; transform: rotate(-3deg)">0.2.2-rc.4 → rc.5</span>
+    <span style="font-size: 42px; font-weight: 700; color: #002FA7; letter-spacing: -.04em">更新解读</span>
+  </div>
+
+  <div style="position: relative; z-index: 1; margin-top: 168px">
+    <p style="margin: 0 0 64px; font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 900; font-size: 71px; line-height: 1.45; letter-spacing: -.02em">DeepSeek 拒答，<br><span style="color: #002FA7">不再被当成「报错」</span></p>
+
+    <div style="display: grid; gap: 42px">
+      <div style="display: flex; align-items: baseline; gap: 22px">
+        <span style="color: #002FA7; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .12em">FOCUS</span>
+        <strong style="font-size: 34px; line-height: 1.45; font-weight: 600">内容拒答错误码<br><span style="font-family: 'JetBrains Mono', monospace; font-size: 29px">MALFORMED_RESPONSE → CONTENT_REFUSED</span></strong>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 22px">
+        <span style="color: #002FA7; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .12em">ALSO</span>
+        <strong style="font-size: 34px; line-height: 1.45; font-weight: 600">rc.5 搜索默认跟模型走<br><span style="font-size: 29px; color: #6D6A62">DeepSeek 模型走服务端搜索，不按次收费</span></strong>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 22px">
+        <span style="color: #002FA7; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .12em">AND</span>
+        <strong style="font-size: 34px; line-height: 1.45; font-weight: 600">liveshare 隧道 worker 修复<br><span style="font-size: 29px; color: #6D6A62">其余为兼容性说明</span></strong>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid rgba(0,47,167,.28); margin-top: 88px; padding-top: 28px; color: #002FA7; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 24px; line-height: 1.4; letter-spacing: .08em">
+      <span>0.2.2-rc.4 → rc.5 更新速览</span>
+      <span aria-hidden="true" style="font-size: 44px; line-height: 1">→</span>
+    </div>
+  </div>
+
+  <div style="position: absolute; z-index: 1; left: 82px; right: 145px; bottom: 42px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid #E5E2D9; padding-top: 18px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 18px; letter-spacing: .1em; color: #6F6B61">
+    <span style="color: #002FA7; letter-spacing: .24em">DEEPSEEK HARNESS</span>
+    <span>01 / 09</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; z-index: 2; right: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; letter-spacing: .58em; color: rgba(0,47,167,.2); user-select: none; pointer-events: none">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

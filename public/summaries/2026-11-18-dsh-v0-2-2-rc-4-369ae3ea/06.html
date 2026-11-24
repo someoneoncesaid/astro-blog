@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>搜索默认跟模型走</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>body{margin:0}</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF9F4; color: #1C1B17; font-family: 'Noto Sans SC', 'PingFang SC', sans-serif">
+
+  <div style="padding: 64px 132px 0 76px">
+    <div style="display: flex; align-items: center; gap: 16px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .2em; color: #6D6A62">RC.5 · WEB SEARCH</span>
+      <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 21px; line-height: 1; color: #002FA7; border: 1.5px solid rgba(0,47,167,.35); border-radius: 999px; padding: 9px 20px; white-space: nowrap">默认行为变化</span>
+    </div>
+    <h2 style="margin: 18px 0 0; font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 900; font-size: 62px; line-height: 1.26; letter-spacing: .01em">搜索默认，跟着模型走</h2>
+    <div style="height: 1.5px; background: #E5E2D9; margin-top: 24px"></div>
+  </div>
+
+  <div style="padding: 34px 132px 0 76px">
+    <p style="margin: 0; font-size: 30px; line-height: 1.62; color: #3D3B34">没配 <span style="font-family: 'JetBrains Mono', monospace; font-size: 26px; color: #002FA7">searchProvider</span> 时，搜索由发起请求的模型决定：DeepSeek 模型走服务端搜索，其他模型走 Search API。</p>
+
+    <div style="margin-top: 34px; display: flex; gap: 18px">
+      <div style="flex: 1; border: 1.5px solid #E5E2D9; border-radius: 14px; padding: 20px 24px; background: #FFFFFF">
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px; letter-spacing: .2em; color: #6D6A62">之前</div>
+        <div style="margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 21px; line-height: 1.5; color: #1C1B17">searchProvider:<br>deepseek-search-api</div>
+        <div style="margin-top: 8px; font-size: 24px; line-height: 1.5; color: #6D6A62">所有搜索都走独立检索接口</div>
+      </div>
+      <div style="flex: 1; border: 1.5px solid rgba(0,47,167,.35); border-radius: 14px; padding: 20px 24px; background: rgba(0,47,167,.05)">
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px; letter-spacing: .2em; color: #002FA7">现在</div>
+        <div style="margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 21px; line-height: 1.5; color: #002FA7">不固定<br>按模型路由选择</div>
+        <div style="margin-top: 8px; font-size: 24px; line-height: 1.5; color: #3D3B34">DeepSeek 模型走服务端搜索</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 36px; border: 1.5px solid #E5E2D9; border-radius: 16px; overflow: hidden">
+      <div style="display: flex; background: rgba(28,27,23,.04); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px; letter-spacing: .14em; color: #6D6A62">
+        <div style="flex: 1.1; padding: 16px 24px; border-right: 1.5px solid #E5E2D9">模型请求路由</div>
+        <div style="flex: 1; padding: 16px 24px">搜索提供方</div>
+      </div>
+      <div style="display: flex; border-top: 1.5px solid #E5E2D9; background: rgba(0,47,167,.05)">
+        <div style="flex: 1.1; padding: 26px 24px; border-right: 1.5px solid #E5E2D9; font-family: 'JetBrains Mono', monospace; font-size: 22px; line-height: 1.55; color: #002FA7">deepseek-official<br>deepseek-account</div>
+        <div style="flex: 1; padding: 26px 24px; font-size: 26px; line-height: 1.45; font-weight: 700; color: #1C1B17">DeepSeek 服务端搜索<span style="display: block; margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500; color: #6D6A62">deepseek-official · Messages</span></div>
+      </div>
+      <div style="display: flex; border-top: 1.5px solid #E5E2D9">
+        <div style="flex: 1.1; padding: 26px 24px; border-right: 1.5px solid #E5E2D9; font-family: 'JetBrains Mono', monospace; font-size: 22px; line-height: 1.55; color: #3D3B34">其他路由<br>未在模型请求中</div>
+        <div style="flex: 1; padding: 26px 24px; font-size: 26px; line-height: 1.45; font-weight: 700; color: #1C1B17">DeepSeek Search API<span style="display: block; margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500; color: #6D6A62">deepseek-search-api · 独立检索</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top: 34px; background: rgba(0,47,167,.06); border: 1.5px solid rgba(0,47,167,.2); border-radius: 16px; padding: 32px 32px">
+      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 19px; letter-spacing: .2em; color: #002FA7">为什么这么选</div>
+      <div style="margin-top: 12px; display: grid; gap: 12px; font-size: 27px; line-height: 1.55; color: #1C1B17">
+        <div style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #002FA7">—</span><span>服务端搜索不按次收费，成本是这次 turn 的 token 与延迟</span></div>
+        <div style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #002FA7">—</span><span>Search API 独立检索：低延迟、按次计费</span></div>
+      </div>
+    </div>
+
+    <p style="margin: 34px 0 0; font-size: 28px; line-height: 1.55; color: #6D6A62">只影响没显式配置 <span style="font-family: 'JetBrains Mono', monospace; font-size: 23px">searchProvider</span> 的部署；手动固定后行为不变。</p>
+  </div>
+
+  <div style="position: absolute; left: 76px; right: 132px; bottom: 48px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid #E5E2D9; padding-top: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 20px; letter-spacing: .12em; color: #6F6B61">
+    <span>DEEPSEEK HARNESS · 0.2.2-rc.5</span>
+    <span>06 / 09</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; right: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; letter-spacing: .58em; color: rgba(0,47,167,.2); user-select: none; pointer-events: none">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

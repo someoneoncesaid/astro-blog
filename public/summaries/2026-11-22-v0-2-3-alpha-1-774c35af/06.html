@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PTC 执行方式</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 升级</p>
+    <p class="so-index" style="color: #002FA7">06 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">PTC 默认改为持久执行</h2>
+    <p class="so-lead">省略 <code>executionMode</code> 时，Node PTC 的默认行为发生变化。</p>
+    <div class="release-rows">
+      <section class="release-row">
+        <h3>原默认</h3>
+        <div><strong>每次调用启动新进程</strong><p>使用 <code>per-call</code> 时，脚本可以用顶层 <code>return value</code> 返回结果。</p></div>
+      </section>
+      <section class="release-row">
+        <h3>新默认</h3>
+        <div><strong>同一 Agent 复用 Node 进程</strong><p>顶层变量可在后续调用中继续访问，最后一条表达式作为返回值。</p></div>
+      </section>
+    </div>
+    <p class="so-text release-callout">旧脚本可把 <code>return value</code> 改成末尾表达式，或显式设为 <code>per-call</code>。<code>workflow-ptc</code> 也适用。</p>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">来源　PTC 升级指南 · PR #8848</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

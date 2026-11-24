@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>四种原语</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF8F3; color: #17181C; padding: 72px 84px 64px; display: flex; flex-direction: column; font-family: 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;">
+  <div style="position: absolute; top: 220px; right: 26px; writing-mode: vertical-rl; font-size: 17px; letter-spacing: 0.42em; color: rgba(0, 47, 167, 0.2);">SOMEONE ONCE SAID</div>
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 20px; border-bottom: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; letter-spacing: 0.3em; color: #002FA7; font-weight: 600;">DEEPSEEK&nbsp;HARNESS</div>
+    <div style="font-size: 21px; letter-spacing: 0.12em; color: #6B7078;">源码拆解 · 04 / 06</div>
+  </div>
+  <div style="margin-top: 58px; font-size: 22px; letter-spacing: 0.24em; color: #002FA7; font-weight: 600;">平台原语</div>
+  <h2 style="margin: 18px 0 0; font-size: 56px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 800;">同一份策略，四种原语</h2>
+  <p style="margin: 22px 0 0; font-size: 26px; line-height: 1.7; color: #4A4E55;">要表达的意思只有两种：拒绝一切写，或在 workspace 与显式额外根下允许写。差别只在用什么原语。</p>
+  <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 240px 1fr 240px; gap: 24px; align-items: start;">
+      <div style="font-size: 27px; font-weight: 700; line-height: 1.35;">Linux · bwrap</div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">mount namespace：宿主根只读绑定，workspace-write 再 tmpfs /tmp 并 bind 可写根。</div>
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 22px; line-height: 1.5; color: #002FA7; text-align: right;">EROFS</div>
+    </div>
+  </div>
+  <div style="margin-top: 22px; padding-top: 24px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 240px 1fr 240px; gap: 24px; align-items: start;">
+      <div style="font-size: 27px; font-weight: 700; line-height: 1.35;">Linux · Landlock</div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">LSM 的访问权 allow-list：readOnly /，readWrite 只有 /dev/null（workspace-write 追加 /tmp 与可写根）。</div>
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 22px; line-height: 1.5; color: #002FA7; text-align: right;">EACCES</div>
+    </div>
+  </div>
+  <div style="margin-top: 22px; padding-top: 24px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 240px 1fr 240px; gap: 24px; align-items: start;">
+      <div style="font-size: 27px; font-weight: 700; line-height: 1.35;">macOS · Seatbelt</div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">SBPL：(allow default)(deny file-write*)，再逐个 subpath 放行可写根；必须用 canonical 路径。</div>
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 22px; line-height: 1.5; color: #002FA7; text-align: right;">EPERM</div>
+    </div>
+  </div>
+  <div style="margin-top: 22px; padding-top: 24px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="display: grid; grid-template-columns: 240px 1fr 240px; gap: 24px; align-items: start;">
+      <div style="font-size: 27px; font-weight: 700; line-height: 1.35;">Windows · ACL</div>
+      <div style="font-size: 24px; line-height: 1.62; color: #2C2F35;">WRITE_RESTRICTED 令牌 + DACL 授权 + Low 完整性标签，三层同时生效。</div>
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 21px; line-height: 1.5; color: #002FA7; text-align: right;">ACCESS_DENIED</div>
+    </div>
+  </div>
+  <div style="margin-top: auto; padding-top: 26px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 25px; line-height: 1.62; color: #2C2F35;">这四种 errno 就是拒绝方言的来源；而 runner 自身的失败另有签名与退出码（Landlock 125、windows-acl 127）。两者必须分开。</div>
+    <div style="margin-top: 10px; font-size: 21px; color: #6B7078;">顺序反了，模型会去改命令，而不是去修沙箱。</div>
+  </div>
+  <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: baseline; font-size: 20px; color: #6B7078;">
+    <div>核对 dsh 0.2.2-rc.5 · sandbox-local/profiles.ts</div>
+    <div style="color: #002FA7; font-weight: 700;">04</div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

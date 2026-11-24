@@ -942,6 +942,10 @@ function buildProjectEntry(project, forcedDesignSet) {
 				signature.push(statSig(path.join(assetsDir, file)));
 			}
 		}
+		/* 设计稿引用的样式表也纳入变更检测，避免改了 CSS 不触发重新导出 */
+		for (const cssFile of collectDesignCss(designSet.projectDir, designSet.cards)) {
+			signature.push(statSig(cssFile));
+		}
 	}
 
 	const sourceHash = crypto
@@ -1017,6 +1021,66 @@ function buildAssetMap(assetsDir) {
 	return map;
 }
 
+/**
+ * 汇总一组设计稿里所有卡片引用的本地样式表绝对路径，用于变更检测。
+ */
+function collectDesignCss(projectDir, cards) {
+	const files = [];
+	for (const card of cards) {
+		const source = readText(card.file);
+		for (const href of findLocalStylesheetHrefs(source)) {
+			const absolute = path.resolve(path.dirname(card.file), href);
+			if (exists(absolute) && absolute.toLowerCase().endsWith('.css')) files.push(absolute);
+		}
+	}
+	return unique(files);
+}
+
+/**
+ * 找出一张设计稿引用的本地样式表（tokens.css / bundle.css / 定制 css 等）。
+ * 只取 rel="stylesheet" 且非外链（跳过 Google Fonts 之类）的 <link>。
+ */
+function findLocalStylesheetHrefs(source) {
+	const hrefs = [];
+	const linkPattern = /<link\b[^>]*>/gi;
+	for (const tag of source.match(linkPattern) || []) {
+		if (!/rel\s*=\s*["']?stylesheet/i.test(tag)) continue;
+		const href = tag.match(/href\s*=\s*["']([^"']+)["']/i)?.[1];
+		if (!href || /^(https?:|data:|\/\/)/i.test(href)) continue;
+		hrefs.push(href);
+	}
+	return unique(hrefs);
+}
+
+/**
+ * 解析设计稿 head 里的本地 CSS，拷进卡片 assets 并返回可直接插入的 <link> 标签。
+ * CSS 相对源稿目录解析；同名同内容复用同一份拷贝（按内容哈希命名）。
+ */
+function collectDesignStylesheets(source, card, targetDir, assetDir) {
+	const links = [];
+	const cache = new Map();
+
+	for (const href of findLocalStylesheetHrefs(source)) {
+		const absolute = path.resolve(path.dirname(card.file), href);
+		if (!exists(absolute) || !absolute.toLowerCase().endsWith('.css')) {
+			warn(`设计稿引用的样式表缺失或非本地 CSS：${href}（${card.file}）`);
+			continue;
+		}
+		if (cache.has(absolute)) {
+			links.push(cache.get(absolute));
+			continue;
+		}
+		ensureDir(assetDir);
+		const outputName = `css-${crypto.createHash('sha1').update(absolute).digest('hex').slice(0, 8)}.css`;
+		fs.copyFileSync(absolute, path.join(assetDir, outputName));
+		const tag = `<link rel="stylesheet" href="assets/${outputName}">`;
+		cache.set(absolute, tag);
+		links.push(tag);
+	}
+
+	return links;
+}
+
 function generateDesignCard(card, targetDir, assetMap) {
 	const source = readText(card.file);
 	const bodyMatch = source.match(/<x-dc>([\s\S]*?)<\/x-dc>/);
@@ -1069,6 +1133,9 @@ function generateDesignCard(card, targetDir, assetMap) {
 	const width = card.width;
 	const height = card.height;
 
+	/* 设计稿靠 <link> 引用的本地样式表（tokens/bundle/定制 css）也要跟过来，否则卡片只剩结构、丢样式 */
+	const styleLinks = collectDesignStylesheets(source, card, targetDir, assetDir).join('\n');
+
 	const html = `<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -1081,6 +1148,7 @@ html,body{margin:0;padding:0;overflow:hidden;background:transparent}
 #xhs-card{position:relative;width:${width}px;height:${height}px;overflow:hidden;transform-origin:top left}
 </style>
 ${helmet}
+${styleLinks}
 </head>
 <body>
 <div id="xhs-card">${body}</div>

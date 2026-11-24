@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF8F3; color: #17181C; padding: 72px 84px 64px; display: flex; flex-direction: column; font-family: 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;">
+  <div style="position: absolute; top: 220px; right: 26px; writing-mode: vertical-rl; font-size: 17px; letter-spacing: 0.42em; color: rgba(0, 47, 167, 0.2);">SOMEONE ONCE SAID</div>
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 20px; border-bottom: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; letter-spacing: 0.3em; color: #002FA7; font-weight: 600;">DEEPSEEK&nbsp;HARNESS</div>
+    <div style="font-size: 21px; letter-spacing: 0.12em; color: #6B7078;">源码拆解 · 01 / 06</div>
+  </div>
+  <div style="margin-top: 64px; font-size: 23px; letter-spacing: 0.26em; color: #002FA7; font-weight: 600;">SOURCE&nbsp;CODE&nbsp;WALKTHROUGH</div>
+  <h1 style="margin: 26px 0 0; font-size: 96px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 800;">DSH 的<br>沙箱机制</h1>
+  <p style="margin: 26px 0 0; font-size: 36px; line-height: 1.45; color: #3A3D44;">进程沙箱、文件围栏与一次性升级</p>
+  <div style="margin-top: 40px; width: 120px; height: 4px; background: #002FA7;"></div>
+  <p style="margin: 36px 0 0; font-size: 30px; line-height: 1.8; color: #2C2F35;">模型要写工作区外的文件，或跑一条会删目录的命令——DSH 到底在哪一层拦住它？</p>
+  <div style="margin-top: 44px; display: grid; grid-template-columns: 64px 1fr; gap: 22px; padding-top: 26px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; color: #002FA7; font-weight: 700; letter-spacing: 0.08em;">01</div>
+    <div>
+      <div style="font-size: 30px; font-weight: 700;">两层机制</div>
+      <div style="margin-top: 10px; font-size: 24px; line-height: 1.6; color: #5A5F66;">内核关住不可信代码，进程内的围栏只拦模型给出的目标路径。</div>
+    </div>
+  </div>
+  <div style="margin-top: 26px; display: grid; grid-template-columns: 64px 1fr; gap: 22px; padding-top: 26px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; color: #002FA7; font-weight: 700; letter-spacing: 0.08em;">02</div>
+    <div>
+      <div style="font-size: 30px; font-weight: 700;">四个包</div>
+      <div style="margin-top: 10px; font-size: 24px; line-height: 1.6; color: #5A5F66;">契约、选路、策略、win32 后端，各管一段，互不越界。</div>
+    </div>
+  </div>
+  <div style="margin-top: 26px; display: grid; grid-template-columns: 64px 1fr; gap: 22px; padding-top: 26px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; color: #002FA7; font-weight: 700; letter-spacing: 0.08em;">03</div>
+    <div>
+      <div style="font-size: 30px; font-weight: 700;">四种原语</div>
+      <div style="margin-top: 10px; font-size: 24px; line-height: 1.6; color: #5A5F66;">bwrap、Landlock、Seatbelt、受限令牌——拒绝的方言各不相同。</div>
+    </div>
+  </div>
+  <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid rgba(23, 24, 28, 0.14); padding-top: 18px; font-size: 20px; color: #6B7078;">
+    <div>6 页 · 读到最后一页，看见一次升级的完整闭环</div>
+    <div style="color: #002FA7; font-weight: 700;">01</div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

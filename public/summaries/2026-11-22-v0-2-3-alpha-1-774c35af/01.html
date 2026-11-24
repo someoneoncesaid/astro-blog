@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封面</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card so-sheet--cover">
+  <img class="release-cover-mark" src="assets/rel-17779ca6.svg" alt="" aria-hidden="true">
+  <header class="so-head">
+    <p class="so-eyebrow">DEEPSEEK HARNESS / RELEASE</p>
+  </header>
+  <div class="so-body">
+    <p class="release-product">DeepSeek Harness</p>
+    <div class="release-version-row">
+      <span class="release-version" style="background: #002FA7">0.2.3-alpha.1 / alpha.2</span>
+      <span class="release-reading">更新解读</span>
+    </div>
+    <h1 class="so-hook">这两次更新<br><span style="color: #002FA7">有哪些值得关注？</span></h1>
+    <p class="release-swipe"><span>向左滑动，逐项看懂</span><span aria-hidden="true">→</span></p>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">DEEPSEEK HARNESS / 0.2.3-alpha.1 / alpha.2</p>
+    <p class="so-index" style="color: #002FA7">01 / 11</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

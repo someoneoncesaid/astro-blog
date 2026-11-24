@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>七个连接器</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 连接器</p>
+    <p class="so-index" style="color: #002FA7">02 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">七个应用，两种接法</h2>
+    <p class="so-lead">安装并启用插件后，点开详情页连接账号。</p>
+    <div class="connector-groups">
+      <section class="connector-group">
+        <h3>厂商 CLI · 在插件页登录</h3>
+        <ul>
+          <li><img src="assets/rel-9377bc75.svg" alt="" width="68" height="68"><span>飞书</span></li>
+          <li><img src="assets/rel-3b82639f.svg" alt="" width="68" height="68"><span>企业微信</span></li>
+          <li><img src="assets/rel-7a685047.svg" alt="" width="68" height="68"><span>腾讯会议</span></li>
+          <li><img src="assets/rel-bdd141c0.svg" alt="" width="68" height="68"><span>钉钉</span></li>
+        </ul>
+      </section>
+      <section class="connector-group">
+        <h3>MCP · 在插件页发起 OAuth</h3>
+        <ul>
+          <li><img src="assets/rel-bb60ace9.svg" alt="" width="68" height="68"><span>Notion</span></li>
+          <li><img src="assets/rel-e089419f.svg" alt="" width="68" height="68"><span>Linear</span></li>
+          <li><img src="assets/rel-0a8f6e75.svg" alt="" width="68" height="68"><span>腾讯文档</span></li>
+        </ul>
+      </section>
+    </div>
+    <div class="release-figures connector-shots">
+      <h3>插件详情页实拍</h3>
+      <figure>
+        <img src="assets/rel-29b925ba.png" alt="飞书账号未连接，已关联应用，右侧显示登录飞书账号">
+        <figcaption>飞书 · 关联应用后，点击「登录飞书账号」</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/rel-a1b37dc2.png" alt="钉钉账号未连接，右侧显示连接钉钉">
+        <figcaption>钉钉 · 点击「连接钉钉」，组织需开启 CLI 访问</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">来源　connector README · 标签 d98f5d6</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

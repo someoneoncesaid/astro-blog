@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>记忆</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0;background:#F7F4EE}
+/* ---------- card system ---------- */
+.card{position:relative;width:1080px;height:1440px;background:#F7F4EE;color:#17171A;overflow:hidden;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.card .pad{position:absolute;inset:0;padding:76px 96px 60px 80px;display:flex;flex-direction:column}
+.card .pad > *{flex:none}
+.kick{display:flex;justify-content:space-between;align-items:baseline;font-size:20px;letter-spacing:.14em;color:#6E6A5E;font-variant-numeric:tabular-nums}
+.kick .b{font-weight:600;color:#17171A;letter-spacing:.10em}
+.rule{height:1px;background:#DCD5C6;margin-top:18px;flex:none}
+.eyebrow{margin-top:40px;font-size:21px;letter-spacing:.16em;color:#C05200;font-weight:700}
+.h1{margin:16px 0 0;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;font-weight:700;font-size:64px;line-height:1.28;letter-spacing:-.01em}
+.h1 em{font-style:normal;color:#C05200}
+.deck{margin:24px 0 0;font-size:29px;line-height:1.72;color:#3F3C37;max-width:860px;letter-spacing:.005em}
+.panel{margin-top:34px;background:#FFFDF8;border:1px solid #DCD5C6;border-radius:3px}
+.panel svg{display:block;width:100%;height:auto}
+.panel text{font-family:"PingFang SC","Hiragino Sans GB",system-ui,sans-serif}
+.fig{margin-top:34px;background:#fff;border:1px solid #E3DCCB;border-radius:3px;overflow:hidden;padding:16px}
+.fig img,.fig svg{display:block;width:100%;height:auto}
+.figcap{margin-top:12px;font-size:18px;color:#8A8578;letter-spacing:.02em}
+.code{margin-top:32px;background:#1E1A16;border-radius:3px;padding:30px 34px;color:#EADFCF}
+.code pre{margin:0;font-family:"SF Mono",Menlo,"JetBrains Mono",monospace;font-size:20px;line-height:1.72;white-space:pre;overflow:hidden}
+.code .k{color:#F0A46A}
+.code .c{color:#9B8E7F}
+.code .s{color:#E7C08A}
+.note{margin-top:auto;padding-top:24px;font-size:22px;line-height:1.62;color:#5F5B52}
+.note strong{color:#17171A;font-weight:600}
+.chips{display:flex;gap:22px;margin-top:26px}
+.chips .chip{flex:1;border-top:2px solid #C05200;padding-top:12px}
+.chips .chip b{display:block;font-size:20px;margin-bottom:4px;color:#17171A}
+.chips .chip span{font-size:18px;line-height:1.6;color:#6E6A5E;display:block}
+.map{margin-top:24px;display:flex;flex-direction:column}
+.map .row{display:flex;align-items:baseline;gap:26px;padding:13px 0;border-top:1px solid #E2DBCB}
+.map .row:last-child{border-bottom:1px solid #E2DBCB}
+.map b{flex:none;width:196px;font-size:21px;font-weight:600;color:#17171A}
+.map span{font-size:20px;color:#6E6A5E}
+.map span i{font-style:normal;font-family:"SF Mono",Menlo,monospace;font-size:19px;color:#C05200}
+.steps{margin-top:22px;display:flex;flex-direction:column;gap:0}
+.steps .row{display:flex;gap:18px;align-items:baseline;padding:15px 0;border-top:1px solid #E2DBCB}
+.steps .row:first-child{border-top:0}
+.steps .n{flex:none;width:34px;height:34px;border-radius:50%;background:#C05200;color:#FFFDF8;font-size:17px;line-height:34px;text-align:center}
+.steps .t{font-size:20px;line-height:1.6;color:#17171A}
+.steps .t code{font-family:"SF Mono",Menlo,monospace;font-size:18px;color:#C05200}
+.rail{display:flex;align-items:center;margin-top:16px}
+.rail span{flex:1;position:relative;padding-left:16px;font-size:18px;letter-spacing:.06em;color:#B5AE9E}
+.rail span::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:#CFC7B6;transform:translateY(-50%)}
+.rail span.on{color:#C05200;font-weight:600}
+.rail span.on::before{background:#C05200;width:7px;height:7px}
+.foot{margin-top:20px;padding-top:18px;border-top:1px solid #DCD5C6;display:flex;justify-content:space-between;gap:24px;font-size:19px;color:#8A8578;letter-spacing:.03em}
+.mark{position:absolute;top:104px;right:26px;writing-mode:vertical-rl;font-size:13px;letter-spacing:.34em;color:rgba(0,47,167,.20);font-family:"Helvetica Neue",Arial,sans-serif}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="card">
+  <span class="mark">SOMEONE ONCE SAID</span>
+  <div class="pad">
+    <div class="kick"><span><span class="b">常驻 AGENT</span> · 后端实现</span><span>06 / 09</span></div>
+    <div class="rule"></div>
+    <div class="eyebrow">组件 03 · 记忆</div>
+    <h1 class="h1">记忆是目录，<br>只存日后查不到的东西</h1>
+    <p class="deck">记忆独立存储（数据库或对象存储），用文件工具读写。每项任务、每个用户各一份，运行结束前把结论写回去。</p>
+    <div class="fig"><svg xmlns:ns0="http://www.w3.org/2000/svg" viewBox="52.0 53.0 1334.5 633.5" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" preserveAspectRatio="xMidYMid meet" role="img" aria-label="记忆目录：三个每次加载的文件与按需读取" style="width:100%;height:auto;aspect-ratio:1334/634"><defs><marker id="ar-orange" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1 L11 6 L0 11 Z" fill="#D55E00"></path></marker><marker id="ar-ink" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1 L11 6 L0 11 Z" fill="#1F1F1E"></path></marker></defs><rect width="1440" height="740" fill="#FFFFFF"></rect><rect x="60" y="210" width="250" height="300" rx="12" fill="#FFFFFF" stroke="#DCD5C6" stroke-width="2"></rect><text x="185" y="344" font-size="30" font-weight="600" fill="#1F1F1E" text-anchor="middle">一次运行</text><text x="185" y="386" font-size="23" font-weight="400" fill="#6E6A5E" text-anchor="middle">Agent 循环</text><line x1="470" y1="280" x2="320" y2="280" stroke="#D55E00" stroke-width="4" marker-end="url(#ar-orange)"></line><text x="322" y="258" font-size="21" font-weight="400" fill="#D55E00" text-anchor="start">启动时加载</text><line x1="320" y1="360" x2="470" y2="360" stroke="#D55E00" stroke-width="4" marker-end="url(#ar-orange)"></line><text x="322" y="338" font-size="21" font-weight="400" fill="#D55E00" text-anchor="start">运行时写入</text><line x1="470" y1="440" x2="320" y2="440" stroke="#D55E00" stroke-width="4" marker-end="url(#ar-orange)"></line><text x="322" y="418" font-size="21" font-weight="400" fill="#D55E00" text-anchor="start">按需读取</text><rect x="480" y="60" width="900" height="620" rx="16" fill="#F1EFE8" stroke="none" stroke-width="0"></rect><text x="518" y="130" font-size="30" font-weight="600" fill="#D55E00" text-anchor="start">记忆</text><text x="600" y="130" font-size="22" font-weight="400" fill="#6E6A5E" text-anchor="start">文件目录</text><text x="520" y="186" font-size="22" font-weight="400" fill="#6E6A5E" text-anchor="start">文件名</text><text x="800" y="186" font-size="22" font-weight="400" fill="#6E6A5E" text-anchor="start">保存的内容</text><text x="1340" y="186" font-size="22" font-weight="400" fill="#6E6A5E" text-anchor="end">读取时机</text><rect x="500" y="206" width="860" height="84" rx="8" fill="#FFFFFF" stroke="#DCD5C6" stroke-width="2"></rect><text x="522" y="258" font-size="24" font-weight="600" fill="#1F1F1E" text-anchor="start">instructions.md</text><text x="800" y="258" font-size="22" font-weight="400" fill="#1F1F1E" text-anchor="start">用户指令</text><text x="1340" y="258" font-size="22" font-weight="600" fill="#D55E00" text-anchor="end">每次运行</text><rect x="500" y="298" width="860" height="84" rx="8" fill="#FFFFFF" stroke="#DCD5C6" stroke-width="2"></rect><text x="522" y="350" font-size="24" font-weight="600" fill="#1F1F1E" text-anchor="start">index.md</text><text x="800" y="350" font-size="22" font-weight="400" fill="#1F1F1E" text-anchor="start">notes/ 和 progress/ 的索引</text><text x="1340" y="350" font-size="22" font-weight="600" fill="#D55E00" text-anchor="end">每次运行</text><rect x="500" y="390" width="860" height="84" rx="8" fill="#FFFFFF" stroke="#DCD5C6" stroke-width="2"></rect><text x="522" y="442" font-size="24" font-weight="600" fill="#1F1F1E" text-anchor="start">reported.md</text><text x="800" y="442" font-size="22" font-weight="400" fill="#1F1F1E" text-anchor="start">已告诉用户的内容</text><text x="1340" y="442" font-size="22" font-weight="600" fill="#D55E00" text-anchor="end">每次运行</text><rect x="500" y="482" width="860" height="84" rx="8" fill="#FFFFFF" stroke="#DCD5C6" stroke-width="2"></rect><text x="522" y="534" font-size="24" font-weight="600" fill="#1F1F1E" text-anchor="start">notes/</text><text x="800" y="522" font-size="22" font-weight="400" fill="#1F1F1E" text-anchor="start">对用户的了解</text><text x="800" y="550" font-size="20" font-weight="400" fill="#6E6A5E" text-anchor="start">按主题拆分成小文件</text><text x="1340" y="534" font-size="22" font-weight="400" fill="#6E6A5E" text-anchor="end">按需读取</text><rect x="500" y="574" width="860" height="84" rx="8" fill="#FFFFFF" stroke="#DCD5C6" stroke-width="2"></rect><text x="522" y="626" font-size="24" font-weight="600" fill="#1F1F1E" text-anchor="start">progress/</text><text x="800" y="614" font-size="22" font-weight="400" fill="#1F1F1E" text-anchor="start">进行中任务的进展</text><text x="800" y="642" font-size="20" font-weight="400" fill="#6E6A5E" text-anchor="start">每项任务一个文件</text><text x="1340" y="626" font-size="22" font-weight="400" fill="#6E6A5E" text-anchor="end">按需读取</text></svg></div>
+    <div class="chips">
+      <div class="chip"><b>用户指令</b><span>单独文件，每次运行开始加载</span></div>
+      <div class="chip"><b>用户笔记</b><span>角色、偏好、纠正，按需读</span></div>
+      <div class="chip"><b>已发消息</b><span>避免重复通知</span></div>
+      <div class="chip"><b>任务进度</b><span>接续上次没做完的</span></div>
+    </div>
+    <div class="note"><strong>三个文件每次必读，notes/ 与 progress/ 按需读，</strong>运行结束前把结论写回目录。定期「做梦」回看旧会话，替换过时条目，也找出单次运行看不出的重复。</div>
+    <div class="rail" aria-label="五个组件进度"><span>收件箱</span><span>定时器</span><span class="on">记忆</span><span>权限</span><span>发件箱</span></div>
+    <div class="foot"><span>William Hu · Anthropic《Building always-on agents》</span><span>记忆</span></div>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

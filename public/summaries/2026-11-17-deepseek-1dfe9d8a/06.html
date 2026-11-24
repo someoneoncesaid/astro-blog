@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一次升级</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>
+body{margin:0}
+</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF8F3; color: #17181C; padding: 72px 84px 64px; display: flex; flex-direction: column; font-family: 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;">
+  <div style="position: absolute; top: 220px; right: 26px; writing-mode: vertical-rl; font-size: 17px; letter-spacing: 0.42em; color: rgba(0, 47, 167, 0.2);">SOMEONE ONCE SAID</div>
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 20px; border-bottom: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; letter-spacing: 0.3em; color: #002FA7; font-weight: 600;">DEEPSEEK&nbsp;HARNESS</div>
+    <div style="font-size: 21px; letter-spacing: 0.12em; color: #6B7078;">源码拆解 · 06 / 06</div>
+  </div>
+  <div style="margin-top: 56px; font-size: 22px; letter-spacing: 0.24em; color: #002FA7; font-weight: 600;">升级闭环</div>
+  <h2 style="margin: 18px 0 0; font-size: 54px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 800;">拒绝之后，只有一条正路</h2>
+  <p style="margin: 20px 0 0; font-size: 25px; line-height: 1.7; color: #4A4E55;">被拒时不去找绕路，而是按固定话术向人申请一次；批准只作用于这一次调用。</p>
+  <div style="margin-top: 32px; background: #F1EEE6; padding: 26px 28px;">
+    <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 20px; line-height: 1.7; color: #3A3D44;">[sandbox: file access denied under &lt;mode&gt; mode]<br>[sandbox: escalation available — retry this exact &lt;command|operation&gt; once with sandbox_permissions + justification]</div>
+  </div>
+  <div style="margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 26px; font-weight: 700;">阶梯只能严格更宽</div>
+    <div style="margin-top: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 21px; line-height: 1.5; color: #002FA7;">read-only → workspace-write → danger-full-access</div>
+    <div style="margin-top: 10px; font-size: 22px; line-height: 1.6; color: #4A4E55;">schema 只放目标词；能不能升，必须对着这次调用的 mode 在执行期判。</div>
+  </div>
+  <div style="margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 26px; font-weight: 700;">审批只有四个封闭结果</div>
+    <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px;">
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 21px;">allowed-once</div>
+      <div style="font-size: 21px; color: #4A4E55;">只这一次生效</div>
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 21px;">rejected</div>
+      <div style="font-size: 21px; color: #4A4E55;">保持拒绝，停下解释</div>
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 21px;">cancelled</div>
+      <div style="font-size: 21px; color: #4A4E55;">调用被取消</div>
+      <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 21px;">unavailable</div>
+      <div style="font-size: 21px; color: #4A4E55;">失败关闭，不等于默许</div>
+    </div>
+  </div>
+  <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid rgba(23, 24, 28, 0.14);">
+    <div style="font-size: 22px; line-height: 1.7; color: #2C2F35;">边界也写在源码里：词汇只有文件效果；同世界隔离；partial 如实上报；官方明确标注未做安全审计。</div>
+    <div style="margin-top: 8px; font-size: 21px; color: #6B7078;">把「关代码」和「拦路径」分开，失败关闭，拒绝给唯一一条正路。</div>
+  </div>
+  <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: baseline; font-size: 20px; color: #6B7078;">
+    <div>核对 dsh 0.2.2-rc.5 · sandbox/escalation.ts</div>
+    <div style="color: #002FA7; font-weight: 700;">06</div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

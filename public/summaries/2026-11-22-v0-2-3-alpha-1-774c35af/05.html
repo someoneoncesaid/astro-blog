@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会话状态</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 界面</p>
+    <p class="so-index" style="color: #002FA7">05 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">会话状态集中查看</h2>
+    <p class="so-lead">点击会话右上角的「显示会话面板」，就能看到当前工作环境和子智能体状态。</p>
+    <p class="so-text release-callout">智能体这一轮结束后，侧栏会标出还没看的结果。</p>
+    <div class="release-figures session-figures">
+      <div class="session-figure-stack">
+        <figure>
+          <div class="session-toggle-crop">
+            <img src="assets/rel-a0e682a0.png" alt="会话右上角的显示会话面板按钮及其提示">
+          </div>
+          <figcaption>会话右上角的打开入口</figcaption>
+        </figure>
+        <figure>
+          <img class="session-unread-shot" src="assets/rel-2866c7d5.jpg" alt="右键会话菜单中的标为未读">
+          <figcaption>右键会话可标为<br>已读或未读</figcaption>
+        </figure>
+      </div>
+      <figure>
+        <img src="assets/rel-62cc657c.png" alt="展开的会话面板显示项目目录、当前分支、本地变更和已完成的子智能体">
+        <figcaption>展开后查看工作目录、分支、本地变更和子智能体</figcaption>
+      </figure>
+    </div>
+    <figure class="session-drag-shot">
+      <img src="assets/rel-b99c96a6.png" width="2096" height="412" alt="从左侧会话列表拖动会话，右侧出现「在侧边栏打开」的投放区">
+      <figcaption>从左侧列表拖动会话，放到右侧「在侧边栏打开」</figcaption>
+    </figure>
+  </div>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

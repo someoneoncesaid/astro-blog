@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>对话与桌面操作</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<style>body { margin: 0; }</style>
+
+<link rel="stylesheet" href="assets/css-226fdedf.css">
+<link rel="stylesheet" href="assets/css-ec618cd0.css">
+<link rel="stylesheet" href="assets/css-ff6c7978.css">
+</head>
+<body>
+<div id="xhs-card">
+
+<article class="so-sheet release-card menu-card combined-actions">
+  <header class="so-head">
+    <span class="so-tick" style="background: #002FA7"></span>
+    <p class="so-eyebrow">0.2.3-ALPHA.1 · 界面</p>
+    <p class="so-index" style="color: #002FA7">10 / 11</p>
+  </header>
+  <div class="so-body">
+    <h2 class="so-title">对话与桌面操作</h2>
+    <div class="release-figures menu-figures">
+      <figure>
+        <div class="menu-crop file-menu-crop">
+          <img src="assets/rel-59c85b96.png" alt="文件右键菜单里的「添加到对话」">
+        </div>
+        <figcaption>
+          <strong>文件右键 → 添加到对话</strong>
+          <span>把文件引用插入草稿，可以继续编辑，不会自动发送。</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <div class="menu-crop settings-menu-crop">
+          <img src="assets/rel-ef8e9c1b.png" alt="桌面菜单中的「设置」和当前快捷键">
+        </div>
+        <figcaption>
+          <strong>桌面应用菜单 → 设置</strong>
+          <span>直接打开设置，菜单显示当前生效的单步快捷键。</span>
+        </figcaption>
+      </figure>
+    </div>
+    <section class="combined-compact">
+      <h3>在侧栏查看压缩摘要</h3>
+      <p>点击对话里的压缩记录，在右侧栏预览摘要。手动、自动压缩均支持。</p>
+      <div class="combined-compact-shots">
+        <figure class="compaction-crop compaction-record-crop">
+          <img src="assets/rel-7d180600.png" alt="对话中的 compact 压缩记录">
+        </figure>
+        <figure class="compaction-crop compaction-summary-crop">
+          <img src="assets/rel-7d180600.png" alt="右侧栏中的上下文压缩摘要">
+        </figure>
+      </div>
+    </section>
+  </div>
+  <footer class="so-foot">
+    <p class="so-foot-note">界面实拍 · PR #8554 #8663 #8461</p>
+  </footer>
+  <div class="so-mark-slot">
+    <span class="so-mark" aria-hidden="true" style="color: #002FA7">SOMEONE ONCE SAID</span>
+  </div>
+</article>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

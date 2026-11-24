@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>服务端搜索是什么</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>body{margin:0}</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF9F4; color: #1C1B17; font-family: 'Noto Sans SC', 'PingFang SC', sans-serif">
+
+  <div style="padding: 64px 132px 0 76px">
+    <div style="display: flex; align-items: center; gap: 16px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .2em; color: #6D6A62">RC.5 · SERVER-SIDE TOOL</span>
+      <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 21px; line-height: 1; color: #002FA7; border: 1.5px solid rgba(0,47,167,.35); border-radius: 999px; padding: 9px 20px; white-space: nowrap">官方术语</span>
+    </div>
+    <h2 style="margin: 18px 0 0; font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 900; font-size: 62px; line-height: 1.26; letter-spacing: .01em">「服务端搜索」是什么</h2>
+    <div style="height: 1.5px; background: #E5E2D9; margin-top: 24px"></div>
+  </div>
+
+  <div style="padding: 34px 132px 0 76px">
+    <p style="margin: 0; font-size: 29px; line-height: 1.58; color: #3D3B34">官网把它叫<strong style="font-weight: 700">「服务端工具」</strong>：搜索和抓取都在服务端完成，客户端不需要执行任何工具。</p>
+
+    <div style="margin-top: 28px; display: flex; align-items: stretch; gap: 8px">
+      <div style="flex: 1; min-width: 0; background: #FFFFFF; border: 1.5px solid #E5E2D9; border-radius: 12px; padding: 16px 12px; text-align: center">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 19px; font-weight: 700; color: #002FA7">web_search</div>
+        <div style="margin-top: 6px; font-size: 20px; line-height: 1.35; color: #6D6A62">声明服务端工具</div>
+      </div>
+      <div aria-hidden="true" style="flex: none; display: flex; align-items: center; color: #6D6A62; font-size: 26px; line-height: 1">→</div>
+      <div style="flex: 1.1; min-width: 0; background: #FFFFFF; border: 1.5px solid #E5E2D9; border-radius: 12px; padding: 16px 12px; text-align: center">
+        <div style="font-size: 22px; font-weight: 700; line-height: 1.35; color: #1C1B17">服务端搜索</div>
+        <div style="margin-top: 6px; font-size: 20px; line-height: 1.35; color: #6D6A62">执行并继续作答</div>
+      </div>
+      <div aria-hidden="true" style="flex: none; display: flex; align-items: center; color: #6D6A62; font-size: 26px; line-height: 1">→</div>
+      <div style="flex: 1.3; min-width: 0; background: rgba(0,47,167,.06); border: 1.5px solid rgba(0,47,167,.35); border-radius: 12px; padding: 16px 12px; text-align: center">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: #002FA7; white-space: nowrap">web_search_tool_result</div>
+        <div style="margin-top: 7px; font-size: 20px; line-height: 1.35; color: #6D6A62">结构化结果块</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 17px; letter-spacing: .2em; color: #002FA7">请求长这样</div>
+    <div style="margin-top: 10px; background: #161A22; border-radius: 14px; padding: 16px 22px; font-family: 'JetBrains Mono', monospace; font-size: 17px; line-height: 1.65; color: #D7DBE2">
+      <div><span style="color: #9CC79C">POST</span> {baseURL}<span style="color: #CD8272">/messages</span></div>
+      <div>tools: [{ type: <span style="color: #CD8272">'web_search_20250305'</span>,</div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: <span style="color: #CD8272">'web_search'</span>, max_uses: <span style="color: #9CC79C">5</span> }]</div>
+      <div>messages: [{ role: <span style="color: #CD8272">'user'</span>, content: <span style="color: #CD8272">&lt;查询&gt;</span> }]</div>
+    </div>
+
+    <p style="margin: 20px 0 0; font-size: 26px; line-height: 1.5; color: #3D3B34">客户端不执行这个工具，也不回传 <span style="font-family: 'JetBrains Mono', monospace; font-size: 23px">tool_result</span>；DSH 把结果块解析成 <span style="font-family: 'JetBrains Mono', monospace; font-size: 23px">sources[]</span>，没有它就直接报 <span style="font-family: 'JetBrains Mono', monospace; font-size: 23px; color: #002FA7">WEB_PROVIDER_ERROR</span>。</p>
+
+    <div style="margin-top: 26px; border: 1.5px solid #E5E2D9; border-radius: 14px; overflow: hidden">
+      <div style="display: flex; background: rgba(28,27,23,.04); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 16px; letter-spacing: .12em; color: #6D6A62">
+        <div style="flex: 1; padding: 12px 20px; border-right: 1.5px solid #E5E2D9">场景</div>
+        <div style="flex: 1.6; padding: 12px 20px">官方名字</div>
+      </div>
+      <div style="display: flex; border-top: 1.5px solid #E5E2D9">
+        <div style="flex: 1; padding: 15px 20px; border-right: 1.5px solid #E5E2D9; font-size: 21px; line-height: 1.4; color: #3D3B34">联网工具</div>
+        <div style="flex: 1.6; padding: 15px 20px; font-family: 'JetBrains Mono', monospace; font-size: 19px; line-height: 1.45; color: #1C1B17">deepseek_web_search<br><span style="color: #6D6A62">deepseek_read_url</span></div>
+      </div>
+      <div style="display: flex; border-top: 1.5px solid #E5E2D9; background: rgba(0,47,167,.04)">
+        <div style="flex: 1; padding: 15px 20px; border-right: 1.5px solid #E5E2D9; font-size: 21px; line-height: 1.4; color: #3D3B34">Anthropic 兼容</div>
+        <div style="flex: 1.6; padding: 15px 20px; font-family: 'JetBrains Mono', monospace; font-size: 19px; line-height: 1.45; color: #1C1B17">web_search<br><span style="color: #6D6A62">web_search_20250305</span></div>
+      </div>
+      <div style="display: flex; border-top: 1.5px solid #E5E2D9">
+        <div style="flex: 1; padding: 15px 20px; border-right: 1.5px solid #E5E2D9; font-size: 21px; line-height: 1.4; color: #3D3B34">DSH 设置项</div>
+        <div style="flex: 1.6; padding: 15px 20px; font-size: 21px; line-height: 1.45; color: #1C1B17">DeepSeek 服务端搜索<br><span style="font-size: 19px; color: #6D6A62">旧名「DeepSeek（旧版）」</span></div>
+      </div>
+    </div>
+
+    <p style="margin: 26px 0 0; font-size: 27px; line-height: 1.5; color: #1C1B17">所以它不是另一种 Search API，而是模型请求里的<strong style="font-weight: 700">服务端工具</strong>；rc.5 让 DeepSeek 模型默认走它。</p>
+  </div>
+
+  <div style="position: absolute; left: 76px; right: 132px; bottom: 48px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid #E5E2D9; padding-top: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 20px; letter-spacing: .12em; color: #6F6B61">
+    <span>DEEPSEEK HARNESS · 0.2.2-rc.5</span>
+    <span>09 / 09</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; right: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; letter-spacing: .58em; color: rgba(0,47,167,.2); user-select: none; pointer-events: none">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>

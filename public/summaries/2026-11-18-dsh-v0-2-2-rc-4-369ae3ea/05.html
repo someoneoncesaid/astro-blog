@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>兼容性与迁移</title>
+
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:transparent}
+#xhs-card{position:relative;width:1080px;height:1440px;overflow:hidden;transform-origin:top left}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>body{margin:0}</style>
+
+</head>
+<body>
+<div id="xhs-card">
+
+<div style="width: 1080px; height: 1440px; box-sizing: border-box; position: relative; overflow: hidden; background: #FAF9F4; color: #1C1B17; font-family: 'Noto Sans SC', 'PingFang SC', sans-serif">
+
+  <div style="padding: 64px 132px 0 76px">
+    <div style="display: flex; align-items: center; gap: 16px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; line-height: 1; letter-spacing: .2em; color: #6D6A62">COMPAT · 0.2.2-RC.4</span>
+      <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 21px; line-height: 1; color: #002FA7; border: 1.5px solid rgba(0,47,167,.35); border-radius: 999px; padding: 9px 20px; white-space: nowrap">兼容性</span>
+    </div>
+    <h2 style="margin: 18px 0 0; font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 900; font-size: 66px; line-height: 1.28; letter-spacing: .01em">其余照旧，只迁移错误码</h2>
+    <div style="height: 1.5px; background: #E5E2D9; margin-top: 24px"></div>
+  </div>
+
+  <div style="padding: 40px 132px 0 76px">
+    <p style="margin: 0; font-size: 33px; line-height: 1.6; color: #3D3B34">没有协议或用法上的破坏性变化；<br>迁移只落在错误码一处。</p>
+
+    <div style="margin-top: 44px; background: rgba(0,47,167,.07); border: 1.5px solid rgba(0,47,167,.18); border-radius: 18px; padding: 36px 34px">
+      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 21px; letter-spacing: .2em; color: #002FA7">没有变化的部分</div>
+      <div style="display: grid; gap: 14px; margin-top: 16px">
+        <div style="display: flex; gap: 14px; font-size: 32px; line-height: 1.6; color: #1C1B17"><span aria-hidden="true" style="color: #002FA7">—</span><span>请求 wire 格式与 rc.3 逐字节相同</span></div>
+        <div style="display: flex; gap: 14px; font-size: 32px; line-height: 1.6; color: #1C1B17"><span aria-hidden="true" style="color: #002FA7">—</span><span>CLI 用法不变，不需要额外配置</span></div>
+        <div style="display: flex; gap: 14px; font-size: 32px; line-height: 1.6; color: #1C1B17"><span aria-hidden="true" style="color: #002FA7">—</span><span><span style="font-family: 'JetBrains Mono', monospace; font-size: 28px">SESSION_FORMAT_VERSION</span> 未动，无新增事件类型</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top: 44px; background: #FAF9F4; border: 1.5px solid #E5E2D9; border-radius: 18px; padding: 36px 34px">
+      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 21px; letter-spacing: .2em; color: #002FA7">唯一要迁移的</div>
+      <div style="display: grid; gap: 14px; margin-top: 16px">
+        <div style="display: flex; gap: 14px; font-size: 32px; line-height: 1.6; color: #1C1B17"><span aria-hidden="true" style="color: #002FA7">—</span><span>按官方升级指南处理 <span style="font-family: 'JetBrains Mono', monospace; font-size: 28px">CONTENT_REFUSED</span><br>（<span style="font-family: 'JetBrains Mono', monospace; font-size: 28px">v0.2.2-rc.3/deepseek-refusal-code</span>）</span></div>
+        <div style="display: flex; gap: 14px; font-size: 32px; line-height: 1.6; color: #1C1B17"><span aria-hidden="true" style="color: #002FA7">—</span><span>回放一条以 <span style="font-family: 'JetBrains Mono', monospace; font-size: 28px">refusal</span> 结束的流，确认进入拒答分支</span></div>
+      </div>
+    </div>
+
+    <p style="margin: 56px 0 0; font-size: 34px; line-height: 1.6; color: #6D6A62">两个标签之间 8 个提交，380 个文件只是版本号——<br><strong style="color: #1C1B17; font-weight: 700">真正的产品改动只有拒答与 liveshare 两处</strong>。</p>
+  </div>
+
+  <div style="position: absolute; left: 76px; right: 132px; bottom: 48px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid #E5E2D9; padding-top: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 20px; letter-spacing: .12em; color: #6F6B61">
+    <span>DEEPSEEK HARNESS · 0.2.2-rc.4</span>
+    <span>05 / 09</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; right: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 23px; letter-spacing: .58em; color: rgba(0,47,167,.2); user-select: none; pointer-events: none">SOMEONE ONCE SAID</div>
+</div>
+</div>
+<script>
+(function(){
+  var card = document.getElementById('xhs-card');
+  var W = 1080, H = 1440;
+  function fit(){
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var scale = Math.min(vw / W, vh / H);
+    card.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe(document.documentElement); }
+  fit();
+})();
+</script>
+</body>
+</html>
